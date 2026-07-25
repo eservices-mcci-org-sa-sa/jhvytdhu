@@ -1,0 +1,247 @@
+﻿<style>
+    .ErrorPwdPattern {
+        color: #f98c9d !important;
+    }
+
+    body {
+        background: #f2f4f9;
+    }
+
+    .portlet-body .table tbody > tr > td {
+        padding: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    [data-balloon] {
+        position: inherit !important;
+        z-index: 99999 !important;
+    }
+</style>
+
+<div class="users-content grey-color p-top-lg p-bottom-lg">
+    <div class="container">
+        <div class="custom-user-table" ng-if="!userInfo.globalSessionValues.CurrentMember.IsAdmin">
+            <div class="alert alert-danger text-center"><h4>  عفواً , ليس لديك صلاحية الوصول لهذه الشاشة.</h4></div>
+        </div>
+        <div class="custom-user-table" ng-if="detailModel.requestStatus !== 1">
+            <div class="alert alert-danger text-center"><h4>  عفواً , تم تغيير حالة الطلب.</h4></div>
+        </div>
+        <div class="user-container no-padding" ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin && detailModel.requestStatus === 1">
+            <div class="row">
+                <div class="custom-user-table">
+                    <div class="submit small-submit text-center">
+                        <div class="bg-white">
+                            <h2>
+                                {{title}}
+                            </h2>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+                    <form class="form-inline add-users" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="custom-title">
+                                    <h4>
+                                        <i class="icon-menu font-blue"></i>
+                                        بيانات طلب التفويض
+                                    </h4>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="user-input">
+                                    <label>إسم المٌفوض  </label>
+                                    <div>
+                                        <input type="text" class="form-control input-no-borders" ng-model="detailModel.userFullName" name="UserFullName" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="user-input">
+                                    <label>رقم الهوية / الإقامة</label>
+                                    <div>
+                                        <input type="text" class="form-control  input-no-borders" autocomplete="off" ng-model="detailModel.identityNo"
+                                               ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="col-xs-12">
+                            <div class="custom-title">
+                                <h4>
+                                    <i class="icon-menu font-blue"></i>
+                                    نهاية التفويض
+                                </h4>
+                            </div>
+                            <div class="row p-bottom-md">
+                                <!--<div class="col-md-3 col-xs-12">
+                                    <div class="custom-input custom-cal">
+                                        <label for="date">  بداية التفويض</label>
+                                        <date-control name="DelegateFromDate" class="datepickgreg" onkeydown="return false;" autocomplete="off"
+                                                      mydate="detailModel.DelegateFromDate" placeholder="تاريخ من " title="{{IsHijriTitle}}"></date-control>
+                                    </div>
+                                </div>-->
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="custom-input custom-cal">
+                                        <!--<label for="date"> نهاية التفويض  </label>-->
+                                        <date-control name="DelegateToDate" class="datepickgreg" ng-required="true" onkeydown="return false;"
+                                                      mydate="detailModel.DelegateToDate" autocomplete="off" placeholder="تاريخ نهاية التفويض"
+                                                      title="{{IsHijriTitle}}"></date-control>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="custom-title">
+                                <h4>
+                                    <i class="icon-menu font-blue"></i>
+                                    صلاحيات المفوض
+                                </h4>
+                            </div>
+                            <div class="row p-bottom-md">
+                                <div class="col-md-8 col-xs-12 custom-check-input">
+                                    <div class="user-input no-margin">
+                                        <div class="form-group">
+                                            <div class="checkbox no-margin">
+                                                <label>
+                                                    <input type="checkbox" class="checkboxes select-all-checkbox" ng-click="toggleAll(detailModel.IsAdmin)"
+                                                           data-ng-model="detailModel.IsAdmin">إسناد كافة الصلاحيات
+                                                </label>
+                                                <div class="alert m-top-sm" ng-if="detailModel.IsAdmin">
+                                                    <i class="fa fa-exclamation"></i>
+                                                    تنويه : سيكون لديه جميع الصلاحيات مساويه لمالك العضوية
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="!detailModel.IsAdmin">
+                            <div class="col-xs-12">
+                                <div class="custom-title">
+                                    <h4>
+                                        <i class="font-blue"></i>
+                                        1- الوصول للطلبات
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="light bordered" ng-show="PrvsArr.length > 0">
+
+                                <div class="col-md-3" ng-repeat="r in OriginalPrvsArr | filter: {type : 1 }:true | orderBy:orderByLength">
+                                    <div class="permission-item">
+                                        <div class="number">{{$index+1}}</div>
+                                        <div class="title">{{r.name}}</div>
+                                        <div class="check">
+                                            <input type="checkbox" class="checkboxes" ng-change="checkOne($index,r,r.isSelected)" ng-model="r.isSelected">
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="portlet-body form">
+                                    <div class="form-body">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover table-checkable order-column no-footer">
+                                                <tr ng-repeat="c in PrvsArr">
+                                                    <td class="text-center" ng-repeat-start="p in c | filter: {type : 1 }:true">{{p.index}}</td>
+                                                    <td class="text-center">{{p.name}}</td>
+                                                    <td class="text-center" ng-repeat-end>
+                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                            <input type="checkbox" class="checkboxes" ng-change="checkOne($index,p,p.isSelected)" ng-model="p.isSelected">
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="row" ng-show="showNoData">
+                                            <div class="note note-danger" style="text-align:center !important">
+                                                عفواً . لا توجـد بيانات.
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-hide="!EmpsList.length">
+                                            <pagination total-items="totalItemsModal" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-model="currentPageModal" ng-change="pageChangedd()" class="pagination-sm" items-per-page="numPerPageModal"></pagination>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12">
+                                <div class="custom-title">
+                                    <h4>
+                                        <i class="font-blue"></i>
+                                        2- صلاحيات عامه
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="light bordered" ng-show="PrvsArr.length > 0">
+                                <div class="portlet-body form">
+                                    <div class="form-body">
+                                        <div class="col-md-3" ng-repeat="r in OriginalPrvsArr | filter: {type : 2 }:true | orderBy:orderByLength">
+                                            <div class="permission-item">
+                                                <div class="number">{{$index+1}}</div>
+                                                <div class="title">{{r.name}}</div>
+                                                <div class="check">
+                                                    <input type="checkbox" class="checkboxes" ng-change="checkOne($index,r,r.isSelected)" ng-model="r.isSelected">
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover table-checkable order-column no-footer">
+                                                <tr ng-repeat="c in PrvsArr">
+                                                    <td class="text-center" ng-repeat-start="p in c | filter: {type : 2 }:true">{{p.index}}</td>
+                                                    <td class="text-center">{{p.name}}</td>
+                                                    <td class="text-center" ng-repeat-end>
+                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                            <input type="checkbox" class="checkboxes" ng-change="checkOne($index,p,p.isSelected)" ng-model="p.isSelected">
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>-->
+
+                                        <div class="row" ng-show="showNoData">
+                                            <div class="note note-danger" style="text-align:center !important">
+                                                عفواً . لا توجـد بيانات.
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-hide="!EmpsList.length">
+                                            <pagination total-items="totalItemsModal" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-model="currentPageModal" ng-change="pageChangedd()" class="pagination-sm" items-per-page="numPerPageModal"></pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="submit small-submit text-center">
+                            <button id="advanced-search-btn" ng-click="handleDelegationRequest(2,AddForm,$event)" class="custom-btn btn-3">
+                                موافقة <i class="fa fa-check"></i>
+                            </button>
+                            <a ng-href="/#/Requests/Delegations" class="custom-btn btn-3">
+                                الغاء <i class="fa fa-remove"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

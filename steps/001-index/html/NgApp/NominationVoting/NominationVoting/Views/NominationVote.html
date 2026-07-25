@@ -1,0 +1,204 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}"
+                         alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified"
+                         ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+
+<!--START: Committees VOTING LOG  -->
+<div class="es-sectral-committees-candidate-voting">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            تصويت لمرشحي لجنة
+                            {{committeeName}}
+                        </h2>
+                        <div class="sp-main-toolbar">
+                            <a href="/#/NominationCommittees/Vote" class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <div class="sp-main-box">
+                    <div class="sp-main-title">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h2>قائمة المرشحين</h2>
+                            <h4>{{selectionLimit}} / {{(selectedItems | selectionVoteCount) + selectedBefore}}</h4>
+                        </div>
+                    </div>
+
+
+                    <div class="sp-main-table-holder">
+                        <div class="table-responsive custom-table wss-wallet-table white-bg p-bottom-sm">
+                            <table class="table table-hover table-centered">
+                                <thead>
+                                    <tr class="bg-blue font-white">
+                                        <th class="text-center">
+                                            <label>
+                                                <strong># </strong>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <strong>اسم المرشج </strong>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <strong>العضوية / اسم المنشأة</strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestTypeName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <strong>المؤهل</strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <!-- <th class="text-center">
+                                          <strong>علاقته بالمنشأة</strong>
+                                          <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='ApproveRejectDate'"
+                                            ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}">
+                                          </span>
+                                        </th> -->
+                                        <th class="text-center">
+                                            <label>
+                                                <strong>نبذة عني</strong>
+                                            </label>
+                                        </th>
+                                        <th style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong> التصويت </strong>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate-start="c in paginatedCandidates | itemsPerPage:model.Pagination" total-items="totalItems"
+                                        current-page="currentPage" dir-paginate-end="">
+                                        <td class="text-center">{{c.index + 1 | ngArabicNumber: true}}</td>
+                                        <td class="text-center">
+                                            <img ng-if="c.candidateImage" ng-src="{{c.candidateImage}}" class="candidate-rounded-image" width="100" height="100" alt="Uploaded Image" />
+                                            {{c.candidateName}}
+                                        </td>
+                                        <td class="text-center">{{c.estName}}</td>
+                                        <td class="text-center">{{c.specialization}}</td>
+                                        <!-- <td class="text-center">{{c.relation}}</td> -->
+                                        <td class="text-center"> 
+                                            <a ng-click="showInfo(c.candidateInfo)">نبذة عن المرشح</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="switch-control">
+                                                <div id="SwitchRow">
+                                                    <label>
+                                                        <input ng-if="c.isVoted" type="checkbox" checked disabled>
+                                                        <input ng-if="!c.isVoted" type="checkbox" ng-model="selectedItems[c.nominationCandidateId]"
+                                                               ng-change="toggleSelection(c.nominationCandidateId)" value="{{c.isVoted}}">
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div ng-show="startLoading" colspan="12" style="text-align: center" class="text-center"
+                                 data-loading>
+                                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px" />
+                            </div>
+                            <div ng-hide="thereIsData">
+                                <div colspan="12" style="text-align: center" ng-show="!startLoading">
+                                    <h3 class="font-red">عفواً , لا توجد بيانات للعرض</h3>
+                                </div>
+                            </div>
+                            <div class="d-flex-align-center-justify-center">
+                                <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sp-form-actions">
+                        <button class="sp-main-button m-ie-20 px-20" ng-click="addVotes()" ng-if="thereIsData && !disableSubmit">تصويت</button>
+                        <button class="sp-main-button m-ie-20 px-20" disabled ng-if="thereIsData && disableSubmit">تصويت</button>
+                        <a class="sp-main-button sp-transparent-button px-20"
+                           href="/#/NominationCommittees/Vote">إلغاء</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .candidate-rounded-image {
+        border-radius: 50%; /* Makes the image circular */
+        width: 50px; /* Set a width */
+        height: 50px; /* Set a height */
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+    }
+    .d-flex-align-center-justify-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .sp-form-actions {
+        text-align: center;
+        padding: 20px 10px;
+        border-top: 1px solid #eaecec;
+    }
+
+    .m-ie-20 {
+        margin-inline-end: 20px;
+    }
+
+    .textAreaDisplay {
+        white-space: pre-wrap;
+    }
+</style>
+<modal visible="showInfoModal" title="نبذة شخصية عن المرشح">
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="form-group">
+                    <p class="textAreaDisplay">
+                        {{candidateInfo}}
+                    </p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="text-center">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </div>
+</modal>
+
+<!--END: Committees VOTING LOG -->

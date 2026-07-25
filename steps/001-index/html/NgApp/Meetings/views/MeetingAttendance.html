@@ -1,0 +1,119 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <!--<img src="assets/img/302.svg" alt="" />-->
+                    <img ng-if="chamberSettings.id" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<div class="container" ng-show="!ValidationDone">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="sp-main-box sp-forget-box sp-register-box">
+                <div class="sp-main-title">
+                    <h2>تسجيل الحضور في الجمعية العمومية</h2>
+                    <a class="sp-main-button sp-main-sm-button pull-left" href="" ng-click="setBack()">
+                        العودة
+                    </a>
+                </div>
+
+                <div class="sp-main-form">
+                    <form form-autofill-fix autocomplete="off" ng-class="{'IsLoading':showSpin==true}" ng-show="showRegister"
+                          id="registerForm" role="form" name="registerForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="alert alert-warning margin-top-20" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    لتأكيد حضوركم فى إجتماع الجمعية العمومية  {{chamberSettings.chamberName}}  يرجي إدخال البيانات التالية 
+                                </div>
+
+                                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                    <div class="input-icon left">
+                                        <label for="IdentityNo">رقم الهوية</label>
+                                        <div class="input-icon">
+                                            <input name="IdentityNo" maxlength="10" ng-minlength="10" autofocus only-Int ng-pattern="identityPattern"
+                                                   ng-model="ValidateModel.IdentityNo" ng-required="true" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div ng-messages="registerForm.IdentityNo.$error" ng-if="(registerForm.IdentityNo.$dirty || SubmitRegister)">
+                                        <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم الهوية</p>
+                                        <p class="text-danger error-msg" ng-message="pattern">من فضلك ادخل رقم الهوية أرقام وتبدأ ب 1 أو 2</p>
+                                    </div>
+                                </div>
+
+                                <style>
+                                    .sp-form-check {
+                                        display: flex !important;
+                                    }
+
+                                        .sp-form-check input {
+                                            width: 30px !important;
+                                            height: 0 !important;
+                                            min-height: 18px !important;
+                                            margin: 0 !important;
+                                            margin-left: 8px !important;
+                                        }
+
+                                        .sp-form-check label {
+                                            font-size: 12px;
+                                            font-weight: normal
+                                        }
+
+                                            .sp-form-check label a {
+                                                color: #399B75;
+                                            }
+                                </style>
+                                  
+                                <p class="errors" ng-bind-html="Message"></p>
+                                <button type="submit" class="sp-main-button margin-bottom-20" ng-click="ValidateAttendance(registerForm,$event,false)">
+                                    <span ng-show="showSpin"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i></span>
+                                    التالي
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="confirm-form" form-autofill-fix ng-class="{'IsLoading':showSpin == true}" class="w3-animate-bottomm" ng-show="showTFA" role="form" name="confirmForm" novalidate>
+                        <div class="row">
+                            <div class="sp-main-form sp-otp sp-register-form">
+                                <div class="text-center margin-top-20 margin-bottom-20">
+                                    <h1>
+                                        الرجاء ادخل رقم التحقق الذي تم ارسالة على الجوال  &nbsp;&nbsp;  <span dir="ltr">{{currUserMobile}}</span>
+                                    </h1>
+                                    <div class="form-group ver-code login-ver-code">
+                                        <input id="{{'login-ver-code'+ $index}}" ng-repeat="digit in smsInputs  track by $index" type="number"
+                                               data-ng-model="digit.value" restrict-input="{type: 'digitsOnly'}" min="0"
+                                               max="9" move-Previous maxlength="1" ng-change="combineCode(digit,$index)"
+                                               class="form-control" autocomplete="off" />
+                                    </div>
+                                    <p class="errors" ng-bind-html="Message"></p>
+                                    <p ng-hide="showRetrySendCode">
+                                        يمكنك إعادة الإرسال بعد : {{timeElapsed}} ثانية
+                                    </p>
+                                    <a ng-if="Sms.CodeSent && showRetrySendCode"
+                                       ng-click="ValidateAttendance(registerForm,$event,true);"
+                                       class="sp-main-button">
+                                        إعادة الإرسال
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                        <p class="errors"> {{confirmLoginErrors}}</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

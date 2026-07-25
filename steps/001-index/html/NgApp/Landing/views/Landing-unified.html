@@ -1,0 +1,418 @@
+﻿<!-- NEW BreadCrumbs Title -->
+<div>
+    <div class="sp-full-width">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- page title -->
+                    <div class="sp-main-box sp-box-title">
+                        <div class="sp-main-title">
+                            <!--<h2>{{NavigationTitle}}</h2>-->
+                            <h2 ng-show="userInfo.globalSessionValues.UserData.AgreementAccepted">الرئيسية</h2>
+                            <h2 ng-show="!userInfo.globalSessionValues.UserData.AgreementAccepted">الشروط و الأحكام</h2>
+
+                            <a ng-click="RedirectNonMembers();" 
+                               ng-if="chamberSettings.enableNonMembers && userInfo.globalSessionValues.UserData.AgreementAccepted" class="pull-left my-membership-button">
+                                خدمات غير المشتركين
+                            </a>
+                        </div>
+                    </div>
+                    <!-- page title end -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12" ng-if="!identityFounded">
+            <div class="form-group">
+                <div class="alert alert-landing">
+                    <img src="../../../Content/Theme/assets/img/alert.svg" />
+                    في حالة عدم ظهور عضويتك يمكنك التأكد من  
+                    <a target="_blank" href="https://e2.business.sa/">
+                        تجديد الاشتراك
+                    </a>
+                    أو
+                    <a target="_blank" href="/#/Contact">
+                        تحديث البيانات
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- search section -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sp-main-box sp-membership-box margin-bottom-30" id="related">
+                <div class="sp-main-title">
+                    <h2>
+                        <i class="fa fa-user mc-color-reverse"></i>
+                         تحديد الغرفة
+                    </h2>
+                </div>
+                <div class="sp-membership-inner-box">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="custom-input">
+                                <label for="date">اختيار الغرفة </label>
+                                <!--{{invisible}}-->
+                                <ui-select ng-model="searchModel.chamberId" ng-change="filterMembershipsByChamber()" reset-search-input="true" theme="selectize" ng-required="true">
+                                    <ui-select-match>
+                                        <span class="selected-value" ng-bind="$select.selected.chamberName"></span>
+                                        <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="c.chamberId as c in ChamberList | filter: $select.search">
+                                        <small ng-bind-html="c.chamberName"></small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <div ng-messages="searchForm.ChamberId.$error" ng-if="searchForm.ChamberId.$dirty">
+                                    <p class="text-danger" ng-message="required">من فضلك أختر الغرفة</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .alert-landing a {
+        text-decoration: underline !important;
+    }
+</style>
+
+<!-- <modal visible="showMeetingBanner">
+    <div style="overflow: hidden;">
+        <a href="/#/Meetings/Subscription"><img src="../../../Content/Theme/img/meetingModal-302.png" class="img-responsive" /></a>
+    </div>
+</modal> -->
+
+<modal visible="userInfo.globalSessionValues.UserData.ShowMobileBanner">
+    <div class="col-md-12" style="overflow: hidden;">
+        <div class="info-box guide-box">
+            <div class="box-data sp-adv-container">
+                <div class="sp-adv-data">
+                    <div class="sp-rmobinfo">
+                        <img src="../../../Content/Theme/img/mobileicon.svg" width="100" alt="mobileicon" class="mobileicon margin-right-10" draggable="false" />
+                        <img src="../../../Content/Theme/img/mobileadvtext.svg" alt="mobileadvtext" class="mobileadvtext margin-top-10" draggable="false" />
+                    </div>
+                    <div class="sp-lmobinfo">
+                        <a href="https://play.google.com/store/apps/details?id=com.worldofss.scapp" target="_blank">
+                            <img src="../../../Content/Theme/img/googleplay.svg" alt="googleplay" class="googleplay" draggable="false" />
+                        </a>
+                        <a href="https://apps.apple.com/us/app/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%A7%D9%84%D8%BA%D8%B1%D9%81/id1639993268" target="_blank">
+                            <img src="../../../Content/Theme/img/appstore.svg" alt="appstore" class="appstore" draggable="false" />
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</modal>
+
+
+<div class="wss-memberships" ng-show="page.thereIsData && userInfo.globalSessionValues.UserData.AgreementAccepted">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- memberships -->
+                <div class="sp-main-box sp-membership-box is-unified-box margin-bottom-30" id="related">
+                    <div class="sp-main-title">
+                        <h2>
+                            <i class="fa fa-user mc-color-reverse"></i>
+                            العضويات التابعة
+                        </h2>
+                    </div>
+                    <div class="sp-membership-inner-box">
+                        <div class="row" ng-if="DisplayedRelated.length > 1">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="form-group margin-bottom-20">
+                                    <input class="form-control" ng-model="searchModel.searchRelated" name="UserFullName" type="text" placeholder="بحث" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row flex-row">
+                            <div id="relatedCard" class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm"
+                                 dir-paginate-start="c in DisplayedRelated | filter:searchModel.searchRelated | itemsPerPage : page.itemsPerPage_R"
+                                 current-page="page.currentPage_R" pagination-id="paginateId_R">
+
+                                <div class="dropdown wss-dropdown mc-dropdown" ng-if="c.checked">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" title="اختيارات">
+                                        <img src="../../../Content/Theme/assets/img/dots.svg" alt="اختيارات " />
+                                    </a>
+                                    <ul class="dropdown-menu wss-dropdown-menu card-dropdown">
+                                        <li>
+                                            <a href="" ng-click="Action(c,true);$event.stopPropagation();"> إلغاء التفعيل</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="custom-card wss-memberships-card mc-color" ng-click="c.checked && Action(c,false)"
+                                     data-balloon="{{c.estName}}" data-balloon-pos="up"
+                                     ng-class="{'membership-inActive':!c.checked}">
+
+                                    <div class="click-card-info" style="margin-top:15px">
+                                        <div class="row">
+                                            <div class="col-sm-12 no-padding">
+                                                <div class="sp-acc-card-memb">
+                                                    <div class="sp-acc-card-thumbnail">
+                                                        <img ng-src="{{'/Logos/'+c.chamberId+'.png'}}" />
+                                                    </div>
+                                                    <div class="sp-acc-card-title">
+                                                        <span class="sp-card-chamber-name" ng-if="c.chamberFullArabicName">{{c.chamberFullArabicName | cutWords:7:' ...'}}</span>
+                                                        <h3 class="membership-title">{{c.estName | cutWords:4:' ...'}}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>{{c.memberId}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 no-padding" ng-if="c.unifiedNumber">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) :</span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>{{c.unifiedNumber}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم الســـــجل:</span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>{{c.crNumber}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button data-balloon="إضغط لتفعيل العضوية" data-balloon-pos="up" class="custom-card-btn" ng-if="!c.checked" ng-click="Action(c,false);$event.stopPropagation();">
+                                    تفعيل العضوية
+                                </button>
+                            </div>
+
+                            <div dir-paginate-end="">
+                            </div>
+                            <div ng-show="(DisplayedRelated | filter:searchModel.searchRelated).length == 0" class="col-sm-12 col-md-12 col-lg-12">
+                                <div colspan="3" class="note note-danger">لا توجد عضويات تابعة</div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <dir-pagination-controls max-size="5" pagination-id="paginateId_R"
+                                                         direction-links="true"
+                                                         boundary-links="true">
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--العضويات المفوض عليها-->
+                <div class="sp-main-box sp-membership-box is-unified-box  margin-bottom-30" id="delegated">
+                    <div class="sp-main-title">
+                        <h2>
+                            <i class="fa fa-users mc-color-reverse"></i>
+                            العضويات المفوض عليها
+                        </h2>
+                    </div>
+
+                    <div class="sp-membership-inner-box">
+                        <div class="row" ng-if="DisplayedDelegated.length > 4">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <input class="form-control" ng-model="searchModel.searchDelegated" name="UserFullName" type="text" placeholder="بحث" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row flex-row">
+                            <div id="delegatedCard" class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm"
+                                 dir-paginate-start="c in DisplayedDelegated | filter:searchModel.searchDelegated | itemsPerPage : page.itemsPerPage_D"
+                                 current-page="page.currentPage_D" pagination-id="paginateId_D">
+
+                                <div class="dropdown wss-dropdown mc-dropdown" ng-if="c.checked">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                                        <img src="../../../Content/Theme/assets/img/dots.svg" alt="اختيارات " />
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="" ng-click="Action(c,true);$event.stopPropagation();"> إلغاء التفعيل</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="custom-card wss-memberships-card mc-color"
+                                     data-balloon="{{c.estName}}" data-balloon-pos="up"
+                                     ng-class="{'membership-inActive':!c.checked}">
+
+
+                                    <div ng-click="c.checked && Action(c,false)" class="click-card-info" style="margin-top:15px">
+                                        <div class="row">
+                                            <div class="col-sm-12 no-padding">
+                                                <div class="sp-acc-card-memb">
+                                                    <div class="sp-acc-card-thumbnail">
+                                                        <img ng-src="{{'/Logos/'+c.chamberId+'.png'}}" />
+                                                    </div>
+                                                    <div class="sp-acc-card-title">
+                                                        <span class="sp-card-chamber-name" ng-if="c.chamberFullArabicName">{{c.chamberFullArabicName | cutWords:7:' ...'}}</span>
+                                                        <h3 class="membership-title">{{c.estName | cutWords:4:' ...'}}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>{{c.memberId}}</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 no-padding" ng-if="c.unifiedNumber">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) :</span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>{{c.unifiedNumber}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم الســـــجل:</span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>{{c.crNumber}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button data-balloon="إضغط لتفعيل العضوية" data-balloon-pos="up" class="custom-card-btn" ng-if="!c.checked" ng-click="Action(c,false);$event.stopPropagation();">
+                                    تفعيل العضوية
+                                </button>
+
+                            </div>
+                            <div dir-paginate-end="">
+                            </div>
+                            <div ng-show="(DisplayedDelegated | filter:searchModel.searchDelegated).length == 0" class="col-sm-12 col-md-12 col-lg-12">
+                                <div colspan="3" class="note note-danger">لا توجد عضويات مُفوضة</div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <dir-pagination-controls max-size="5" pagination-id="paginateId_D"
+                                                         direction-links="true"
+                                                         boundary-links="true">
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!userInfo.globalSessionValues.UserData.AgreementAccepted">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box sp-register-box form-wizard register-pg" id="form_wizard_1">
+                    <form id="registerForm" name="registerForm" autocomplete="off">
+                        <input autocomplete="false" name="hidden" type="text" class="hidden">
+                        <div class="sp-register-form">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div ng-bind-html="chamberSettings.agreementText"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>
+                                        <input type="checkbox" class="checkbox-input" name="agree" data-ng-model="AgreementAccepted" ng-required="true" />
+                                        <span> أوافق على هذه الشروط </span>
+                                    </label>
+                                    <div ng-messages="registerForm.agree.$error " ng-if="registerForm.agree.$touched  || isFormSubmitted">
+                                        <p class="text-danger" ng-message="required">فضلاً قم بالموافقة على الإتفاقية</p>
+                                    </div>
+                                    <hr />
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button type="submit" ng-click="acceptAgreement(AgreementAccepted);"
+                                            class="sp-main-button">
+                                        التالى
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="page.thereIsData" class="m-top-lg">
+    <div ng-show="page.showLoad" class="text-center" data-loading>
+        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+    </div>
+    <div class="col-md-12" ng-show="page.noData">
+        <div class="note note-danger" style="text-align:center !important">
+            عفواً . لا توجـد بيانات.
+        </div>
+    </div>
+</div>
+
+<style>
+    nz-tour #nzTour-content {
+        display: table;
+    }
+</style>
+
+<script>
+    $('.sp-nav-tabs a').click(function (e) {
+        $('.sp-nav-tabs a.active').removeClass('active')
+        $(this).addClass('active')
+    })
+</script>

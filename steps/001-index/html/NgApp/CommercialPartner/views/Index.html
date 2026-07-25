@@ -1,0 +1,39 @@
+﻿<div class="commercial-subscription">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="packages-title">
+                    <h3>
+                        إشتراكات الشريك التجاري
+                    </h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div class="commercial-subscription-id text-center">
+                    <span class="package-name">  {{Objects[0].packageName}} </span>
+                    <!--<p ng-if="ShowData">  المتبقي على انتهاء الباقة <span id="expireDate"></span> </p>-->
+                    <p ng-if="ShowData">  المتبقي على انتهاء الباقة <span>{{expireDate}}</span> </p>
+                    <p ng-if="!ShowData">  عفوا لا توجد بيانات اشتراك  </p>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-sm-12">
+                <div class="subscribed-features">
+                    <div class="s-feature" ng-repeat="x in Objects">
+                        <h2> <span>الخدمة</span>{{x.propertyName}}	</h2>
+                        <span class="s-discount" ng-if="x.discount != 0"> خصم {{x.discount}}% </span>
+                        <p> {{x.extraInfo}}	</p>
+                        <ul>
+                            <li class="s-count"> <p> <span>{{x.excutedCountPerYear}} </span>  مرات </p> </li>
+                            <li class="s-done" ng-if="x.excutedCountPerYear != x.excuteCount && x.excuteCount != 0"> <p> <span>{{x.excuteCount}}</span> منفذه </p> </li>
+                            <li class="s-remain" ng-if="x.excutedCountPerYear != x.excuteCount && x.excuteCount != 0"> <p> <span>{{x.excutedCountPerYear - x.excuteCount }}</span> متبقي </p></li>
+                            <li class="s-done" ng-if="x.excutedCountPerYear == x.excuteCount"> <p> <span><i class="fa fa-check"></i></span> تم التنفيذ </p></li>
+                            <li class="s-not-done" ng-if="x.excuteCount == 0"> <p> <span><i class="fa fa-clock-o"></i></span> لم يتم التنفيذ </p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

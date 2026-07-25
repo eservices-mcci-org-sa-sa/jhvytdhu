@@ -1,0 +1,126 @@
+﻿<style>
+    .ErrorPwdPattern {
+        color: #f98c9d !important;
+    }
+
+    body {
+        background: #f2f4f9;
+    }
+
+    .portlet-body .table tbody > tr > td {
+        padding: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+</style>
+<div class="users-content grey-color p-top-lg p-bottom-lg">
+    <div class="container">
+        <div class="user-container no-padding">
+            <div class="row">
+                <div class="custom-user-table">
+                    <div class="submit small-submit text-center">
+                        <div class="bg-white">
+                            <h2>
+                                إضافة شكوى/إقتراح
+                            </h2>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="clearfix"></div>
+                    <form class="form-inline add-users" ng-submit="Save(AddForm,$event)" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="custom-title">
+                                    <h4>
+                                        <i class="icon-menu font-blue"></i>
+                                        بيانات الشكوى/الإقتراح
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="user-input">
+                                    <label>إسم المنشأة  </label>
+                                    <div>
+                                        <input type="text" autocomplete="off" name="Email" class="form-control" ng-model="AddModel.EstName" ng-readonly="true" ng-required="true">
+                                        <div ng-messages="AddForm.EstName.$error" ng-if="AddForm.EstName.$dirty || isFormSubmitted">
+                                            <p class="text-danger" ng-message="required">البريد الإلكتروني مطلوب </p>
+                                            <p class="text-danger" ng-message="pattern">البريد الإلكتروني مطلوب بشكل صحيح </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="user-input">
+                                    <label>البريد الإلكتروني</label>
+                                    <div>
+                                        <input type="email" autocomplete="off" name="Email" class="form-control" ng-model="AddModel.Email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" ng-required="true">
+                                        <div ng-messages="AddForm.Email.$error" ng-if="AddForm.Email.$dirty || isFormSubmitted">
+                                            <p class="text-danger" ng-message="required">البريد الإلكتروني مطلوب </p>
+                                            <p class="text-danger" ng-message="pattern">البريد الإلكتروني مطلوب بشكل صحيح </p>
+                                            <p class="text-danger" ng-message="email">  ادخل بريد الكترونى صحيح</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-12">
+                                <div class="user-input">
+                                    <label>رقم الجوال</label>
+                                    <div>
+                                        <input type="text"  only-Int  ng-pattern="/^(05)([0-9]{8})$/" minlength="10" maxlength="10" 
+                                               name="Mobile" class="form-control" ng-model="AddModel.Mobile" ng-required="true">
+                                        <div ng-messages="AddForm.Mobile.$error" ng-if="AddForm.Mobile.$dirty || isFormSubmitted">
+                                            <p class="text-danger" ng-message="required"> رقم الجوال مطلوب</p>
+                                            <p class="text-danger" ng-message="maxlength || minlength"> أدخل الجوال مكون من 10 أرقام</p>
+                                            <p class="text-danger" ng-message="pattern">
+                                                ادخل مالايقل
+                                                عن 10 ارقام يبدأ ب (05)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 col-xs-12">
+                                <div class="user-input">
+                                    <label>  عنوان الشكوى/الإقتراح</label>
+                                    <div>
+                                        <input type="text" class="form-control" restrict-input="{regex: '^[^<>@#]*$'}"  name="Title" ng-model="AddModel.Title" ng-required="true">
+                                        <div ng-messages="AddForm.Title.$error" ng-if="AddForm.Title.$dirty || isFormSubmitted">
+                                            <p class="text-danger" ng-message="required">عنوان الشكوى/الإقتراح مطلوب </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 col-xs-12">
+                                <div class="user-input">
+                                    <label>  تفاصيل الشكوى/الإقتراح</label>
+                                    <div>
+                                        <textarea class="form-control" ng-model="AddModel.ComplainText" name="ComplainText" ng-required="true"></textarea>
+                                        <div ng-messages="AddForm.ComplainText.$error" ng-if="AddForm.ComplainText.$dirty || isFormSubmitted">
+                                            <p class="text-danger" ng-message="required">تفاصيل الشكوى/الإقتراح مطلوبة </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="submit small-submit text-center">
+                                <button type="submit" class="custom-btn btn-3">
+                                    إرسال <i class="fa fa-check"></i>
+                                </button>
+
+                                <a ng-href="/#/CommercialPartner/Complaines" class="custom-btn btn-3">
+                                    إلغاء <i class="fa fa-remove"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 

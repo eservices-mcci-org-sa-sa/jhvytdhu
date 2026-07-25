@@ -1,0 +1,1507 @@
+<!-- Banners start from here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!--<a href="{{chamberSettings.rassdFatwraUrl}}" target="_blank" ng-if="chamberSettings.rassdFatwraIsActive" ng-class="{'ES_ln-banner-wrapper':chamberSettings.rassdFatwraIsActive==true}" class=" banner-fawtara">
+    <div class="container">
+        <div class="ES_ln-banner">
+            <div class="banner-logo">
+                <img src="../../../Content/Theme/assets/img/fawtara-logo.svg" alt="Fawtara Logo" width="104"
+                    height="40">
+
+                <p>أدر وأصدر فواتيرك الرقمية بسهولة من الجوال!</p>
+            </div>
+            <div class="banner-discount">
+                <p>
+                    احصل على خصم
+                    <span>{{chamberSettings.rassdFatwraPercentage}}%</span>
+                    على الباقة
+                    <span>السنوية</span>
+                    باستخدم الرمز الترويجي
+                </p>
+                <div class="discount-code">
+                    <p>{{chamberSettings.rassdFatwraPromoCode}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>-->
+<!--<a href="{{chamberSettings.rassdTwajodUrl}}"  target="_blank" ng-if="chamberSettings.rassdTwajodIsActive" ng-class="{'ES_ln-banner-wrapper':chamberSettings.rassdTwajodIsActive==true}" class="banner-twajd">
+    <div class="container">
+        <div class="ES_ln-banner">
+            <div class="banner-logo">
+                <img src="../../../Content/Theme/assets/img/twajd-logo.svg" alt="Twajd Logo" width="104" height="40">
+                <p>أدر حضور وانصراف موظفيك بسهولة من الجوال!</p>
+            </div>
+            <div class="banner-discount">
+                <p>
+                    احصل على خصم
+                    <span>{{chamberSettings.rassdTwajodPercentage}}%</span>
+                    على الباقة
+                    <span>السنوية</span>
+                    باستخدم الرمز الترويجي
+                </p>
+                <div class="discount-code">
+                    <p>{{chamberSettings.rassdTwajodPromoCode}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>-->
+<!-- Banners End -->
+<!-- header -->
+<div class="ES_ln-header" ng-class="{'landing-banner-space':chamberSettings.rassdTwajodIsActive==true || chamberSettings.rassdFatwraIsActive==true}">
+    <div class="container">
+        <div class="ES_ln-header--content">
+            <a href="" class="logo2">
+                <img src="../../../../Content/Theme/assets/img/logo-new.svg" alt="" />
+            </a>
+
+            <!-- Hide in responsive -->
+            <div class="menu_actions">
+                <ul class="header_menu">
+                    <li class="active">
+                        <a href="">الرئيسية</a>
+                    </li>
+                    <li>
+                        <a href="" class="scroll-to-services">خدمات البوابة</a>
+                    </li>
+                </ul>
+
+                <div class="header_actions">
+                    <a ng-href="/#/MemberLogin" class="primary_btn">
+                        <span class="web-text">تسجيل الدخول</span>
+                        <span class="mobile-text">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.71 10.7101C14.6904 9.93878 15.406 8.88105 15.7572 7.68407C16.1085 6.48709 16.0779 5.21039 15.6698 4.03159C15.2617 2.85279 14.4963 1.83052 13.4801 1.10698C12.4639 0.383444 11.2474 -0.00537109 10 -0.00537109C8.75255 -0.00537109 7.53611 0.383444 6.51993 1.10698C5.50374 1.83052 4.73834 2.85279 4.33021 4.03159C3.92208 5.21039 3.89151 6.48709 4.24276 7.68407C4.59401 8.88105 5.3096 9.93878 6.29 10.7101C4.61007 11.3832 3.14428 12.4995 2.04889 13.94C0.953495 15.3806 0.26956 17.0914 0.0699967 18.8901C0.0555513 19.0214 0.0671132 19.1543 0.104022 19.2812C0.140931 19.408 0.202464 19.5264 0.285108 19.6294C0.452016 19.8376 0.69478 19.971 0.959997 20.0001C1.22521 20.0293 1.49116 19.9519 1.69932 19.785C1.90749 19.6181 2.04082 19.3753 2.07 19.1101C2.28958 17.1553 3.22168 15.3499 4.68822 14.0389C6.15475 12.7279 8.0529 12.0032 10.02 12.0032C11.9871 12.0032 13.8852 12.7279 15.3518 14.0389C16.8183 15.3499 17.7504 17.1553 17.97 19.1101C17.9972 19.3558 18.1144 19.5828 18.2991 19.7471C18.4838 19.9115 18.7228 20.0016 18.97 20.0001H19.08C19.3421 19.97 19.5817 19.8374 19.7466 19.6314C19.9114 19.4253 19.9881 19.1625 19.96 18.9001C19.7595 17.0963 19.0719 15.3811 17.9708 13.9383C16.8698 12.4955 15.3969 11.3796 13.71 10.7101ZM10 10.0001C9.20887 10.0001 8.43551 9.76553 7.77772 9.326C7.11992 8.88648 6.60723 8.26176 6.30448 7.53086C6.00173 6.79995 5.92251 5.99569 6.07686 5.21976C6.2312 4.44384 6.61216 3.73111 7.17157 3.1717C7.73098 2.61229 8.44371 2.23132 9.21964 2.07698C9.99556 1.92264 10.7998 2.00186 11.5307 2.30461C12.2616 2.60736 12.8863 3.12005 13.3259 3.77784C13.7654 4.43564 14 5.209 14 6.00012C14 7.06099 13.5786 8.07841 12.8284 8.82855C12.0783 9.5787 11.0609 10.0001 10 10.0001Z" fill="white"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Show in responsive -->
+                <!-- <button class="primary_btn burger_btn">
+                    <img src="../../../Content/Theme/assets/img/burger-menu.svg" alt="" />
+                </button> -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Responsive Header -->
+<div class="responsive_header">
+    <div class="side_head">
+        <button class="primary_btn close_btn">x</button>
+    </div>
+    <div class="ES_ln-header--content">
+        <!-- Hide in responsive -->
+        <div class="menu_actions">
+            <ul class="header_menu">
+                <li class="active">
+                    <a href="">الرئيسية</a>
+                </li>
+                <li>
+                    <a href="">خدمات البوابة</a>
+                </li>
+            </ul>
+
+            <div class="header_actions">
+                <a href="" class="primary_btn">تسجيل الدخول</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="ES_ln-mainP">
+    <!-- Intor Section -->
+    <section class="EL_ln-intro">
+        <div class="container">
+            <div class="intor_content">
+                <h1><span>بوابة إلكترونية متكاملة</span> لتيسير أعمال منشآتك</h1>
+                <p>
+                    تتيح تقديم الطلبات الإلكترونية بسهولة، إلى جانب خدمات إدارة العضويات، إصدار الشهادات، وإنجاز المعاملات بسرعة وكفاءة.
+                    واجهة بسيطة وأداء آمن لضمان تجربة مميزة لأعضاء الغرف التجارية.
+                </p>
+                <!-- ADS -->
+                 <div class="landing-ads-wrapper" ng-if="chamberSettings.rassdFatwraIsActive || chamberSettings.rassdTwajodIsActive">
+                    <a class="sp-ads ads-fawtara ads-vertical" href="{{chamberSettings.rassdFatwraUrl}}" target="_blank" ng-if="chamberSettings.rassdFatwraIsActive">
+                        <div class="ads-logo">
+                            <img src="../../../Content/Theme/assets/img/fawtara-logo.svg" alt="Fawtara Logo" width="100%">
+                            <p>
+                                <span>أصدر فواتيرك بسهولة</span> <br>
+                                عبر الجــــــــــــــوال و الويـــب!
+                            </p>
+                        </div>
+                        <div class="ads-discount">
+                            <p>
+                                اشـــــــــــتـرك الآن بالباقة السنوية بخصــــم
+                                <span>{{chamberSettings.rassdFatwraPercentage}}%</span>
+                            </p>
+                            <div class="ads-code-wrapper">
+                                <p>
+                                    <span class="font-smaller">استخدم</span>
+                                    الرمز الترويجي:
+                                </p>
+                                <span class="ads-code">
+                                    <span>{{chamberSettings.rassdFatwraPromoCode}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="sp-ads ads-twajod ads-vertical" href="{{chamberSettings.rassdTwajodUrl}}" target="_blank" ng-if="chamberSettings.rassdTwajodIsActive">
+                        <div class="ads-logo">
+                            <img src="../../../Content/Theme/assets/img/twajd-logo.svg" alt="Twajod Logo" width="100%">
+                            <p>
+                                <span>أدر حضــــــــور موظفــــــــــيك</span> <br>
+                                عبر الجــــــــــــــوال و الويــــــــــــــــــــب!
+                            </p>
+                        </div>
+                        <div class="ads-discount">
+                            <p>
+                                اشـــــــــــتـرك الآن بالباقة السنوية بخصــــم
+                                <span>{{chamberSettings.rassdTwajodPercentage}}%</span>
+                            </p>
+                            <div class="ads-code-wrapper">
+                                <p>
+                                    <span class="font-smaller">استخدم</span>
+                                    الرمز الترويجي:
+                                </p>
+                                <span class="ads-code">
+                                    <span>{{chamberSettings.rassdTwajodPromoCode}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                 </div>
+            </div>
+        </div>
+      
+    </section>
+
+    <!-- Services Section -->
+    <section class="ES_ln-services">
+        <div class="container">
+            <div class="ES_section_title">
+                <h2>خدمات إلكترونية شاملة لتسهيل أعمالك</h2>
+                <p>
+                    استمتع بمجموعة خدمات إلكترونية متكاملة مصممة لتلبية احتياجاتك بسهولة وسرعة
+                </p>
+            </div>
+            <div class="ES_services_cards">
+
+                <div class="ES_services_card" ng-if="chamberSettings.id != 201&&chamberSettings.id !== 402">
+                    <img src="../../../Content/Theme/assets/img/service-icon-1.svg" alt="" class="service_icon" />
+                    <h3>شهادة الاشتراك</h3>
+                    <p>التحقق من عضوية المنشآت بالغرفة إلكترونيًا عبر النظام</p>
+                    <a href="https://www.coccertificate.org/#/" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card">
+                    <img src="../../../Content/Theme/assets/img/service-icon-2.svg" alt="" class="service_icon" />
+                    <h3>التحقق من الوثائق</h3>
+                    <p>التحقق الإلكتروني من الوثائق المصدقة عبر بوابة المشتركين</p>
+                    <a href="/#/DocumentVerify" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card">
+                    <img src="../../../Content/Theme/assets/img/service-icon-3.svg" alt="" class="service_icon" />
+                    <h3>تجديد الإشتراك</h3>
+                    <p>تجديد العضوية إلكترونيًا عبر وزارة التجارة لضمان استمرار الخدمات</p>
+                    <a href="https://e2.business.sa" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card">
+                    <img src="../../../Content/Theme/assets/img/service-icon-4.svg" alt="" class="service_icon" />
+                    <h3>الدليل التجاري</h3>
+                    <p>الاستعلام عن عضويات الغرف التجارية المسجلة من خلال الدليل</p>
+                    <a href="/#/CommericalManual" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+
+
+                <div class="ES_services_card">
+                    <img src="../../../Content/Theme/assets/img/service-icon-5.svg" alt="" class="service_icon" />
+                    <h3>الإستعلام عن رقم العضوية</h3>
+                    <p>تهدف بوابة خدمات الغرف إلى توفير خدمات متعددة للتجار وأصحاب </p>
+                    <a href="/#/MemberIdQuery/false" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card">
+                    <img src="../../../Content/Theme/assets/img/service-icon-6.svg" alt="" class="service_icon" />
+                    <h3>الإستعلام عن منتسب</h3>
+                    <p>معرفة رقم الاشتراك للمنتسبين بالغرف التجارية بسهولة</p>
+                    <a href="/#/MemberIdQuery/true" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card">
+                    <img src="../../../Content/Theme/assets/img/service-icon-7.svg" alt="" class="service_icon" />
+                    <h3>تحديث البيانات</h3>
+                    <p>تحديث بيانات ملاك ومدراء العضويات لضمان دقة المعلومات</p>
+                    <a href="/#/Contact" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card" ng-if="chamberSettings.id == 201">
+                    <img src="../../../Content/Theme/assets/img/service-icon-8.svg" alt="" class="service_icon" />
+                    <h3>حجز موعد لخدمة التواقيع</h3>
+                    <p>حجز مواعيد لخدمة توقيع المفوضين إلكترونيًا بكل سهولة</p>
+                    <a href="#" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card service_new" ng-if="chamberSettings.id == 302">
+                    <span class="tag_new">جديد</span>
+                    <img src="../../../Content/Theme/assets/img/service-icon-11.svg" alt="" class="service_icon" />
+                    <h3>الإرشاد القانوني</h3>
+                    <p>خدمة الإرشاد القانوني للمشتركين لتقديم الاستشارات والدعم القانوني</p>
+                    <a href="https://legal.acca.sa/services?utm_source=memberportal&utm_medium=icon&utm_campaign=launch2026" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card"
+                    ng-if="chamberSettings.useMeetings && (chamberSettings.upComingMeetingStatus == 1) ">
+                    <img src="../../../Content/Theme/assets/img/service-icon-9.svg" alt="" class="service_icon" />
+                    <h3>تسجيل الجمعية العمومية</h3>
+                    <p>تسجيل الجمعية العمومية</p>
+                    <a href="/#/Meetings/Subscription" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card service_new" ng-if="chamberSettings.isShowNominationCommittees == true">
+                    <span class="tag_new">جديد</span>
+                    <img src="../../../Content/Theme/assets/img/service-icon-2.svg" alt="" class="service_icon" />
+                    <h3>اللجان القطاعية</h3>
+                    <p>الترشح والمشاركة في لجان القطاعات التجارية بالغرف</p>
+                    <a href="/#/NominationCommittees/Landing" class="service_btn">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+                <div class="ES_services_card service_new" ng-if="chamberSettings.dynamicRequests"
+                    ng-repeat="dynRequest in chamberSettings.dynamicRequests; track by $index">
+                    <span class="tag_new">جديد</span>
+                    <img src="../../../Content/Theme/assets/img/service-icon-11.svg" alt="" class="service_icon" />
+                    <h3>{{dynRequest.NameAr}}</h3>
+                    <p>تتيح للمشتركين تقديم الطلبات إلكترونيًا بكل سهولة</p>
+                    <a class="service_btn" ng-click="openDynRequest(dynRequest)">
+                        <img src="../../../Content/Theme/assets/img/arrow.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- download App -->
+    <section class="ES_ln-download_app">
+        <div class="container">
+            <div class="download_content">
+                <div class="left">
+                    <img src="../../../Content/Theme/assets/img/mobile-app.png" alt="" class="mobile" />
+                    <h3>الآن يمكنك تحميل تطبيق بوابة خدمات الغرف على الجوال</h3>
+                </div>
+                <div class="google_play_store">
+                    <!--<a href="https://play.google.com/store/apps/details?id=com.worldofss.scapp" target="_blank" class="google_btn">
+                        <img src="../../../Content/Theme/assets/img/app-gallery.svg" alt="" />
+                    </a>-->
+                    <a href="https://play.google.com/store/apps/details?id=com.worldofss.scapp" target="_blank"
+                        class="google_btn">
+                        <img src="../../../Content/Theme/assets/img/google-play.svg" alt="" />
+                    </a>
+                    <a href="https://apps.apple.com/us/app/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%A7%D9%84%D8%BA%D8%B1%D9%81/id1639993268"
+                        target="_blank" class="google_btn">
+                        <img src="../../../Content/Theme/assets/img/google-store.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Slider -->
+    <section class="ES_ln-clients">
+        <div class="container">
+            <div class="ES_section_title">
+                <h2>عملائنا المميزون</h2>
+                <p>
+                    تهدف بوابة خدمات الغرف إلى توفير خدمات متعددة للتجار وأصحاب الأعمال بشكل سريع وفعّال. من خلال هذه البوابة، يمكن للأفراد والمؤسسات
+                </p>
+            </div>
+        </div>
+        <div class="slider-container">
+          <ul class="ES_ln-clients-slider">
+              <li>
+                  <img src="../../../Content/Theme/assets/img/abha.svg" alt="" class="client_img" height="52" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/makkah-chamber.svg" alt="" class="client_img"
+                      height="52" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/almadinah-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/qassim-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/alkharg-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/aljouf-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/taif-chamber.svg" alt="" class="client_img"
+                      height="56" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/hafr-albatin-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/alahsa-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/rass-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/tabuk-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/yanbu-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/qurayat-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/najran-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/703.png" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/jazan-chamber.svg" alt="" class="client_img" />
+              </li>
+        <li>
+                  <img src="../../../Content/Theme/assets/img/bisha-logo.png" alt="" class="client_img" />
+              </li>
+              <!-- Cloned -->
+              <li>
+                  <img src="../../../Content/Theme/assets/img/abha.svg" alt="" class="client_img" height="52" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/makkah-chamber.svg" alt="" class="client_img"
+                      height="52" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/almadinah-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/qassim-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/alkharg-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/aljouf-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/taif-chamber.svg" alt="" class="client_img"
+                      height="56" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/hafr-albatin-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/alahsa-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/rass-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/tabuk-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/yanbu-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/qurayat-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/najran-chamber.svg" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/703.png" alt="" class="client_img" />
+              </li>
+              <li>
+                  <img src="../../../Content/Theme/assets/img/jazan-chamber.svg" alt="" class="client_img" />
+              </li>
+             <li>
+                  <img src="../../../Content/Theme/assets/img/bisha-logo.png" alt="" class="client_img" />
+              </li>
+          </ul>
+      </div>
+    </section>
+</main>
+
+<div class="ES_ln-footer">
+    <div class="container">
+        <div class="footer_content">
+            <div class="footer_right">
+                <img src="../../../Content/Theme/assets/img/logo-icon.svg" alt="" class="logo_icon" />
+                <div class="footer_info">
+                    <h3>بوابة خدمات الغرف</h3>
+                    <p>
+                        بوابة إلكترونية شاملة لتقديم الطلبات وخدمات العضويات والشهادات بسهولة وسرعة، مع تجربة آمنة ومميزة.
+                    </p>
+                    <div class="info_row">
+                        <img src="../../../Content/Theme/assets/img/wss-logo.svg" alt="" class="wss_logo" />
+                        <div class="phone">
+                            <div class="icon">
+                                <img src="../../../Content/Theme/assets/img/phone.svg" alt="" />
+                            </div>
+                            <div class="txt">00966112641362</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_left">
+                <div class="footer_logos">
+                    <img src="../../../Content/Theme/assets/img/council-SA.svg" alt="" />
+                    <img src="../../../Content/Theme/assets/img/ministry-commerce.svg" alt="" />
+                    <img src="../../../Content/Theme/assets/img/vision-SA.svg" alt="" />
+                </div>
+                <div class="social_icons">
+                    <a href="{{chamberSettings.facebook}}"  ng-if="chamberSettings.facebook" target="_blank" class="social_icon">
+                        <img src="../../../Content/Theme/assets/img/facebook.svg" alt="" />
+                    </a>
+                    <a href="{{chamberSettings.youtube}}"  ng-if="chamberSettings.youtube" target="_blank" class="social_icon">
+                        <img src="../../../Content/Theme/assets/img/youtube.svg" alt="" />
+                    </a>
+                    <a href="{{chamberSettings.twitter}}"  ng-if="chamberSettings.twitter" target="_blank" class="social_icon">
+                        <img src="../../../Content/Theme/assets/img/twitter.svg" alt="" />
+                    </a>
+                    <!--<a href="#" target="_blank" class="social_icon">
+                        <img src="../../../Content/Theme/assets/img/linkedin.svg" alt="" />
+                    </a>-->
+                    <a href="{{chamberSettings.instagram}}" ng-if="chamberSettings.instagram" target="_blank" class="social_icon">
+                        <img src="../../../Content/Theme/assets/img/instagram.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+            <div class="copy_rights">
+                جميع الحقوق محفوظة لشركة&nbsp;
+                <a href="https://www.worldofss.com/" target="_blank">عالم النظم والبرامج</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<modal visible="showDynRequestAlertModal" title="تنويه بشأن الطلب">
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="form-group text-center">
+                    <span class="icon-wrapper">
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <div class="form-group">
+                    <p>
+                        {{showDynRequestAlertMsg}}
+                    </p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="text-center">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </div>
+</modal>
+
+<Style>
+    /* COLORS */
+    :root {
+        --primary-color: #4183d7;
+        --secondary-color: #75889f;
+        --dark-color: #1c242f;
+        --white-color: #fff;
+        --body-color: #fafcff;
+        --silver-color: #555b63;
+        --icon-bg-color: #cec4d3;
+        --danger-color: #E53A65;
+    }
+
+    /* Global Style */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        /* font-family: "IBM Plex Sans Arabic", sans-serif; */
+        background-color: var(--body-color);
+        text-align: start;
+        /* min-height: 100vh; */
+        font-size: 14px;
+        transition: 0.3s;
+        /* direction: rtl; */
+        /* display: flex; */
+        /* flex-direction: column; */
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        padding: 0;
+        margin: 0;
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+
+    ul,
+    ol {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    button,
+    button:focus {
+        box-shadow: none;
+        outline: 0 none;
+        border: 0;
+    }
+
+    input {
+        box-shadow: none;
+        outline: 0 none;
+        border: 0;
+        caret-color: var(--secondary-color);
+    }
+
+    input::placeholder {
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--secondary-color);
+    }
+
+    .ES_ln-mainP {
+        flex-grow: 1;
+    }
+
+    /****************************************** Header ************************************/
+    .ES_ln-header {
+        padding: 30px 0;
+    }
+
+    .ES_ln-header--content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .ES_ln-header--content .logo2 {
+        flex-shrink: 0;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ES_ln-header--content .logo2 img {
+        height: 100%;
+    }
+
+    .ES_ln-header--content .menu_actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 48px;
+    }
+
+    .ES_ln-header--content .header_menu {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 48px;
+    }
+
+    .ES_ln-header--content .header_menu li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .ES_ln-header--content .header_menu li a {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--silver-color);
+    }
+
+    .ES_ln-header--content .header_menu li.active a,
+    .ES_ln-header--content .header_menu li:hover a {
+        color: var(--primary-color);
+    }
+
+    .primary_btn {
+        padding: 24px;
+        background-color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--white-color);
+        border-radius: 16px;
+    }
+
+    .primary_btn:hover,
+    .primary_btn:focus {
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    .burger_btn {
+        padding: 4px;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        display: none;
+    }
+
+    .burger_btn img {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Responsive Header */
+    .responsive_header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 24px;
+        width: 24px;
+        background-color: #bddaff;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.5s ease-in-out;
+        z-index: 5;
+    }
+
+    .responsive_header.showSidebar {
+        width: 100%;
+        height: 100vh;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .side_head {
+        padding: 25px 24px;
+    }
+
+    .close_btn {
+        padding: 4px;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        margin-inline-start: auto;
+    }
+
+    /************************************** Footer ***********************/
+    .ES_ln-footer {
+        padding-bottom: 28px;
+        margin-top: 8px;
+    }
+
+    .ES_ln-footer .footer_content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        border-radius: 32px;
+        padding: 64px;
+        position: relative;
+        background-image: url(../../../../Content/Theme/assets/img/footer-frame.svg);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    .ES_ln-footer .footer_right {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 24px;
+        max-width: 60%;
+    }
+
+    .ES_ln-footer .footer_right .logo_icon {
+        flex-shrink: 0;
+        height: 64px;
+    }
+
+    .ES_ln-footer .footer_right h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+    }
+
+    .ES_ln-footer .footer_right p {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        margin-bottom: 24px;
+    }
+
+    .ES_ln-footer .info_row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+    }
+
+    .ES_ln-footer .info_row .wss_logo {
+        flex-shrink: 0;
+        height: 40px;
+    }
+
+    .ES_ln-footer .info_row .phone {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .ES_ln-footer .info_row .phone .icon {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        background-color: #ffffff80;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ES_ln-footer .info_row .phone .icon img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .ES_ln-footer .info_row .phone .txt {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--dark-color);
+        direction: ltr;
+    }
+
+    .ES_ln-footer .footer_left .footer_logos {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .ES_ln-footer .footer_left .footer_logos img {
+        flex-shrink: 0;
+        height: 56px;
+    }
+
+    .ES_ln-footer .footer_left .social_icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .ES_ln-footer .footer_left .social_icons .social_icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--icon-bg-color);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    .ES_ln-footer .footer_left .social_icons .social_icon img {
+        height: 15px;
+    }
+
+    .ES_ln-footer .copy_rights {
+        content: "";
+        position: absolute;
+        background-color: transparent;
+        width: 35%;
+        height: 64px;
+        bottom: 0;
+        left: 0;
+        border-top-right-radius: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: #202020;
+        text-align: center;
+    }
+
+    .ES_ln-footer .copy_rights a {
+        color: #202020;
+    }
+
+    /****************************************** Home  ***************************/
+    /* Intor Section */
+    .EL_ln-intro {
+        padding-bottom: 117px;
+        background-image: url(../../../../Content/Theme/assets/img/hero-bg.svg);
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: 100% auto;
+        position: relative;
+    }
+
+    .EL_ln-intro::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: linear-gradient(0deg, #F5F7FA, transparent);
+        height: 129px;
+    }
+
+    .EL_ln-intro .intor_content {
+        padding: 89px 97px 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        /* padding-bottom: 220px; */
+    }
+
+    .EL_ln-intro .intor_content h1 {
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--dark-color);
+        text-align: center;
+        max-width: 50%;
+        margin: 0 auto 24px;
+        line-height: 72px;
+    }
+
+    .EL_ln-intro .intor_content h1 span {
+        color: var(--primary-color);
+    }
+
+    .EL_ln-intro .intor_content p {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        text-align: center;
+        max-width: 80%;
+        margin-bottom: 0;
+        line-height: 27px;
+    }
+
+    /* Clients Slider */
+    .ES_ln-clients{padding: 96px 0;}
+    .slider-container {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    ul.ES_ln-clients-slider {
+        display: flex;
+        align-items: center;
+        animation: move-right 32s linear infinite;
+        width: calc(250px * 32);
+    }
+
+    ul.ES_ln-clients-slider>li {
+        min-width: 250px;
+        height: 112px;
+        padding: 24px 20px;
+        flex-shrink: 0;
+    }
+
+    ul.ES_ln-clients-slider>li img {
+        display: block;
+        width: 100%;
+        max-height: 64px;
+    }
+
+    @keyframes move-right {
+
+        /* from {
+            transform: translateX(calc(-250px * 16));
+        }
+        to {
+            transform: translateX(0);
+        } */
+        0% {
+            transform: translateX(0%);
+        }
+
+        100% {
+            transform: translateX(calc(250px * 16))
+        }
+    }
+
+    /* Services Section */
+    .ES_ln-services {
+        padding: 96px 0;
+        background: linear-gradient(253.44deg, #d6e6fb 1.8%, #fcf0f0 98.97%);
+        border-radius: 80px;
+        margin-bottom: 96px;
+    }
+
+    .ES_section_title {
+        margin-bottom: 56px;
+    }
+
+    .ES_section_title h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--dark-color);
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .ES_section_title p {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        text-align: center;
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .ES_services_cards {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .ES_services_cards .ES_services_card {
+        width: 23%;
+        max-width: 275px;
+        height: 250px;
+        background-image: url(../../../../Content/Theme/assets/img/card-frame.svg);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: cover;
+        border-radius: 32px;
+        padding: 24px 24px 69px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-bottom-left-radius: 0;
+    }
+
+    .ES_services_cards .ES_services_card.service_new {
+        border-top-right-radius: 0;
+        background-image: url(../../../../Content/Theme/assets/img/card-frame2.svg);
+        background-position: center;
+    }
+
+    .ES_services_cards .ES_services_card .service_icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+    }
+
+    .ES_services_cards .ES_services_card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    .ES_services_cards .ES_services_card p {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        text-align: center;
+        margin: 0;
+    }
+
+    .ES_services_card .service_btn {
+        width: 50px;
+        height: 52px;
+        background-color: var(--primary-color);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .ES_services_cards .ES_services_card.service_new .tag_new {
+        width: 60px;
+        height: 52px;
+        background-color: var(--danger-color);
+        color: var(--white-color);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .ES_services_card .service_btn img {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Download App */
+    .ES_ln-download_app .download_content {
+        padding: 32px;
+        background: linear-gradient(253.44deg, #d6e6fb 1.8%, #fcf0f0 98.97%);
+        border-radius: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .ES_ln-download_app .download_content .left {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .ES_ln-download_app .download_content .left .mobile {
+        flex-shrink: 0;
+        width: 72px;
+    }
+
+    .ES_ln-download_app .download_content .left h3 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 0;
+        max-width: 50%;
+    }
+
+    .ES_ln-download_app .google_play_store {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 11px;
+        flex-shrink: 0;
+    }
+
+    .ES_ln-download_app .google_play_store .google_btn {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .ES_ln-download_app .google_play_store .google_btn img {
+        width: 100%;
+    }
+
+    footer,
+    .page-wrap:after {
+        display: none !important;
+    }
+</Style>
+
+<!-- Style for banners Only -->
+<style>
+    .ES_ln-banner-wrapper {
+        --banner-time: 5;
+    }
+    .ES_ln-banner-wrapper {
+        padding: 8px;
+        background: linear-gradient(90deg, black, transparent);
+        font-family: 'IBM Plex Sans Arabic';
+        max-height: 80px;
+    }
+
+    .ES_ln-banner-wrapper.banner-fawtara {
+        background: linear-gradient(258.02deg, #1775D4 7.2%, #4081D0 91.25%);
+    }
+
+    .ES_ln-banner-wrapper.banner-twajd {
+        background: linear-gradient(258.02deg, #6B6AB0 7.2%, #4488C7 91.25%);
+    }
+
+    .ES_ln-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ES_ln-banner .banner-logo img {
+        width: 104px;
+    }
+
+    .ES_ln-banner .banner-logo p {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        color: white;
+        margin: 0;
+    }
+
+    .ES_ln-banner .banner-discount {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .ES_ln-banner .banner-discount p {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 27px;
+        color: white;
+    }
+
+    .ES_ln-banner .banner-discount p span:first-child {
+        color: #FFD900;
+        font-size: 36px;
+        line-height: 54px;
+    }
+
+    .ES_ln-banner .banner-discount .discount-code {
+        padding: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-radius: 8px;
+        min-width: 189px;
+        min-height: 49px;
+    }
+
+    .ES_ln-banner .banner-discount .discount-code p {
+        color: #0C942A;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        line-height: 41px;
+        border: 1px dashed #0C942A;
+        border-radius: 8px;
+    }
+
+    .landing-banner-space {padding-top: 30px;}
+    .ES_ln-banner-wrapper {
+        position: absolute;
+        width: 100%;
+        isolation: isolate;
+    }
+    .ES_ln-banner-wrapper::before{
+        content: '';
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        position: absolute;
+        transition: 0.3s width ease-in-out,0.3s opacity ease-in-out;
+        z-index: -1;
+    }
+    .ES_ln-banner-wrapper.banner-fawtara::before{
+        background: linear-gradient(258.02deg, #1775D4 7.2%, #4081D0 91.25%);
+    }
+    .ES_ln-banner-wrapper.banner-twajd::before{
+        background: linear-gradient(258.02deg, #6B6AB0 7.2%, #4488C7 91.25%);
+    }
+
+    .ES_ln-banner-wrapper.banner-twajd::before{
+        /* animation: fadeWidth1 20s infinite; */
+        animation: fadeWidth infinite;
+        animation-duration: calc(var(--banner-time, 10)*3s);
+        opacity: 0;
+    }
+    .ES_ln-banner-wrapper.banner-twajd > * {
+        /* animation: fade1 20s infinite; */
+        animation: fade infinite;
+        animation-duration: calc(var(--banner-time, 10)*3s);
+        opacity: 0;
+    }
+    .ES_ln-banner-wrapper.banner-twajd {
+        animation: fadeParent infinite; 
+        animation-duration: calc(var(--banner-time, 10)*3s);
+        opacity: 0;
+        z-index: -1;
+    }
+    /* =-=-==-==-==-=-= */
+    @keyframes fade {
+        0%, 33.33% { /* Hold opacity 0 for the first 10 seconds */
+            opacity: 0;
+        }
+        36.66%, 66.66% { /* Fade in and hold opacity 1 for the next 10 seconds */
+            opacity: 1;
+        }
+        70%, 100% { /* Fade out and hold opacity 0 for the remaining 10 seconds */
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeWidth {
+        0%, 33.33% { /* Hold width 0 and opacity 0 for the first 10 seconds */
+            width: 0;
+            opacity: 0;
+        }
+        36.66%, 66.66% { /* Animate width to 100% and opacity to 1, hold for 10 seconds */
+            width: 100%;
+            opacity: 1;
+        }
+        70%, 100% { /* Animate back to width 0 and opacity 0, hold for the remaining 10 seconds */
+            width: 0;
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeParent {
+        0%, 33.33% { /* Hold opacity 0 for the first 10 seconds */
+            opacity: 0;
+            z-index: -1; 
+        }
+        36.66%, 66.66% { /* Fade in and hold opacity 1 for the next 10 seconds */
+            opacity: 1;
+            z-index: 1; 
+        }
+        70%, 100% { /* Fade out and hold opacity 0 for the remaining 10 seconds */
+            opacity: 0;
+            z-index: -1;
+        }
+    }
+</style>
+<!-- ADS Styles Vertical || New -->
+<style>
+    .landing-ads-wrapper {
+        /* display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(calc(50% - 20px), 1fr)); */
+        gap: 20px;
+        /* width: 100%; */
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .sp-ads .ads-discount{max-width: 156px;}
+   @media screen and (max-width:991.98px) {
+    .landing-ads-wrapper {
+        flex-wrap: wrap;
+    }
+
+    .landing-ads-wrapper > * {
+        flex: 100%;
+    }
+   }
+    
+    /* .ads-vertical-wrapper{flex-direction: column; gap: 24px;} */
+    .sp-ads + .login_box {margin: 0 30px;}
+    
+    .sp-ads{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 20px;
+        font-family: 'IBM Plex Sans Arabic';
+      
+    }
+    
+    .sp-ads.ads-fawtara{background: linear-gradient(270deg, #1775D4 7.2%, #4081D0 91.25%);}
+    .sp-ads.ads-twajod{ background: linear-gradient(270deg, #6B6AB0 7.2%, #4488C7 91.25%);}
+
+    .sp-ads .ads-logo > img { max-width: 150px;  margin-bottom: 16px; }
+    .sp-ads .ads-logo p {
+        padding: 8px;
+        border-radius: 12px;
+        background: black;
+        color: white;
+        font-size: 20px;
+        font-weight: 300;
+    }
+    .sp-ads .ads-logo p span {font-weight: 600; letter-spacing: 0.5px; }
+    
+    .sp-ads.ads-fawtara .ads-logo p{background: #f68d5e;}
+    .sp-ads.ads-twajod .ads-logo p{background: #00b0b9;}
+
+    .sp-ads .ads-discount {color: white;}
+    .sp-ads:not(.ads-vertical) .ads-discount{margin-top: 30px;}
+    .sp-ads .ads-discount > p{font-weight: 600; font-size: 22px; color: white;}
+
+    .sp-ads .ads-code-wrapper {display: flex; gap: 8px; align-items: center; flex-wrap: wrap;}
+    .sp-ads .ads-code-wrapper > * {flex: 1;}
+    .sp-ads .ads-discount .ads-code-wrapper > p{font-weight: 300; font-size: 18px; min-width: fit-content; color: white;}
+    .sp-ads .ads-discount .ads-code-wrapper > p span{font-weight: 500; font-size: 22px;}
+
+    .sp-ads .ads-discount .ads-code {
+        background: #000;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 25px;
+        font-weight: 600;
+        padding: 4px;
+    }
+    .sp-ads .ads-discount .ads-code span {
+        margin: 0;
+        border: 1px dashed white;
+        border-radius: 6px;
+        padding: 0 5px;
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* Vertical */
+    /* @media screen and (min-width: 992px){
+        .sp-ads.ads-vertical {flex-direction: column; gap: 60px; padding: 32px 16px; max-width: 163px; text-align: center;}
+        .sp-ads.ads-vertical.ads-fawtara{background: linear-gradient(180deg, #1775D4 7.2%, #4081D0 91.25%);}
+        .sp-ads.ads-vertical.ads-twajod{ background: linear-gradient(180deg, #6B6AB0 7.2%, #4488C7 91.25%);}
+        .sp-ads.ads-vertical .ads-logo > img { max-width: 190px; margin-bottom: 40px; }
+        .sp-ads.ads-vertical .ads-logo p {max-width: 190px; letter-spacing: 0.4px;}
+        .sp-ads.ads-vertical .ads-discount {color: white; max-width: 190px; }
+        .sp-ads.ads-vertical .ads-discount .ads-code-wrapper > p{font-weight: 300; font-size: 14px;}
+        .sp-ads.ads-vertical .ads-discount .ads-code-wrapper > p span{font-weight: 500; font-size: 17px;}
+    } */
+
+    @media screen and (max-width: 550px) {
+        .sp-ads:not(.ads-vertical) .ads-discount{margin-top: 0;}
+        .sp-ads .ads-discount p,.sp-ads .ads-logo p{margin-bottom: 0;}
+    }
+
+    /* NEW Ads landing only  */
+    .sp-ads .ads-logo{text-align: start;}
+    .sp-ads .ads-logo p {
+        max-width: 100%;
+        text-align: start;
+    }
+    .sp-ads .ads-discount .ads-code-wrapper > p{font-size: 16px;}
+    .sp-ads .ads-discount .ads-code-wrapper > p span{font-size: 17px;}
+</style>
+
+
+<style>
+
+    @media screen and (max-width: 1200px){
+        .ES_ln-banner-wrapper{padding-block: 20px;max-height: none;}
+        .ES_ln-banner {flex-direction: column;}
+        .ES_ln-banner .banner-logo {text-align: center;}
+        .ES_ln-banner .banner-logo img{margin-bottom: 10px;}
+        .ES_ln-banner .banner-discount{flex-direction: column; gap: 10px;}
+        .landing-banner-space{padding-top: 250px;}
+        .ES_ln-download_app .download_content .left h3{max-width: 100%;}
+        .ES_ln-footer .copy_rights {display: inline-block; width: auto; bottom: -25px; inset-inline-end: 20px;}
+        .ES_services_cards .ES_services_card {width: 33.33%; min-width: 275px;}
+    }
+
+    @media screen and (max-width: 992px){
+        .ES_ln-download_app .download_content{flex-wrap: wrap; justify-content: center;}
+    }
+
+    @media screen and (max-width: 768px){
+        .EL_ln-intro{background-size: auto;}
+        .EL_ln-intro::after{height: 170px;}
+        .EL_ln-intro .intor_content{padding-inline: 20px;}
+        .EL_ln-intro .intor_content h1{max-width:100%;}
+        .ES_ln-download_app .download_content .left{flex-direction: column; text-align: center; gap: 20px;}
+        .ES_ln-footer .footer_right {max-width: 100%;}
+        .ES_ln-footer .footer_content {flex-direction: column; align-items: center; gap: 30px; padding-bottom: 90px;}
+        .ES_ln-footer .copy_rights {bottom: 50px; inset-inline-end: auto; height: auto;}
+        .ES_ln-header--content .header_menu {display: none;}
+        .burger_btn{display: flex;}
+        .ES_ln-header--content .menu_actions{gap: 20px;}
+        .responsive_header .ES_ln-header--content .header_menu{display: flex;}
+        .responsive_header .ES_ln-header--content{justify-content: center;}
+        .responsive_header .ES_ln-header--content .menu_actions{flex-direction: column;}
+    }
+
+    @media screen and (max-width: 600px){
+        .info_row {flex-wrap: wrap;}
+        .ES_ln-footer .footer_content {background-position: top right;}
+    }
+    @media screen and  (max-width: 570px){
+        .landing-banner-space {padding-top: 280px;}
+        .ES_ln-header--content{flex-wrap: wrap; /*justify-content: center;*/}
+    }
+
+    @media screen and (min-width: 768px){
+        .header_actions > a .mobile-text {display: none;}
+    }
+    @media screen and (max-width: 767.98px){
+        .header_actions > a .web-text {display: none;}
+        .header_actions > a span{height: 20px;}
+        .header_actions > a{padding: 12px; width: 48px; height: 48px; border-radius: 10px;}
+    }
+
+</style>
+<script>
+    (function () {
+        let burgerBtn = document.querySelector(".burger_btn");
+        let closeBtn = document.querySelector(".close_btn");
+        let resHeader = document.querySelector(".responsive_header");
+        let link = document.querySelector('.scroll-to-services');
+        let target = document.querySelector('.ES_ln-services');
+
+        burgerBtn.addEventListener("click", () => {
+            resHeader.classList.add("showSidebar");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            resHeader.classList.remove("showSidebar");
+        });
+
+        if (link && target) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    })();
+</script>

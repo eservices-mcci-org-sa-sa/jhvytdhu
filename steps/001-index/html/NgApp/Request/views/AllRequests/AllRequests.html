@@ -1,0 +1,854 @@
+﻿
+
+
+<script type="text/javascript">
+
+    function showImg(imgSrc, H, W, Caption) {
+        var newImg = window.open("", "myImg", config = "height=" + H + ",width=" + W + "")
+        newImg.document.write("<title>" + Caption + "</title>")
+        newImg.document.write("<img src='" + imgSrc + "' height='" + H + "' width='" + W + "' onclick='window.close()' style='position:absolute;left:0;top:0'>")
+        newImg.document.write("<script type='text/javascript'> document.oncontextmenu = new Function(\"return false\") </sc" + "ript>")
+        newImg.document.close()
+    }
+
+</script>
+<style>
+    .fileDownloading {
+        pointer-events: none;
+        cursor: not-allowed;
+        position: relative;
+    }
+
+        .fileDownloading:after {
+            content: "";
+            background: url(/Content/Theme/dist/img/ajax-loader.gif) no-repeat;
+            background-size: contain;
+            position: absolute;
+            top: 40%;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            width: 50px;
+            z-index: 99999;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .fileDownloading:before {
+            content: "";
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: absolute;
+            background: rgba(255,255,255,0.8);
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            z-index: 9999;
+        }
+
+
+
+
+    @media (max-width: 768px) {
+        .all-requests .custom-table {
+            padding-bottom: 105px !important;
+        }
+    }
+</style>
+
+
+<style>
+    .WSSCalenderSwitch {
+        background-color: #5c9bd1;
+        color: white;
+        height: 33px;
+        border: none;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 20px;
+        height: 34px;
+        font-family: Tahoma, Times New Roman, Arial, Simplified Arabic;
+        padding-top: 0px;
+        border: 1px solid #aaa;
+        cursor: pointer;
+        right: 0px;
+        text-align: center !important;
+    }
+
+    .customBtn {
+        border: 1px solid #dddddd;
+        background: #adb3b3 url(http://localhost:2183/Content/css/JQueryUI/images/ui-bg_flat_100_adb3b3_40x100.png) 50% 50% repeat-x;
+        font-weight: bold;
+        color: #475d5f;
+    }
+</style>
+
+
+<div class="container">
+
+    <section class="all-requests margin-bottom-30">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box">
+                    <div class="sp-main-title">
+                        <h2>بحث الطلبات</h2>
+                    </div>
+
+                    <form name="searchForm" novalidate="novalidate" role="form" autocomplete="off">
+
+
+                        <div class="sp-main-form sp-main-form-inner">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="custom-input">
+                                        <label for="service-name">نوع الطلب</label>
+                                        <ui-select ng-model="searchModel.requestType" reset-search-input="true" theme="selectize">
+                                            <ui-select-match>
+                                                <span class="selected-value" ng-bind="$select.selected.name"></span>
+                                                <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="c.id as c in RequestTypes | filter: $select.search">
+                                                <small ng-bind-html="c.name"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="custom-input">
+                                        <label for="phone-one">حالة الطلب</label>
+                                        <ui-select ng-model="searchModel.requestStatus" reset-search-input="true" theme="selectize">
+                                            <ui-select-match>
+                                                <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="c.id as c in RequestStatuses | filter: $select.search">
+                                                <small ng-bind-html="c.nameAr"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="custom-input custom-cal">
+                                        <label for="date">تاريخ من</label>
+                                        <date-control name="startDate" class="datepickgreg" onkeydown="return false;" autocomplete="off"
+                                                      placeholder="تاريخ من " mydate="searchModel.startDate" title="{{IsHijriTitle}}"></date-control>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="custom-input custom-cal">
+                                        <label for="date">تاريخ إلي</label>
+                                        <date-control name="endDate" class="datepickgreg" ng-required="true" onkeydown="return false;"
+                                                      autocomplete="off" placeholder="تاريخ إلى "
+                                                      mydate="searchModel.endDate" title="{{IsHijriTitle}}"></date-control>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="custom-input ">
+                                        <label for="date">رقم الطلب  </label>
+                                        <input type="text" ng-model="searchModel.requestId"
+                                               only-Int maxlength="20"
+                                               class="form-control" placeholder="رقم الطلب" />
+                                        <span class="info-details">
+                                            <i class="fa fa-info-circle"></i>
+                                           للبحث يرجي كتابة الرقم باللغة الإنجليزية
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="row justify-content-center text-center">
+
+                                <a ng-click="SearchAllRequest();" class="sp-main-button margin-right-10" ng-disabled="searchForm.$invalid">
+                                    <span><ion-icon name="search-outline"></ion-icon></span>
+                                    بحـث
+                                </a>
+                                <a ng-click="clearSearchModel()" class="sp-main-button sp-transparent-button margin-left-10">
+                                    <span><ion-icon name="reload-outline"></ion-icon></span>
+                                    تفريغ
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/#/NewRequest" class="sp-main-button margin-bottom-30" style="display:inline-block"><i class="fa fa-plus" aria-hidden="true"></i> اضافة طلب</a>
+        </div>
+    </div>
+
+    <section class="sp-table-section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box">
+                    <div class="sp-main-title">
+                        <h2>الطلبات</h2>
+                    </div>
+
+
+                    <!--<div class="filter-table clearfix">
+
+                    <div class="col-md-6 col-sm-12" ng-hide="page.noData || page.showLoad">
+                        <div class="table-filter-input">
+                            <label for="table-rows">عدد السجلات </label>
+                            <input ng-model="searchModel.itemsPerPage" class="form-control edited " ng-model-options="{debounce: 1000}" name="recordNumber" type="number" max="100" min="1" style="">
+                        </div>
+                    </div>
+                            </div>-->
+                    <div class="sp-main-table-holder">
+                        <div id="tblInfo" ng-class="{'fileDownloading':IsDownloading==true}" class="table-responsive custom-table wss-wallet-table white-bg p-bottom-sm">
+                            <table class="table table-hover table-centered">
+                                <thead>
+                                    <tr class="bg-blue font-white">
+                                        <th class="text-center">
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <strong># </strong>
+                                            </label>
+                                        </th>
+                                        <th ng-click="sort('RequestId')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong>رقم الطلب </strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th ng-click="sort('RequestTypeName')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong>نوع الطلب</strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestTypeName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th ng-click="sort('RequestStatus')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong>حالة الطلب  </strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestStatus'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th ng-click="sort('RequestDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong>تاريخ الطلب  </strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th ng-click="sort('ApproveRejectDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                            <strong>تاريخ اخر حالة للطلب  </strong>
+                                            <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='ApproveRejectDate'"
+                                                  ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}">
+                                            </span>
+                                        </th>
+                                        <th ng-click="sort('CreatedBy')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                            <strong>منشيء الطلب  </strong>
+                                            <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='CreatedBy'"
+                                                  ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}">
+                                            </span>
+                                        </th>
+                                        <th style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong> الخيارات </strong>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-hide="page.thereIsData">
+                                        <td ng-show="page.showLoad" colspan="9" style="text-align:center;" class="text-center" data-loading>
+                                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                        </td>
+                                        <td colspan="9" style="text-align:center;" ng-show="page.noData">
+                                            <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض </h3>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat-start="x in objects | orderBy: sortKeyTrans : reverseTrans" class="white-bg">
+                                        <td class="text-center">
+                                            <a class="icon-large" data-balloon="عرض التفاصيل" data-balloon-pos="up"
+                                               ng-if="!x.expanded && x.requestType != 55" ng-click="x.expanded = true;details(x,1);">
+                                                <i class="fa  fa-angle-down font-blue-chambray"></i>
+                                            </a>
+                                            <a class="icon-large" data-balloon="إخفاء التفاصيل" data-balloon-pos="up"
+                                               ng-if="x.expanded" ng-click="x.expanded = false">
+                                                <i class="fa  fa-angle-up font-blue-chambray"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">{{$index+1 | ngArabicNumber: true}} </td>
+                                        <td class="text-center">{{x.requestId | ngArabicNumber: true}}</td>
+                                        <td class="text-center">{{x.requestTypeName}}</td>
+                                        <td class="text-center">
+                                            <span ng-show="x.requestStatus==5">
+                                                <a class="RequestRefused" ng-click="GetRequestDataByRequestId(x,2)"><i class="fa fa-flag"></i> &nbsp;{{x.requestStatusName}}</a>
+                                            </span>
+                                            <span data-balloon="{{x.requestStatusName}}" data-balloon-pos="up"
+                                                  ng-show="x.requestStatus!=5" ng-class="{'RequestAccept':x.requestStatus == 4,'RequestPaused':x.requestStatus == 15,
+                                                  'RequestPending':x.requestStatus == 1 || x.requestStatus == 8 || x.requestStatus == 3 ,
+                                                  'RequestPendingMemberAdmin': x.requestStatus == 9 || x.requestStatus == 10,'RequestCanceled':x.requestStatus == 6}">
+                                                <i class="fa fa-flag"></i>&nbsp;
+                                                {{(x.requestStatusName.length < 15) ?  x.requestStatusName: x.requestStatusName | cut:true:15:' ...'}}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">{{x.requestDate  | date:'dd-MM-yyyy' | ngArabicNumber: true}} </td>
+                                        <td class="text-center">
+                                            <span ng-show="x.requestStatus==1 || x.requestStatus==6 ||x.requestStatus==9">
+                                                {{x.requestDate  | date:'dd-MM-yyyy'  | ngArabicNumber: true}}
+                                            </span>
+                                            <span ng-show="x.requestStatus==4 || x.requestStatus==5 || x.requestStatus==15">
+                                                {{x.approveRejectDate  | date:'dd-MM-yyyy' | ngArabicNumber: true}}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">{{x.userFullName  | cut:true:15:' ...'}} </td>
+
+                                        <td title="">
+                                            <div class="btn-group" ng-if="x.requestType != 55 || x.requestStatus ==5">
+                                                <button class="dropdown-toggle purple-intense  sp-dropdown-button" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false">
+                                                    <ion-icon name="settings-outline"></ion-icon>
+                                                </button>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li ng-if="x.requestStatus == 4 && x.requestType != 55">
+                                                        <a class="customized-btn" name="requestDetails" href="#/Print/{{x.guid}}"> تفاصيل الطلب</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus == 4 && x.requestType == 64">
+                                                        <a class="customized-btn" name="requestDetails" href="#/Request/InstrumentDetails/{{x.guid}}"> تفاصيل السند</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus==1 && x.requestStatus==9 && x.requestType != 55">
+                                                        <a class="customized-btn"
+                                                           ng-if="!x.expanded" ng-click="x.expanded = true;details(x,1);">
+                                                            عرض التفاصيل
+                                                        </a>
+                                                        <a class="customized-btn"
+                                                           ng-if="x.expanded" ng-click="x.expanded = false">
+                                                            إخفاء التفاصيل
+                                                        </a>
+                                                    </li>
+
+                                                    <li ng-if="x.movementsCount > 0 && x.requestType != 55">
+                                                        <a class="customized-btn" ng-click="GetRequestMovements(x.requestId)">  تتبع سير الطلب</a>
+                                                    </li>
+                                                    <li ng-if="( x.requestType != 55 && x.requestType != 56 && x.requestType != 64) || 
+                                                        (x.requestType == 56 && (x.requestStatus == 1 || x.requestStatus == 4))
+                                                        || (x.requestType == 64 && (x.requestStatus == 1 || x.requestStatus == 4))">
+                                                        <a class="customized-btn" ng-click="GetRequestAttachments(x.requestId,x.isAttachment)">عرض المرفقات</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus == 4 && CheckCustomPriv('PauseRequest')">
+                                                        <a class="customized-btn" ng-click="PauseRequest(x.requestId)">إيقاف الطلب</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus==5 || x.requestStatus==3 || x.requestStatus == 6 || x.requestStatus == 15">
+                                                        <a class="customized-btn" ng-click="ShowRequestRejectReason(x)">
+                                                            سبب
+                                                            {{x.requestStatus== 3 ? 'التعليق' :x.requestStatus == 5 ? 'الرفض' : x.requestStatus == 6 ?'الإلغاء' :'الإيقاف' }}
+                                                        </a>
+                                                    </li>
+                                                    <li ng-if="x.waitingMemberAdminConfirm ===1 && userInfo.globalSessionValues.CurrentMember.IsAdmin && x.requestType != 55">
+                                                        <a class="customized-btn" ng-click="confirmRequest(x)">تأكيد الطلب</a>
+                                                    </li>
+                                                    <li ng-if=" (( x.requestType != 55 && x.requestStatus !== 5) && x.requestStatus==1 || x.requestStatus==9)
+                                                    || ((x.requestStatus==1 || x.requestStatus==9 ) && userInfo.globalSessionValues.CurrentMember.IsAdmin)">
+                                                        <a class="customized-btn" ng-click="DeleteRequest(x)">الغاء الطلب</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus !== 3 && x.requestStatus !== 9
+                                                        && x.requestStatus !== 10 && x.requestStatus !== 8 && x.requestStatus !== 5
+                                                        && x.requestStatus != 1 && x.requestStatus != 6 && x.requestType != 55 && x.requestStatus != 15
+                                                        && x.isOnlyForPrint != 1 && x.requestType != 1">
+                                                        <a class="customized-btn" ng-click="FileDownload(x)">  تحميل الطلب</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus !== 3 && x.requestStatus !== 9
+                                                        && x.requestStatus !== 10 && x.requestStatus !== 8 && x.requestStatus !== 5
+                                                        && x.requestStatus != 1 && x.requestStatus != 6 && x.requestType != 55 && x.requestStatus != 15
+                                                        && x.isOnlyForPrint != 1 && x.requestType == 64">
+                                                        <a class="customized-btn" ng-click="InstrumentDownload(x)">  تحميل السند</a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus !== 3 && x.requestStatus !== 9 && x.requestStatus !== 10 && x.requestStatus != 15 &&
+                                                        x.requestStatus !== 8 &&x.requestStatus !== 5 && x.requestStatus != 1 && x.requestStatus != 6 && x.requestType != 55 && x.isOnlyForPrint != 1">
+                                                        <a class="customized-btn" ng-click="PrepareSendToMail(x)">
+                                                            إرسال لبريد إلكتروني
+                                                        </a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus === 8 && x.workFlowId && x.memberId != currentMemberId && x.requestType != 55">
+                                                        <a class="customized-btn" ng-click="PrepareAcceptOrRejectRequestWithWorkFlow(x,true)">
+                                                            موافقة
+                                                        </a>
+                                                    </li>
+                                                    <li ng-if="x.requestStatus === 8 && x.workFlowId && x.memberId != currentMemberId && x.requestType != 55">
+                                                        <a class="customized-btn" ng-click="PrepareAcceptOrRejectRequestWithWorkFlow(x,false)">
+                                                            رفض
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="x.expanded" ng-repeat-end="">
+                                        <td colspan="11" class="expand-bg font-blue-chambray">
+                                            <div>
+                                                <div ng-show="x.thereIsData">
+                                                    <ng-include src="templateUrl(x)"></ng-include>
+                                                </div>
+                                                <div ng-hide="x.thereIsData">
+                                                    <div ng-show="x.showLoad" class="text-center" data-loading>
+                                                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                                    </div>
+                                                    <div class="col-md-12" ng-show="x.noData">
+                                                        <div class="note note-danger" style="text-align:center !important">
+                                                            عفواً . لا توجـد بيانات.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot ng-hide="objects.length == 0">
+                                    <tr>
+                                        <td colspan="9">
+                                            <ul class="nav nav-pills center-nav" style="display: inline-block; float: left;">
+                                                <!--<li>
+                                                    <a href="javascript:;">
+                                                        رقم الصفحة
+                                                        <span class="badge badge-custom"> {{ searchModel.currentPage  | ngArabicNumber: true}} </span>
+                                                    </a>
+                                                </li>
+                                                <li class="active">
+                                                    <dir-pagination-controls max-size="7" pagination-id="paginateId"
+                                                                             direction-links="true"
+                                                                             boundary-links="true"
+                                                                             on-page-change="SearchAllRequest()">
+                                                    </dir-pagination-controls>
+                                                </li>-->
+                                                <li>
+                                                    <a href="javascript:;" style="cursor: auto; border:2px solid; margin-right: 10px; padding: 8px 15px">
+                                                        إجمالى السجلات
+                                                        <span class="badge badge-custom"> {{ objects[0].rowsCount | ngArabicNumber: true }} </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group pull-left wss-noprint" id="noprint">
+                                                <a href="" ng-hide="objects[0].rowsCount === objects.length" ng-click="showMore(searchModel.currentPage + 1)" class="custom-btn custom-btn-reverse btn-3">
+                                                    تحميل المزيد ..
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<modal class="send-code" title="يرجى ادخال الكود المرسل لجوالك" visible="sms.codeSent">
+    <form class="form-horizontal  text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-sm-12">
+                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="input-icon left">
+                        الرجاء إدخال كود التحقق الذي تم إرساله على الهاتف الجوال الخاص بك
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="!sms.codeSent" class="text-center" data-loading>
+                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+            </div>
+
+            <div class="col-xs-12" ng-show="sms.codeSent">
+                <div class="col-xs-12">
+                    <div class="form-group has-success">
+                        <div class="custom-input">
+                            <label for="codeToMatch">  كود التحقق</label>
+                            <input ng-required="true" ng-disabled="showSpin" restrict-input="{type: 'digitsOnly'}" ng-pattern="/^\d{4,4}$/" class="form-control"
+                                   autocomplete="off" maxlength="4" ng-model="sms.Code" name="codeToMatch" type="text">
+                        </div>
+                        <!--<p style="color: #8998AA;" ng-show="page.showSmsTime || page.smsTimer != 0">
+                            يمكنك إعادة الإرسال بعد:   {{page.smsTimer}} ثانية
+                        </p>-->
+                        <div ng-messages="verifyForm.codeToMatch.$error" ng-if="verifyForm.codeToMatch.$dirty">
+                            <p class="text-danger" ng-message="required">من فضلك ادخل رقم الكود</p>
+                            <p class="text-danger" ng-message="pattern"> فضلا ادخل ما لا يقل عن أربعة ارقام</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <button ng-click="AcceptOrRejectRequestWithWorkFlow();" ng-disabled="sms.codeToMatch === '' || verifyForm.$invalid " class="custom-btn custom-btn-reverse btn-3">
+                        <span ng-show="showSpin">
+                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                        </span>
+                        حفظ
+                    </button>
+                    <!--<button ng-click="sendCode();" ng-disabled="page.showSmsTime" class="custom-btn custom-btn-reverse btn-3">
+                        إعادة إرسال
+                    </button>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+
+            </div>
+        </div>
+    </form>
+</modal>
+
+
+
+<modal title="تتبع سير الطلب" visible="showMovementsModel">
+    <div class="light bordered">
+        <div class="portlet-body ">
+            <div class="table-scrollable">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> # </th>
+                            <th class="text-center">من</th>
+                            <th class="text-center">إلى</th>
+                            <th class="text-center">الحالة</th>
+                            <th class="text-center">التاريخ</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="RequestMovements.length <= 0">
+                            <td colspan="5" style="text-align:center;">
+                                <h3>عفواً , لا يوجد بيانات للعرض </h3>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="x in RequestMovements">
+                            <td class="text-center"> {{$index+1}} </td>
+                            <td class="text-center"> {{x.moveFrom}} </td>
+                            <td class="text-center"> {{x.moveTo}} </td>
+                            <td class="text-center">
+                                {{x.NameAr}}
+
+                                <span data-balloon="{{x.statusName}}" data-balloon-pos="up"
+                                      ng-show="x.status!=5" ng-class="{'RequestAccept':x.status == 4,'RequestPaused':x.status == 15,
+                                                  'RequestPending':x.status == 1 || x.status == 8 ,
+                                                  'RequestPendingMemberAdmin': x.status == 9,'RequestCanceled':x.status == 6}">
+                                    <i class="fa fa-flag"></i>&nbsp;
+                                    {{(x.statusName.length < 15) ?  x.statusName: x.statusName | cut:true:15:' ...'}}
+                                </span>
+
+                            </td>
+                            <td class="text-center"> {{x.date | date : "dd-MM-yyyy h:mm:ss a" }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </div>
+</modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<span us-spinner="{radius:30, width:8, length: 16}" id="Spinner" ng-show="showSpinner" spinner-key="spinner-4"></span>-->
+
+
+<style type="text/css">
+    button[data-name=resizedDataImage] {
+        position: relative;
+        overflow: hidden;
+    }
+
+        button[data-name=resizedDataImage] input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            opacity: 0;
+            font-size: 200px;
+            max-width: 100%;
+            -ms-filter: 'alpha(opacity=0)';
+            direction: ltr;
+            cursor: pointer;
+        }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $('.summernote').summernote({
+            height: 250,
+            toolbar: [
+                ['insert', ['resizedDataImage', 'link']]
+            ]
+        });
+    });
+</script>
+
+
+
+
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-searchForm: rotate(0deg);
+        }
+
+        100% {
+            -webkit-searchForm: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            searchForm: rotate(0deg);
+        }
+
+        100% {
+            searchForm: rotate(360deg);
+        }
+    }
+
+
+    .spinner {
+        margin: 100px auto;
+        width: 75px;
+        height: 70px;
+        text-align: center;
+        font-size: 31px;
+    }
+
+        .spinner > div {
+            background-color: #333;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+            -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+            animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        }
+
+        .spinner .rect2 {
+            -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s;
+        }
+
+        .spinner .rect3 {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        .spinner .rect4 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .spinner .rect5 {
+            -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s;
+        }
+
+    @-webkit-keyframes sk-stretchdelay {
+        0%, 40%, 100% {
+            -webkit-searchForm: scaleY(0.4);
+        }
+
+        20% {
+            -webkit-searchForm: scaleY(1.0);
+        }
+    }
+
+    @keyframes sk-stretchdelay {
+        0%, 40%, 100% {
+            searchForm: scaleY(0.4);
+            -webkit-searchForm: scaleY(0.4);
+        }
+
+        20% {
+            searchForm: scaleY(1.0);
+            -webkit-searchForm: scaleY(1.0);
+        }
+    }
+</style>
+
+ 
+
+<!------PopUp------>
+<modal visible="page.showAttachmentsModal" title="عرض المرفقات">
+    <div class="light bordered">
+        <div class="portlet-body ">
+            <div class="table-scrollable">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> # </th>
+                            <th class="text-center">نوع المرفق</th>
+                            <th class="text-center">اسم المرفق</th>
+                            <th class="text-center">المرفق</th>
+                            <th class="text-center"> خيارات </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="RequestAttachments.length <= 0">
+                            <td colspan="8" style="text-align:center;">
+                                <h3>عفواً , لا يوجد بيانات للعرض </h3>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="x in RequestAttachments">
+                            <td class="text-center"> {{$index+1}} </td>
+
+                            <td class="text-center">
+                                {{x.attachmentTypeName }}
+                            </td>
+                            <td class="text-center">
+                                {{x.attachmentFileName | cut:true:8:' ...'}}
+                            </td>
+
+                            <td class="text-center">
+                                <span ng-if="x.attachmentType==='application/pdf'"><img width="30" src="../../../img/pdflogo.png" /></span>
+                                <span ng-if="x.attachmentType!=='application/pdf'"><img width="30" data-ng-src="data:image/png;base64,{{x.attachmentImage}}" /> </span>
+                            </td>
+                            <td class="text-center">
+                                <a ng-click="AttachDownload(x)" download="" title="تحميل" class="btn btn-primary download" name="code" id="code">
+                                    <i class="fa fa-download"></i>
+                                </a>
+                                <a ng-click="OpenAttachmentToNewTab(x)" download="" title="عرض" class="btn btn-primary download" name="code" id="code" ng-if="x.attachmentType!=='application/pdf'">
+                                    <i class="fa fa-image"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </div>
+</modal>
+
+
+
+<modal visible="showRejectReasonModal" title="عرض السبب">
+    <div class="portlet light bordered">
+        <div class="portlet-body ">
+            <div class="row">
+                <div class="col-sm-11 col-xs-11">
+                    <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                        <div class="input-icon left">
+                          السبب :   <p class="CustomTextShow">{{rejectReason}}</p>
+                        </div>
+                        <hr />
+                        <div class="input-icon left" ng-if="isPausedRequest">
+                           تم بواسطة هوية رقم :  <p class="CustomTextShow">{{rejectReasonUser}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </div>
+</modal>
+
+
+<div class="container" id='divToSend' ng-hide="true" style="position:relative !important;">
+    <div class="row">
+        <div class="custom-member-details">
+            <div id='newprint' pdf-save-content="newprint">
+                <div id="HeadDiv" style="-webkit-print-color-adjust: exact;">
+
+                </div>
+                <div class="clearfix"></div>
+                <div ng-if="selectedRequestType != 28" class="col-xs-12 custom-note text-center" style="margin-top: 6px;">
+                    <p>صدرت هذه الوثيقة بناء علي طلب المشترك أعلاه</p>
+                </div>
+                <div class="col-xs-12 custom-member-content">
+                    <ul ng-if="selectedRequestType != 28" style="width:50%; float:right; display:block;" class="date list-unstyled">
+                        <li>التاريخ <span>&#58;</span>  {{memberData.currentDateHijri}} هـ</li>
+                        <li>{{memberData.currentDate | date:'yyyy-MM-dd'}} مـ</li>
+                    </ul>
+
+                    <ul ng-if="selectedRequestType != 28" style="float:left; display:block;" class="date list-unstyled">
+                        <li>تاريخ الطلب <span>&#58;</span>  {{RequestDataModel.requestDate | date:'yyyy-MM-dd'}} مـ</li>
+                        <li>الرقم المرجعى <span>&#58;</span>  {{RequestDataModel.requestId}} </li>
+
+                    </ul>
+                    <div class="clearfix">
+                    </div>
+
+
+                    <div id="contentDiv" style="margin-top:20px;max-height:600px;min-height:300px;overflow:hidden;">
+
+                    </div>
+                </div>
+                <div style="position:absolute; bottom:20px; width:100%;">
+                    <div id="FooterDiv" class="col-xs-12 custom-footer text-center clearfix">
+
+                    </div>
+
+                    <div id="ExtraFooter" class="col-xs-12 footer-note text-center" style="background-color:#f1f1f1 !important;-webkit-print-color-adjust: exact; text-align:right;padding:10px;line-height:25px;margin-bottom:0px; text-align:center; margin-top:0px;">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<style>
+    contentDiv {
+        margin-top: 8px !important;
+        min-height: 267px !important;
+    }
+
+    #contentDiv .footer-note {
+        padding-top: 15px !important;
+    }
+</style>
+
+
+
+

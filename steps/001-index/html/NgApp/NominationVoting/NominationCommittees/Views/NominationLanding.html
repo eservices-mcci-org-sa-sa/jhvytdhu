@@ -1,0 +1,183 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+<div class="custom-regi">
+
+    <!--START: Sector Committees || Step 1 -->
+    <div class="es-sectral-committees">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                خدمة الترشح للجان القطاعية
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <a class="sp-main-button sp-inlineflex-align-center"  ng-href="#/NominationCommittees/Candidate">
+                                    تسجيل الدخول للترشح والتصويت
+                                </a>
+                                <a class="sp-main-button sp-transparent-button sp-inlineflex-align-center" ng-href="/#/">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                ما هي خدمة الترشح للجان القطاعية
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <p class="sp-general-title text-black">
+                                تتيح هذه الخدمة للاعضاء المسجلين فرصة الاطلاع علي اللجان القطاعية المتاحة، التقديم للترشح للجان المطابقة لعضوياتهم، و المشاركة في العملية التنظيمية للجان.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                خطوات استخدام الخدمة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <ul class="sp-comm-activities-list">
+                                <li>
+                                    <h4>تسجيل الدخول</h4>
+                                    <p>قم بتسجيل الدخول للوصول الي تفاصيل اللجان المتاحة.</p>
+                                </li>
+                                <li>
+                                    <h4>استعراض اللجان المتاحة</h4>
+                                    <p>بعد الدخول يمكنك تصفح جميع اللجان ذات الصلة ، مع معرفة مواعيد الترشح و التصويت  بالاضافة الي تفاصيل الانشطة الخاصة بكل لجنة.</p>
+                                </li>
+                                <li>
+                                    <h4>تقديم طلب الترشح</h4>
+                                    <p>اختر اللجنة المناسبة لعضويتك وقدم طلب الترشح بسهولة عبر المنصة.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                خدمات اضافية لدعم تجربتك
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <ul class="sp-comm-activities-list">
+                                <li>
+                                    <h4>التحقق من حالة الطلب</h4>
+                                    <p>بعد التقديم، يمكنك متابعة حالة طلبك بشكل دوري لمعرفة آخر المستجدات.</p>
+                                </li>
+                                <li>
+                                    <h4>التصويت علي الترشيحات</h4>
+                                    <p>كن جزءا من عملية اتخاذ القرار من خلال المشاركة في التصويت لاختيار المرشحين المناسبين للجان.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .d-flex-align-center {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .d-flex-align-center-justify-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .d-flex-align-center-justify-around {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 10px;
+    }
+
+    .text-black {
+        color: black !important;
+    }
+
+    .main-content-item .sp-general-title {
+        font-size: 13px;
+        color: var(--main-color);
+        font-weight: 700;
+        line-height: 23px;
+        margin-bottom: 10px;
+    }
+
+
+    ul.sp-comm-activities-list {
+        list-style: none;
+        padding-inline-start: 20px;
+    }
+
+        ul.sp-comm-activities-list li::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            background: var(--main-color);
+            position: absolute;
+            inset-block: 0;
+            top: 3px;
+            inset-inline-start: -20px;
+        }
+
+        ul.sp-comm-activities-list li {
+            position: relative;
+            padding: 0;
+            border: 0;
+        }
+
+            ul.sp-comm-activities-list li:not(:last-child) {
+                margin-bottom: 20px;
+            }
+
+            ul.sp-comm-activities-list li h4 {
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+            ul.sp-comm-activities-list li p {
+                font-size: 12px;
+                color: #8191A6;
+            }
+</style>
+
+<!--END: Sector Committees || Step 1 -->

@@ -1,0 +1,181 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+<div class="custom-regi formverify">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            {{header}}
+                        </h2>
+                        <div class="sp-main-toolbar">
+                            <a href="#/NominationCommittees" class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <form id="documents-validate " name="authForm">
+                    <div class="sp-main-box sp-forget-box">
+                        <div class="sp-main-title">
+                            <h2 >تسجيل الدخول </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <div class="input-icon left">
+                                            <label for="identityNumber">رقم الهوية</label>
+                                            <div class="input-icon">
+                                                <input name="identityNumber" type="text" class="form-control" 
+                                                        autocomplete="off"
+                                                        id="identityNumber"
+                                                        restrict-input="{type: 'digitsOnly'}"
+                                                        ng-trim="true" numbers-Only minlength="10"
+                                                        maxlength="10" ng-pattern="/^(1|2)([0-9]{9})$/"
+                                                        ng-model="identityNumber" ng-required="true" />
+                                            </div>
+                                        </div>
+                                        <div ng-messages="authForm.identityNumber.$error" ng-if="authForm.identityNumber.$touched">
+                                            <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم الهوية</p>
+                                            <p class="text-danger error-msg" ng-message="pattern">من فضلك ادخل رقم الهوية بشكل صحيح</p>
+                                            <p class="text-danger error-msg" ng-message="minlength">من فضلك ادخل 10 ارقام</p>
+                                            <p class="text-danger error-msg" ng-message="maxlength">من فضلك ادخل 12 أرقام</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 margin-bottom-30">
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label cr_no"    >
+                                        <div vc-recaptcha
+                                            theme="'light'"
+                                            key="captcha.captchaKey"
+                                            lang="ar"
+                                            ng-model="captcha.response"
+                                            name="captchaKey"
+                                            ng-required="true"
+                                            on-create="setWidgetId(widgetId)"
+                                            on-expire="cbExpiration()">
+                                        </div>
+                                        <div ng-messages="authForm.captchaKey.$error" ng-if="authForm.captchaKey.$touched ">
+                                            <p class="text-danger error-msg" ng-message="required">من فضلك قُم بالتحديد</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12">
+                                    <button ng-click="submit(authForm)" 
+                                            type="submit" class="sp-main-button">
+                                        ارسال
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<modal class="sp-main-modal" title="يرجي إدخال الكود المرسل لجوالك" visible="showOtpModal">
+    <form class="form-horizontal text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div ng-if="isResend">
+            <div class="clearfix"></div>
+            <div class="col-md-12 margin-bottom-30" style="margin-top: 30px;">
+                <div class="form-group form-md-line-input has-success form-md-floating-label cr_no" >
+                    <div vc-recaptcha
+                        theme="'light'"
+                        key="captcha.captchaKey"
+                        lang="ar"
+                        ng-model="captcha.response"
+                        name="captchaKey"
+                        ng-required="true"
+                        on-create="setWidgetId(widgetId)"
+                        on-expire="cbExpiration()">
+                    </div>
+                    <div ng-messages="verifyForm.captchaKey.$error" ng-if="verifyForm.captchaKey.$touched ">
+                        <p class="text-danger error-msg" ng-message="required">من فضلك قُم بالتحديد</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <button ng-click="submit(verifyForm)" 
+                        type="submit" class="sp-main-button">
+                    ارسال
+                </button>
+            </div>
+        </div>
+        <div class="form-body row text-center" ng-if="!isResend">
+            <div class="sp-main-form sp-main-form-inner" ng-show="true || otp.isSent">
+                <label> ادخل كود التحقق الذى تم ارسالة على الجوال المرتبط بالهوية ابشر</label>
+                <div class="custom-input check-input-icon">
+                    <input ng-required="true" ng-disabled="showSpin" restrict-input="{type: 'digitsOnly'}" ng-pattern="/^\d{4,6}$/" class="form-control"
+                           autocomplete="off" maxlength="6" prevent-typing-greater
+                           ng-model="otp.code" name="code" type="text">
+                    <!--<ion-icon name="checkmark-circle-outline"></ion-icon>-->
+                </div>
+                <div ng-show="false" class="text-center" data-loading>
+                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                </div>
+                <div class="sp-countdown">
+                    <span>يمكنك إعادة الإرسال بعد {{otp.timer}} ثانية <a ng-click="sendCode();" ng-class="{'disabledAnchor':otp.timer > 0 || otp.showTimer}" ng-if="otp.timer == 0 || !otp.showTimer">إعادة الإرسال</a></span>
+                </div>
+
+                <div ng-messages="verifyForm.code.$error" ng-if="verifyForm.$submitted || verifyForm.code.$touched">
+                    <p class="text-danger" ng-message="required">من فضلك ادخل رقم الكود</p>
+                    <p class="text-danger" ng-message="pattern"> فضلا ادخل رقم صحيح</p>
+                </div>
+            </div>
+
+            <button type="button" class="sp-main-button lg-padding" ng-click="hideOtpModal()">
+                إغلاق
+            </button>
+        </div>
+    </form>
+</modal>
+
+<style>
+    .text-gray {
+        color: #8191A6;
+    }
+
+    .text-main-color {
+        color: var(--main-color);
+    }
+    @media screen and (min-width: 550px) {
+        .w-80-center {
+            width: 80%;
+            margin-inline: auto;
+        }
+    }
+</style>
+
+
+<!--END: Committee LOGIN -->

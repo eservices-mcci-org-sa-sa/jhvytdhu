@@ -1,0 +1,272 @@
+<!-- header start-->
+<header class="sp-header sp-header-register">
+  <div class="container h-100">
+      <div class="row align-items-center h-100">
+          <div class="col-md-12">
+              <div class="sp-outer-logo">
+                  <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+              </div>
+              <div class="sp-outer-logos">
+                  <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                  <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                  <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+              </div>
+          </div>
+      </div>
+  </div>
+</header>
+<!-- header end-->
+</br>
+
+<div class="es-sectral-committees-candidate-requests">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main-content-item sp-main-box margin-bottom-30">
+          <div class="sp-main-title d-flex-align-center-justify-between">
+            <h2> التحقق من حالات طلب الترشيح </h2>
+            <div class="sp-main-toolbar">
+              <a href="/#/NominationCommittees" class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                العودة
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="sp-main-box">
+          <div class="sp-main-title">
+            <div style="display: flex; justify-content: space-between;">
+              <h2>قائمة طلبات الترشيح - {{userFullName}}</h2>
+              <button class="sp-main-button" ng-click="refresh()">
+                إعادة تحميل
+                <ion-icon name="refresh-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="sp-main-table-holder">
+            <div class="table-responsive custom-table wss-wallet-table white-bg p-bottom-sm">
+              <table class="table table-hover table-centered">
+                <thead>
+                  <tr class="bg-blue font-white">
+                    <th class="text-center">
+                      <label>
+                        <strong>نوع الطلب</strong>
+                      </label>
+                    </th>
+                    <th class="text-center">
+                      <label>
+                        <strong>رقم الطلب</strong>
+                      </label>
+                    </th>
+                    <th class="text-center">
+                      <label>
+                        <strong>اللجنة </strong>
+                      </label>
+                    </th>
+                    <th class="text-center">
+                      <label>
+                        <strong>تاريخ التقديم</strong>
+                      </label>
+                    </th>
+                    <th class="text-center">
+                      <label>
+                        <strong>رقم العضوية المرشح عليها</strong>
+                      </label>
+                    </th>
+                    <th class="text-center">
+                      <strong>الحالة</strong>
+                    </th>
+                    <th class="text-center">
+                      <label>
+                        <strong> الخيارات </strong>
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-hide="thereIsData">
+                    <td colspan="99" style="text-align: center">
+                      <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض</h3>
+                    </td>
+                  </tr>
+                  <tr ng-repeat-start="a in applications | orderBy: sortKeyTrans : reverseTrans" ng-repeat-end=""
+                    class="white-bg">
+                      <td class="text-center">{{a.relatedRequestId ? 'طلب معاد تقديمه' : 'طلب ترشح'}}</td>
+                    <td class="text-center">{{a.nominationNumber}}</td>
+                    <td class="text-center">{{a.nominationCommittee}}</td>
+                    <td class="text-center">{{a.createdDate | date: 'yyyy-MM-dd'}}</td>
+                    <td class="text-center">{{a.memberId}}</td>
+                    <td class="text-center">
+                      <span data-balloon="{{a.nameAr}}" data-balloon-pos="up"
+                        class="{{a.nominationStatusId | statusClass: nominationStatus}}">
+                        {{a.nameAr}}
+                      </span>
+                    </td>
+                    <td title="">
+                      <!-- <div class="btn-group" ng-if="a.nominationStatusId == nominationStatus.Rejected"> -->
+                        <div class="btn-group">
+                        <button class="dropdown-toggle purple-intense sp-dropdown-button" data-toggle="dropdown"
+                          data-hover="dropdown" data-close-others="true" aria-expanded="false">
+                          <ion-icon name="settings-outline"></ion-icon>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                          <li ng-if="a.nominationStatusId == nominationStatus.Rejected" ng-click="showRejectReason(a)">
+                            <a class="customized-btn">سبب الرفض</a>
+                          </li>
+                          <li ng-if="a.isGrievanceAllowed" ng-click="AddGrievanceRequest(a)">
+                              <a class="customized-btn">إعادة تقديم الطلب</a>
+                          </li>
+                          <li ng-click="openAttachment(a)">
+                            <a class="customized-btn">مشاهدة المرفقات</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- <div ng-if="a.nominationStatusId != nominationStatus.Rejected">-</div> -->
+                    </td>
+                  </tr>
+                  <td ng-show="loading" colspan="99" style="text-align: center" class="text-center" data-loading>
+                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px" />
+                  </td>
+                </tbody>
+                <tfoot ng-hide="applications.length === 0">
+                  <tr>
+                    <td colspan="9">
+                      <ul class="nav nav-pills center-nav" style=" float: left">
+                        <li>
+                          <a style="cursor: auto; border: 2px solid; margin-right: 10px; padding: 8px 15px">
+                            إجمالى السجلات
+                            <span class="badge badge-custom">{{totalItems}} </span>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="btn-group pull-left wss-noprint" id="noprint">
+                        <a href="" ng-hide="totalItems === applications.length" ng-click="showMore(model.PageIndex + 1)"
+                          class="custom-btn custom-btn-reverse btn-3">
+                          تحميل المزيد ..
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .d-flex-align-center-justify-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+</style>
+<modal visible="showRejectModal" title="سبب الرفض">
+  <div class="portlet-body">
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <div class="form-group">
+          <p class="d-flex-align-center-justify-center">
+            <span class="icon-wrapper">
+              <ion-icon name="information-circle-outline"></ion-icon>
+            </span>
+            عذرًا، يؤسفنا بإبلاغك عن رفض {{isGrievance ? 'طلب التظلم' : 'طلب الترشيح'}}
+          </p>
+          <p class="d-flex-align-center-justify-center">{{rejectReason}}</p>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="text-center d-flex-align-center-justify-center">
+          <button type="button" ng-if="isGrievanceAllowed" title="إعادة تقديم الطلب" class="sp-main-button" ng-click="AddGrievanceRequest(application)">إعادة تقديم الطلب</button>
+        <button type="button" title="اغلاق" class="btn sp-main-button red" data-dismiss="modal">اغلاق</button>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<modal visible="showAttachmentModal" title="المرفقات">
+  <div class="portlet-body">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="es-table-attachment-list" ng-if="attachments.length > 0">
+          <li ng-repeat="a in attachments">
+            <div class="d-flex-align-center">
+              <img style="width: 20%;" ng-if="a.attachmentType.startsWith('image/')" ng-src="data:{{a.attachmentType}};base64,{{a.attachmentImage}}" alt="{{a.attachmentFileName}}" class="es-icon-wrapper table-icon" >
+              <img style="width: 20%;" ng-if="!a.attachmentType.startsWith('image/')" src="/img/pdfLogo.png" alt="PDF" class="es-icon-wrapper table-icon">
+
+              <div class="d-flex-column-align-center">
+                <p class="mb-0 bold">{{a.attachmentDesc}}</p>
+                <p class="mb-0 text-gray fs-sm">{{a.attachmentFileName}}</p>
+              </div>
+            </div>
+            <div style="display: flex">
+              <a class="btn btn-link text-blue" ng-click="selectAttachment(a)" title="مشاهدة">
+                <i class="fa fa-eye"></i>
+              </a>
+              <a class="btn btn-link text-blue" ng-click="AttachDownload(a)" download="" title="تحميل">
+                <i class="fa fa-download"></i>
+              </a>
+            </div>
+          </li>
+        </ul>
+        <div ng-if="attachments.length === 0" class="text-center">
+          <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</modal>
+<style>
+  ul.es-table-attachment-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+  }
+  .es-table-attachment-list > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    width: 85%;
+    border-radius: 8px;
+    background: rgb(231 233 235 / 10%);
+    border: 1px solid #edeff0;
+  }
+
+  table tr td ul.es-table-attachment-list > li {
+    padding: 20px !important;
+  }
+  ul.es-table-attachment-list .es-icon-wrapper.table-icon {
+    background: white;
+    border: 1px solid #cfd3d7;
+    border-radius: 8px;
+    color: #333;
+  }
+
+  ul.es-table-attachment-list .btn-link {
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+  }
+</style>
+
+<modal visible="showAttachment" class="attachment" title="المرفقات">
+  <div class="light bordered">
+    <div class="portlet-body isic-activities form">
+
+      <img style="width: 100%" ng-if="selectedAttachment.attachmentType.startsWith('image/')" ng-src="data:{{selectedAttachment.attachmentType}};base64,{{selectedAttachment.attachmentImage}}" alt="{{selectedAttachment.attachmentFileName}}"  >
+      <iframe ng-if="selectedAttachment.attachmentType === 'application/pdf'" id="pdfIframe" ng-src="{{pdfDataUrl}}" width="100%" height="900" allowfullscreen></iframe>
+
+    </div>
+  </div>
+</modal>

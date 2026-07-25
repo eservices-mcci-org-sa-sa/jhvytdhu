@@ -1,0 +1,475 @@
+﻿<div class="custom-regi formverify">
+    <div class="regi-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-8">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="col-md-6 col-xs-4">
+                    <a class="back-btn" href="/#/Login/redirectUrl=NewRequest+52">
+                        {{resources.haveaccount}}
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xs-4">
+                    <a class="back-btn" ng-click="changeLang()">
+                        {{ lang == 'en' ? 'اللغه العربية':'English'}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <link href="../../../../../Content/Theme/dist/css/candidates-styling.css" rel="stylesheet" />
+    <link href="../../../../../Content/Theme/dist/css/candidates-styling.css" rel="stylesheet" />
+    
+    <div class="jedbanner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <img src="../../../../../Content/Theme/dist/img/jc_sc_logo-01.png" />
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <ul class="jedmenu list-inline text-left clearfix">
+                        <li><a target="_blank" href="https://jc.sa/councils/">{{resources.home}}</a></li>
+                        <li><a target="_blank" href="https://jc.sa/councils/المجالس-القطاعية">{{resources.councils}} </a></li>
+                        <li><a target="_blank" href="https://jc.sa/councils/معلومات-تهمك"> {{resources.faq}}  </a></li>
+                        <li><a target="_blank" href="https://jc.sa/councils/ضوابط-الترشح"> {{resources.adjustments}}  </a></li>
+                        <li><a target="_blank" href="https://jc.sa/councils/تواصل-معنا"> {{resources.contactus}}  </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="jed-title">
+                <h1>
+                    {{resources.candidateform}} 
+                </h1>
+            </div>
+        </div>
+    </div>
+    <!--<div class="container" ng-if="!CodeVerified">
+        <form autocomplete="off" novalidate name="verifyCandidateForm">
+            
+            <div class="row">
+                <div class="form-box clearfix">
+
+                    <div class="col-md-4 col-sm-12">
+                        <label for="MemberId" class="aut-label"> رقم العضوية  </label>
+                        <input ng-model-options="{'updateOn': 'blur'}" title="رقم العضوية" ng-change="getMemberData()" type="text" ng-model="RequestModel.MemberId" ng-required="true" autocomplete="off"
+                               class="form-control" name="MemberId" maxlength="12">
+                        <div ng-messages="verifyCandidateForm.MemberId.$error" ng-if="verifyCandidateForm.MemberId.$dirty || isVerifyFormSubmitted">
+                            <p class="text-danger" ng-message="required">من فضلك ادخل رقم العضوية</p>
+                        </div> 
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <label for="IdNumber" class="aut-label"> رقم الهوية   </label>
+                        <input ng-model="RequestModel.IdentityNo" only-Int maxlength="10" title="رقم الهوية"
+                               ng-required="true" autocomplete="off" ng-pattern="/^(1|2)([0-9]{9})$/"
+                               class="form-control" name="IdentityNo" type="text">
+                        <div class="validation-alert" ng-messages="verifyCandidateForm.IdentityNo.$error" ng-if="verifyCandidateForm.IdentityNo.$dirty || isVerifyFormSubmitted">
+                            <p class="text-danger" ng-message="required">من فضلك ادخل رقم بطاقة الهوية </p>
+                            <p class="text-danger" ng-message="pattern"> فضلا ادخل رقم الهوية بشكل صحيح</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12" style="margin-top:10px;margin-bottom:10px;">
+                            <div vc-recaptcha
+                                 theme="'light'"
+                                 key="captcha.captchaKey"
+                                 lang="ar"
+                                 ng-model="captcha.captchaKey"
+                                 name="captchaKey"
+                                 ng-required="true"
+                                 on-create="setWidgetId(widgetId)"
+                                 on-success="setResponse(response)"
+                                 on-expire="cbExpiration()">
+                            </div>
+                            <div ng-messages="verifyCandidateForm.captchaKey.$error" ng-if="verifyCandidateForm.captchaKey.$dirty || isVerifyFormSubmitted">
+                                <p class="text-danger" ng-message="required">من فضلك قُم بالتحديد</p>
+                            </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="col-xs-12">
+                        <button ng-click="moveNext(verifyCandidateForm,$event);" ng-disabled="verifyCandidateForm.$invalid" class="custom-btn custom-btn-reverse btn-3">
+                            التالى
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>-->
+
+    <div class="container">
+        <form autocomplete="off" novalidate name="councilCandidateForm">
+            <div id="injectCalnder"></div>
+            <div class="row">
+                <div class="form-box clearfix">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="MemberId">{{resources.memberId}}    </label>
+                            <input ng-model-options="{'updateOn': 'blur'}" title=" {{resources.memberId}}" ng-change="getMemberData()" type="text" ng-model="RequestModel.MemberId" ng-required="true" autocomplete="off"
+                                   class="form-control" name="MemberId" maxlength="12">
+                            <div ng-messages="councilCandidateForm.MemberId.$error" ng-if="councilCandidateForm.MemberId.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required"> {{resources.memberIdrequiredMessage}}   </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12" ng-hide="RequestModel.CompanyName == null">
+                        <div class="custom-input">
+                            <label for="CompanyName">{{resources.companyname}}  </label>
+                            <input type="text" ng-model="RequestModel.CompanyName" title="{{resources.companyname}} " autocomplete="off" ng-required="true" readonly="readonly"
+                                   class="form-control  input-no-borders" name="CompanyName">
+                            <div ng-messages="councilCandidateForm.CompanyName.$error" ng-if="councilCandidateForm.CompanyName.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.companynamerequiredMessage}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="Title">{{resources.title}}   </label>
+                            <select ng-model="RequestModel.Title" title="{{resources.title}}" name="Title" ng-required="true" class="form-control">
+                                <option value="السيد">{{resources.mr}}</option>
+                                <option value="السيدة">{{resources.mrs}}</option>
+                            </select>
+                            <div ng-if="EditingMode">{{RequestModel.BirthDate}}</div>
+
+                            <div ng-messages="councilCandidateForm.Title.$error" ng-if="councilCandidateForm.Title.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required"> {{resources.titlerequiredMessage}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="FirstName">{{resources.firstname}}   </label>
+                            <input type="text" ng-class="{'input-no-borders':EditingMode}" title="{{resources.firstname}}" ng-model="RequestModel.FirstName" ng-required="true" autocomplete="off"
+                                   class="form-control" name="FirstName" />
+                            <div ng-messages="councilCandidateForm.FirstName.$error" ng-if="councilCandidateForm.FirstName.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required"> {{resources.firstnamerequiredMessage}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="LastName"> {{resources.fathername}}  </label>
+                            <input type="text" ng-class="{'input-no-borders':EditingMode}" title="{{resources.fathername}}" ng-model="RequestModel.FatherName" ng-required="true" autocomplete="off"
+                                   class="form-control" name="FatherName" />
+                            <div ng-messages="councilCandidateForm.FatherName.$error" ng-if="councilCandidateForm.FatherName.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required"> {{resources.fathernamerequiredMessage}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="FirstName"> {{resources.grandfathername}}  </label>
+                            <input type="text" ng-class="{'input-no-borders':EditingMode}" title="{{resources.grandfathername}}" ng-model="RequestModel.GrandFatherName" ng-required="true" autocomplete="off"
+                                   class="form-control" name="GrandFatherName" />
+                            <div ng-messages="councilCandidateForm.GrandFatherName.$error" ng-if="councilCandidateForm.GrandFatherName.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.grandfathernamerequiredMessage}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="LastName">{{resources.familyName}}  </label>
+                            <input type="text" ng-class="{'input-no-borders':EditingMode}" title="{{resources.familyName}}" ng-model="RequestModel.FamilyName" ng-required="true" autocomplete="off"
+                                   class="form-control" name="FamilyName" />
+                            <div ng-messages="councilCandidateForm.FamilyName.$error" ng-if="councilCandidateForm.FamilyName.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.familyNamerequiredMessage}}  </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="Date"> {{resources.birthdate}}      </label>
+                            <input type="text" class="datepick form-control WSSCalender" title="{{resources.birthdate}} " name="BirthDate" ng-required="true" autocomplete="off"
+                                   placeholder="{{resources.choosedate}}" ng-model="RequestModel.BirthDate" />
+                            <div ng-if="EditingMode">{{RequestModel.BirthDate  | date: 'dd-MM-yyyy'}}</div>
+                            <div ng-if="(RequestModel.BirthDate =='' || RequestModel.BirthDate =='undefined' || RequestModel.BirthDate == null )&& isFormSubmitted">
+                                <p class="text-danger">{{resources.birthdaterequiredMessage}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label>{{resources.facilityrelation}}</label>
+                            <ui-select ng-model="RequestModel.MemberRelationTypeId" title="{{resources.facilityrelation}}" reset-search-input="true" theme="selectize" name="MemberRelationTypeId" ng-required="true">
+                                <ui-select-match>
+                                    <span class="selected-value" ng-bind="lang == 'en'?$select.selected.nameEn:$select.selected.nameAr"></span>
+                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                </ui-select-match>
+                                <ui-select-choices repeat="c.id as c in MemberRelationType | filter: $select.search">
+                                    <small ng-bind-html="lang == 'en'?c.nameEn:c.nameAr"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div ng-messages="councilCandidateForm.MemberRelationTypeId.$error" ng-if="councilCandidateForm.MemberRelationTypeId.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.facilityrelationrequiredMessage}}     </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label> <span></span>{{resources.qualification}} </label>
+                            <ui-select ng-model="RequestModel.QualificationTypeId" title="{{resources.qualification}}" reset-search-input="true" theme="selectize" name="QualificationTypeId" ng-required="true">
+                                <ui-select-match>
+                                    <span class="selected-value" ng-bind="lang == 'en'?$select.selected.nameEn:$select.selected.nameAr"></span>
+                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                </ui-select-match>
+                                <ui-select-choices repeat="c.id as c in Qualifications | filter: $select.search">
+                                    <small ng-bind-html="lang == 'en'?c.nameEn:c.nameAr"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="notify-note" ng-if="RequestModel.QualificationTypeId === 4 || RequestModel.QualificationTypeId === 5 || RequestModel.QualificationTypeId === 6">
+                                <i class="fa fa-info-circle"></i>
+                                
+                                {{resources.qualificationNoteMessage}}
+                            </span>
+                            <div ng-messages="councilCandidateForm.QualificationTypeId.$error" ng-if="councilCandidateForm.QualificationTypeId.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.qualificationrequiredMessage}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="LastName">{{resources.education}}   </label>
+                            <input type="text" ng-model="RequestModel.SpecializedEducationalQualification" title="  {{resources.education}}" ng-required="true" autocomplete="off"
+                                   class="form-control" name="SpecializedEducationalQualification">
+                            <div ng-messages="councilCandidateForm.SpecializedEducationalQualification.$error" ng-if="councilCandidateForm.SpecializedEducationalQualification.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required"> {{resources.educationrequiredMessage}}  </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="Mobile">{{resources.mobile}}  </label>
+                            <input ng-class="{'input-no-borders':EditingMode}" title="{{resources.mobilerequiredMessage}}  " only-Int ng-model="RequestModel.MobileNumber" ng-pattern="/^(05)([0-9]{8})$/"
+                                   maxlength="10" autocomplete="off"
+                                   class="form-control" name="MobileNumber" type="text" ng-required="true">
+                            <div ng-messages="councilCandidateForm.MobileNumber.$error" ng-if="councilCandidateForm.MobileNumber.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.mobilerequiredMessage}}   </p>
+                                <p class="text-danger" ng-message="pattern">
+                                    {{resources.mobilevalidationMessage}}   
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="IdNumber" class="aut-label">{{resources.identity}}  </label>
+                        <input ng-disabled="RequestModel.MemberId == null" ng-class="{'input-no-borders':EditingMode}" ng-model="RequestModel.IdNumber" only-Int maxlength="10" title="رقم الهوية"
+                               ng-required="true" autocomplete="off" ng-pattern="/^(1|2)([0-9]{9})$/" ng-change="CheckCanAddCommittee();"
+                               class="form-control" name="IdNumber" type="text">
+                        <div class="validation-alert" ng-messages="councilCandidateForm.IdNumber.$error" ng-if="councilCandidateForm.IdNumber.$dirty || isFormSubmitted">
+                            <p class="text-danger" ng-message="required"> {{resources.identityrequiredMessage}}ة </p>
+                            <p class="text-danger" ng-message="pattern">{{resources.identityvalidationMessage}}   </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="Date">{{resources.idNumberExpireDate}}     </label>
+                            <input type="text" class="datepick form-control WSSCalender" title="{{resources.idNumberExpireDate}}" name="IdNumberExpireDate" ng-required="true" autocomplete="off"
+                                   placeholder="{{resources.choosedate}}  " ng-model="RequestModel.IdNumberExpireDate" />
+                            <div ng-if="EditingMode">{{RequestModel.IdNumberExpireDate  | date: 'dd-MM-yyyy'}}</div>
+                            <div ng-if="(RequestModel.IdNumberExpireDate =='' || RequestModel.IdNumberExpireDate =='undefined'  || RequestModel.IdNumberExpireDate == null )&& isFormSubmitted">
+                                <p class="text-danger">  {{resources.idNumberExpireDaterequiredMessage}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label for="Email">{{resources.email}}  </label>
+                            <input ng-class="{'input-no-borders':EditingMode}" title=" {{resources.email}}" type="email" required ng-model="RequestModel.Email" autocomplete="off"
+                                   class="form-control" name="Email" id="phone-one">
+                            <div ng-messages="councilCandidateForm.Email.$error" ng-if="councilCandidateForm.Email.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required">{{resources.emailrequiredMessage}}</p>
+                                <p class="text-danger" ng-message="email">{{resources.emailvalidationMessage}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12">
+                        <div class="custom-title">
+                            <h4>
+                                <i class="icon-menu font-blue"></i>
+                                {{resources.council}}     
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-input">
+                            <label> {{resources.choosecouncil}}</label>
+                            <ui-select ng-model="RequestModel.SectoralCouncilId" title="{{resources.council}}" reset-search-input="true" theme="selectize" name="SectoralCouncilId" ng-required="true">
+                                <ui-select-match>
+                                    <span class="selected-value" ng-bind="lang == 'en'?$select.selected.nameEn:$select.selected.nameAr"></span>
+                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                </ui-select-match>
+                                <ui-select-choices repeat="c.id as c in SectoralCouncils | filter: { isActive: true , nameAr : $select.search}">
+                                    <small ng-bind-html="lang == 'en'?c.nameEn:c.nameAr"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div ng-messages="councilCandidateForm.SectoralCouncilId.$error" ng-if="councilCandidateForm.SectoralCouncilId.$dirty || isFormSubmitted">
+                                <p class="text-danger" ng-message="required"> {{resources.councilrequiredMessage}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!--<div class="col-xs-12">
+        <div class="custom-title">
+            <h4>
+                <i class="icon-menu font-blue"></i>
+                البرنامج
+            </h4>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <label for="notes" class="aut-label">ما هو برنامجك الذي ترغب في تحقيقه عند انضمامك للمجلس القطاعى :</label>
+        <table class="table table-bordered table-hover table-centered">
+            <thead>
+                <tr class="bg-blue font-white">
+                    <th>م</th>
+                    <th>البرامج المتاحة</th>
+                    <th>إختر</th>
+                    <th>أكتب نبذه عن الخطة المتبعه لتحقيق البرنامج</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="type in LKUP_RequestsFormsReasons  | filter: {requestType : 52 }:true track by $index">
+                    <td style="width: 5% !important;">
+                        {{$index+1}}
+                    </td>
+                    <td>{{type.name}}</td>
+                    <td style="width: 5% !important;"><input type="checkbox" ng-disabled="checkDisable(type)" ng-checked="type.isPinned ? true : type.isChecked" data-ng-model="type.isChecked" id="chex{{$index+1}}" value="{{type.name}}"></td>
+                    <td>
+                        <textarea style="width: 90% !important;" ng-model="type.Note" ng-required="type.isChecked"
+                                  autocomplete="off" title="'نبذه عن '{{type.name}}" rows="3" class="input-large" name="programs{{type.id}}" type="text" ng-disabled="!type.isChecked"></textarea>
+                        <span class="jed-file-required" ng-show="!councilCandidateForm['programs'+type.id].$valid || (isFormSubmitted && type.isChecked && councilCandidateForm['programs'+type.id].$invalid)"><i class="fa fa-asterisk"></i></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+                    <div class="col-xs-12">
+                        <div class="custom-title">
+                            <h4>
+                                <i class="icon-menu font-blue"></i>
+                                {{resources.attachments}}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 col-sm-12">
+                        <ul class="jed-file-attatchment">
+                            <li ng-repeat="attachment in AttachmentTypes track by $index" ng-if="!attachment.Uploaded && !attachment.Hide">
+                                <h2>
+                                    {{lang == 'en' ? attachment.NameEn:attachment.Name}}
+                                    <span class="jed-file-required" ng-show="!councilCandidateForm['files'+attachment.Id].$valid || (isFormSubmitted && attachment.IsRequired) "><i class="fa fa-asterisk"></i></span>
+                                </h2>
+                                <input valid-file ng-model="attachment.File" title="{{attachment.Name}}" ng-required="attachment.IsRequired" type="file" id="files{{attachment.Id}}" name="files{{attachment.Id}}"
+                                       onchange="angular.element(this).scope().selectFile(this.files, angular.element(this).scope().attachment.Id , angular.element(this).scope().attachment.Name)" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <table class="table table-bordered table-hover table-centered files-table" ng-show="imagesList.length">
+                            <thead>
+                                <tr class="bg-blue font-white">
+                                    <th>#</th>
+                                    <th>{{resources.name}}</th>
+                                    <th>{{resources.type}}</th>
+                                    <th>{{resources.file}}</th>
+                                    <th>{{resources.options}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fl in imagesList">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{fl.Name | cut:true:20:' ...'}}</td>
+                                    <td>{{fl.AttachmentTypeName}}</td>
+                                    <td><img class="imageThumb" ng-src="{{fl.Type=='application/pdf'?'../../../Content/Theme/dist/img/pdflogo.png': fl.Src}}" title={{fl.Name}}></td>
+                                    <td><button ng-click="removeImg(fl);" type='button' class="remove">{{resources.delete}}</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="col-md-12 col-sm-12 custom-agremment-check">
+                        <label><input type="checkbox" class="col-sm-1" title="{{resources.saveConfirm}}" name="agree" data-ng-model="RequestModel.IsChecked" ng-required="true" /> <span> {{resources.saveNote}} </span></label>
+                        <div ng-messages="councilCandidateForm.agree.$error " ng-if="councilCandidateForm.agree.$touched  || isFormSubmitted">
+                            <p class="text-danger" ng-message="required"> {{resources.saveConfirmrequiredMessage}}</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="col-md-4 col-sm-12" style="margin-top:10px;margin-bottom:10px;">
+                        <div vc-recaptcha
+                             theme="'light'"
+                             key="captcha.captchaKey"
+                             lang="ar"
+                             ng-model="captcha.captchaKey"
+                             name="captchaKey"
+                             ng-required="true"
+                             on-create="setWidgetId(widgetId)"
+                             on-success="setResponse(response)"
+                             on-expire="cbExpiration()">
+                        </div>
+                        <div ng-messages="councilCandidateForm.captchaKey.$error" ng-if="councilCandidateForm.captchaKey.$dirty || isFormSubmitted">
+                            <p class="text-danger" ng-message="required">{{resources.saveConfirmrequiredMessage}}</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="col-md-12 col-sm-12" ng-click="showCommitteeAlert()">
+                        <div class="btn-unlink btn btn-danger">
+                            <i class="fa fa-plus"></i>
+                            {{resources.anothecouncile}}
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="col-md-12 col-sm-12" ng-if="isFormSubmitted">
+                        <ul>
+                            <li style="color: red;" ng-repeat="(key, errors) in councilCandidateForm.$error track by $index">
+                                <span ng-if="$first"> {{resources.validateionerrors}}   </span>
+                                <ul>
+                                    <li ng-repeat="e in errors">
+                                        <span ng-if="key==='required'"> {{ councilCandidateForm.$error.required[$index].$$attr.title}} <strong>{{ key ==='required'? (lang == 'en'? 'required ':'مطلوب') :'' }}</strong>.</span>
+                                        <span ng-if="key==='email' "> {{ councilCandidateForm.$error.email[$index].$$attr.title}} <strong>{{ key ==='email'? (lang == 'en'? 'required ':'بشكل صحيح') :'' }}</strong>.</span>
+                                        <span ng-if="key==='pattern' "> {{ councilCandidateForm.$error.pattern[$index].$$attr.title}} <strong>{{key==='pattern'?(lang == 'en'? 'required ':'بشكل صحيح'):'' }}</strong>.</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 col-sm-12">
+                        <button class="custom-btn custom-btn-reverse btn-3"
+                                name="next" style="margin-top:10px;" type="button" ng-click="save(councilCandidateForm,$event)">
+                            <i class="fa fa-floppy-o"></i> {{resources.save}}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+    <div class="jedfooter">
+        <div class="first-col"><p> {{resources.rightsreserved}}   {{chamberSettings.chamberName}} </p></div>
+        <div class="second-col"><p class="text-left"> {{resources.developedby}}  <a href="https://worldofss.com/" target="_blank"> {{resources.worldofss}} </a>  </p></div>
+    </div>
+</div>
+

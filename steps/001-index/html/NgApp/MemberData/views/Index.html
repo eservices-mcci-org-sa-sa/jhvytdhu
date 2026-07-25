@@ -1,0 +1,551 @@
+﻿<div ng-show="page.thereIsData" id="home" class="sp-member-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sp-member-id-data">
+                    <!--Member List ID-->
+                    <div class="sp-services">
+                        <div class="sp-main-title">
+                            <h2>بيانات العضوية</h2>
+                        </div>
+                        <div class="sp-services-list">
+                            <div class="sp-member-id-data-box clearfix">
+                                <h2> {{memberData.estName}} </h2>
+                                <span class="co-type" ng-hide="!memberData.businessTypeAr"> {{memberData.businessTypeAr}} </span>
+                                <div class="sp-member-id-controls">
+                                    <a class="sp-back-btn" ng-show="!page.showEditFields && userInfo.globalSessionValues.CurrentMember.IsAdmin == true " ng-click="page.showEditFields=!page.showEditFields"> <i class="fa fa-pencil"></i> تعديل </a>
+                                    <a class="sp-back-btn" ng-show="page.showEditFields" ng-click="page.showEditFields=!page.showEditFields"> إلغاء </a>
+                                    <a class="sp-back-btn" ng-show="page.showEditFields" ng-click="EditMemberData();page.showEditFields=!page.showEditFields;"> حفظ <i class="fa fa-check"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="sp-member-id-list">
+                                <p>{{memberData.mainActivity}}</p>
+
+                                <ul>
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="location-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>العنوان</p>
+                                            <b>
+                                                {{memberData.street}}
+                                                <span style="background: none; color: white;" ng-if="memberData.street !== null && memberData.street !== ''">,</span>
+                                                {{memberData.address}}
+                                                <span style="background: none; color: white;" ng-if="memberData.address !== null && memberData.address !== ''">,</span>
+                                                {{memberData.cityName}}
+                                            </b>
+
+                                            <div class="row">
+                                                <div class="col-md-12" ng-show="page.showEditFields">
+                                                    <input type="text" class="form-control input" placeholder="العنوان" ng-model="editMemberModel.address" />
+                                                </div>
+                                                <div class="col-md-12" ng-show="page.showEditFields">
+                                                    <input type="text" class="form-control input" placeholder="الشارع" ng-model="editMemberModel.street" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="location-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>رقم العضوية</p>
+                                            <b class="sp-number" id="memberIdCopy" ng-if="memberData.memberId !=null && memberData.memberId !=''">{{memberData.memberId | ngArabicNumber: true}}</b>
+                                            <b ng-if="memberData.memberId ==null || memberData.memberId==''">لا يـوجد</b>
+                                            <button class="sp-copy" ng-if="memberData.memberId !=null && memberData.memberId !=''"
+                                                    ngclipboard data-clipboard-target="#memberIdCopy">
+                                                <img src="../../../Content/Theme/img/export.svg" />
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="location-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>الرقم الموحد(700) </p>
+                                            <b class="sp-number" id="mM_UnifiedNumberCopy"
+                                               ng-if="memberData.mM_UnifiedNumber !=null && memberData.mM_UnifiedNumber !=''">
+                                                {{memberData.mM_UnifiedNumber | ngArabicNumber: true}}
+                                            </b>
+                                            <b ng-if="memberData.mM_UnifiedNumber ==null || memberData.mM_UnifiedNumber==''">لا يـوجد</b>
+                                            <button class="sp-copy" ng-if="memberData.mM_UnifiedNumber !=null && memberData.mM_UnifiedNumber !=''"
+                                                    ngclipboard data-clipboard-target="#mM_UnifiedNumberCopy">
+                                                <img src="../../../Content/Theme/img/export.svg" />
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="location-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>رقم السجل</p>
+                                            <b class="sp-number" ng-if="memberData.crNumber !=null && memberData.crNumber !=''" id="crNumberCopy"> {{memberData.crNumber | ngArabicNumber: true}} </b>
+                                            <b ng-if="memberData.crNumber ==null || memberData.crNumber==''">لا يـوجد</b>
+                                            <button class="sp-copy" ng-if="memberData.crNumber !=null && memberData.crNumber !=''"
+                                                    ngclipboard data-clipboard-target="#crNumberCopy">
+                                                <img src="../../../Content/Theme/img/export.svg" />
+                                            </button>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p> تاريخ الإشتراك </p>
+                                            <b class="sp-number" id="subscriptionDateCopy" ng-if="memberData.subscriptionDate !=null && memberData.subscriptionDate !=''">{{memberData.subscriptionDate | cmdate:'dd-MM-yyyy' | ngArabicNumber: true}}</b>
+                                            <b ng-if="memberData.subscriptionDate ==null || memberData.subscriptionDate==''">لا يـوجد</b>
+                                            <button class="sp-copy" ng-if="memberData.subscriptionDate !=null && memberData.subscriptionDate !=''"
+                                                    ngclipboard data-clipboard-target="#subscriptionDateCopy">
+                                                <img src="../../../Content/Theme/img/export.svg" />
+                                            </button>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>تاريخ إصدار السجل</p>
+                                            <b class="sp-number" ng-if="memberData.crIssueDate !=null && memberData.crIssueDate !=''">{{memberData.crIssueDate | cmdate:'dd-MM-yyyy' | ngArabicNumber: true}}</b>
+                                            <b ng-if="memberData.crIssueDate ==null || memberData.crIssueDate==''"> لا يـوجد</b>
+                                        </div>
+                                    </li>
+
+                                    <li style="display: flex; align-items: center; gap: 10px; justify-content: space-between;">
+                                        <span>
+                                            <span class="sb-list-icon">
+                                                <ion-icon name="calendar-outline"></ion-icon>
+                                            </span>
+                                            <div class="sb-list-details">
+                                                <p> تاريخ نهاية الإشتراك  </p>
+                                                <b class="sp-number" ng-if="memberData.expiryDate !=null && memberData.expiryDate !=''"> {{memberData.expiryDate | cmdate:'dd-MM-yyyy' | ngArabicNumber: true}} </b>
+                                                <b ng-if="memberData.expiryDate ==null || memberData.expiryDate==''">لا يـوجد</b>
+                                            </div>
+                                        </span>
+
+                                        <a class="sp-main-button" name="تجديد" target="_blank" href="https://e2.business.sa/">
+                                            تجديد
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p> تاريخ نهاية السجل </p>
+                                            <b class="sp-number" ng-if="memberData.crExpiryDate !=null && memberData.crExpiryDate !=''"> {{memberData.crExpiryDate | cmdate:'dd-MM-yyyy' | ngArabicNumber: true}} </b>
+                                            <b ng-if="memberData.crExpiryDate ==null || memberData.crExpiryDate==''">لا يـوجد</b>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="document-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>الدرجة </p>
+                                            <b ng-if="memberData.degreeName !=null && memberData.degreeName !=''">{{memberData.degreeName}}</b>
+                                            <b ng-if="memberData.degreeName ==null || memberData.degreeName==''">لا يـوجد</b>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="document-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>حالة السجل</p>
+                                            <b ng-if="memberData.crStatus !=null && memberData.crStatus !=''">{{memberData.crStatus}}</b>
+                                            <b ng-if="memberData.crStatus ==null || memberData.crStatus==''">لا يـوجد</b>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="sb-list-icon">
+                                            <ion-icon name="document-outline"></ion-icon>
+                                        </span>
+                                        <div class="sb-list-details">
+                                            <p>تجديد السجل</p>
+                                            <b>
+                                                <a href="https://efile.mci.gov.sa/account/login?client_id=47F5E9E6-2C8C-497F-8D76-9CA8A639C689&returnUrl=/Land/Index" class="link-item" target="_blank">
+                                                    اضغط هنا
+                                                </a>
+                                            </b>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div style="margin-top:20px">
+                        <a class="sp-main-button w-100" target="_blank" href="/#/Contact">
+                            تحديث البيانات
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="sp-services">
+                    <div class="sp-main-title">
+                        <h2>بيانات التواصل</h2>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="sp-member-data">
+                            <div class="row">
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="mail-outline"></ion-icon></span>
+                                        <h2>رقم بريد الوحدة</h2>
+                                        <p ng-show="!page.showEditFields">{{memberData.wasselUnitNum}}</p>
+                                        <p ng-if="!page.showEditFields && memberData.wasselUnitNum==null || memberData.wasselUnitNum=='' ">لا يـوجد</p>
+
+                                        <div ng-show="page.showEditFields">
+                                            <input class="form-control input" numbers-Only type="text" ng-model="editMemberModel.wasselUnitNum" ng-show="page.showEditFields" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="mail-outline"></ion-icon></span>
+                                        <h2>رقم بريد اساسي</h2>
+                                        <p ng-show="!page.showEditFields">{{memberData.wasselBasicNum}}</p>
+                                        <p ng-if="!page.showEditFields && memberData.wasselBasicNum==null || memberData.wasselBasicNum=='' ">لا يـوجد</p>
+
+                                        <div ng-show="page.showEditFields">
+                                            <input class="form-control input" numbers-Only type="text" ng-model="editMemberModel.wasselBasicNum" ng-show="page.showEditFields" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="mail-outline"></ion-icon></span>
+                                        <h2>رقم بريد اضافى</h2>
+                                        <p ng-show="!page.showEditFields">{{memberData.wasselAdditionalNum}}</p>
+                                        <p ng-if="!page.showEditFields && memberData.wasselAdditionalNum==null || memberData.wasselAdditionalNum=='' ">لا يـوجد</p>
+                                        <div ng-show="page.showEditFields">
+                                            <input class="form-control input" numbers-Only type="text" ng-model="editMemberModel.wasselAdditionalNum" ng-show="page.showEditFields" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="call-outline"></ion-icon></span>
+                                        <h2>رقم الهاتف</h2>
+                                        <p ng-show="!page.showEditFields">{{memberData.phone == 0 ? 'لا يوجد': memberData.phone |  ngArabicNumber: true}}</p>
+                                        <input class="form-control input" numbers-Only maxlength="10" type="text" ng-model="editMemberModel.phone" ng-show="page.showEditFields" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="call-outline"></ion-icon></span>
+                                        <h2>رقم الهاتف اخر</h2>
+
+                                        <p ng-show="!page.showEditFields">{{memberData.phone2 | ngArabicNumber: true}}</p>
+                                        <p ng-if="!page.showEditFields && (memberData.phone2==null || memberData.phone2=='')">لا يـوجد</p>
+
+                                        <div ng-show="page.showEditFields">
+                                            <input class="form-control input" numbers-Only type="text" ng-model="editMemberModel.phone2" ng-show="page.showEditFields" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="call-outline"></ion-icon></span>
+                                        <h2>رقم الفاكس</h2>
+                                        <p ng-show="!page.showEditFields">{{memberData.fax | ngArabicNumber: true}}</p>
+                                        <p ng-if="!page.showEditFields && (memberData.fax==null || memberData.fax=='')">لا يوجد</p>
+                                        <input class="form-control input" numbers-Only maxlength="10" type="text" ng-model="editMemberModel.fax" ng-show="page.showEditFields" />
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="phone-portrait-outline"></ion-icon></span>
+                                        <h2>رقم الجوال</h2>
+                                        <p ng-if="memberData.mobile !=null &&memberData.mobile !='' ">{{memberData.mobile | ngArabicNumber: true}}</p>
+                                        <p ng-if="memberData.mobile==null || memberData.mobile=='' ">لا يـوجد</p>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="phone-portrait-outline"></ion-icon></span>
+                                        <h2>جوال اخر</h2>
+                                        <p ng-show="!page.showEditFields">{{memberData.otherMobile}}</p>
+                                        <p ng-if="!page.showEditFields && (memberData.otherMobile==null || memberData.otherMobile=='') ">لا يـوجد</p>
+
+                                        <div ng-show="page.showEditFields">
+                                            <input class="form-control input" numbers-Only type="text" ng-model="editMemberModel.otherMobile" ng-show="page.showEditFields" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="phone-portrait-outline"></ion-icon></span>
+                                        <h2>رقم 700</h2>
+                                        <p ng-if="memberData.mM_UnifiedNumber !=null &&memberData.mM_UnifiedNumber !='' ">{{memberData.mM_UnifiedNumber | ngArabicNumber: true}}</p>
+                                        <p ng-if="memberData.mM_UnifiedNumber==null || memberData.mM_UnifiedNumber=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="sp-services">
+                    <div class="sp-main-title">
+                        <h2> رأس المال </h2>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="sp-member-data">
+                            <div class="row">
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="home-outline"></ion-icon></span>
+                                        <h2>  رأس المال المصرح به</h2>
+                                        <p ng-if="memberData.mM_AnnouncedCapital !=null &&memberData.mM_AnnouncedCapital !='' ">{{memberData.mM_AnnouncedCapital | ngArabicNumber: true}}</p>
+                                        <p ng-if="memberData.mM_AnnouncedCapital==null || memberData.mM_AnnouncedCapital=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="cash-outline"></ion-icon></span>
+                                        <h2>رأس المال المدفوع  </h2>
+                                        <p ng-if="memberData.mM_PaidCapital !=null &&memberData.mM_PaidCapital !='' ">{{memberData.mM_PaidCapital}}</p>
+                                        <p ng-if="memberData.mM_PaidCapital==null || memberData.mM_PaidCapital=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="card-outline"></ion-icon></span>
+                                        <h2>نسبة رأس المال الوطني</h2>
+                                        <p ng-if="memberData.mM_RateNationalCapital !=null &&memberData.mM_RateNationalCapital !='' ">{{memberData.mM_RateNationalCapital}}</p>
+                                        <p ng-if="memberData.mM_RateNationalCapital==null || memberData.mM_RateNationalCapital=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="cash-outline"></ion-icon></span>
+                                        <h2>  نسبة رأس المال الأجنبي</h2>
+                                        <p ng-if="memberData.mM_RateForeignCapital !=null &&memberData.mM_RateForeignCapital !='' ">{{memberData.mM_RateForeignCapital}}</p>
+                                        <p ng-if="memberData.mM_RateForeignCapital==null || memberData.mM_RateForeignCapital=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="sp-services">
+                    <div class="sp-main-title">
+                        <h2> العاملين </h2>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="sp-member-data">
+                            <div class="row">
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="people-outline"></ion-icon></span>
+                                        <h2> عدد العاملين من الذكور السعوديون</h2>
+                                        <p ng-if="memberData.mM_NumMaleSaudi !=null &&memberData.mM_NumMaleSaudi !='' ">{{memberData.mM_NumMaleSaudi}}</p>
+                                        <p ng-if="memberData.mM_NumMaleSaudi==null || memberData.mM_NumMaleSaudi=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-4 col-xs-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="woman-outline"></ion-icon></span>
+                                        <h2>عدد العاملين من الاناث السعوديات  </h2>
+                                        <p ng-if="memberData.mM_NumFemaleSaudi !=null &&memberData.mM_NumFemaleSaudi !='' ">{{memberData.mM_NumFemaleSaudi}}</p>
+                                        <p ng-if="memberData.mM_NumFemaleSaudi==null || memberData.mM_NumFemaleSaudi=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 col-xs-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="people-outline"></ion-icon></span>
+                                        <h2>عدد العاملين من الذكور غير السعوديون</h2>
+                                        <p ng-if="memberData.mM_NumMaleNonSaudi !=null &&memberData.mM_NumMaleNonSaudi !='' ">{{memberData.mM_NumMaleNonSaudi}}</p>
+                                        <p ng-if="memberData.mM_NumMaleNonSaudi==null || memberData.mM_NumMaleNonSaudi=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-4 col-xs-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="woman-outline"></ion-icon></span>
+                                        <h2>  عدد العاملين من الاناث غير السعوديات</h2>
+                                        <p ng-if="memberData.mM_NumFemaleNonSaudi !=null &&memberData.mM_NumFemaleNonSaudi !='' ">{{memberData.mM_NumFemaleNonSaudi | ngArabicNumber: true}}</p>
+                                        <p ng-if="memberData.mM_NumFemaleNonSaudi==null || memberData.mM_NumFemaleNonSaudi=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="sp-services">
+                    <div class="sp-main-title">
+                        <h2> بيانات اخري </h2>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="sp-member-data">
+                            <div class="row">
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="language-outline"></ion-icon></span>
+                                        <h2>اسم المنشأة بالإنجليزية</h2>
+                                        <p>{{memberData.estNameEn}}</p>
+                                        <p ng-if="!memberData.estNameEn"> لا يوجد </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="business-outline"></ion-icon></span>
+                                        <h2> عدد فروع المنشأة</h2>
+                                        <p class="sp-number" ng-show="!page.showEditFields">{{memberData.mM_NumberofBranches}}</p>
+                                        <p ng-if="!page.showEditFields && memberData.mM_NumberofBranches==null || memberData.mM_NumberofBranches=='' ">لا يـوجد</p>
+                                        <div ng-show="page.showEditFields">
+                                            <input class="form-control input" numbers-Only type="text" ng-model="editMemberModel.mM_NumberofBranches" ng-show="page.showEditFields" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="bar-chart-outline"></ion-icon></span>
+                                        <h2>عدد الأسهم المرخصة</h2>
+                                        <p class="sp-number" ng-if="memberData.mM_AllowedShares !=null &&memberData.mM_AllowedShares !='' ">{{memberData.mM_AllowedShares}}</p>
+                                        <p ng-if="memberData.mM_AllowedShares==null || memberData.mM_AllowedShares=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-member-data-box">
+                                        <span><ion-icon name="folder-outline"></ion-icon></span>
+                                        <h2>مصدر السجل</h2>
+                                        <p class="sp-number" ng-if="memberData.mM_CRSource !=null &&memberData.mM_CRSource !='' ">{{memberData.mM_CRSource}}</p>
+                                        <p ng-if="memberData.mM_CRSource==null || memberData.mM_CRSource=='' ">لا يـوجد</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="sp-services">
+                    <div class="sp-main-title">
+                        <h2> بيانات الملاك والمدراء </h2>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="sp-member-data">
+                            <div class="row">
+
+                                <div class="col-md-12 col-sm-12">
+                                    <div ng-init="Init();">
+                                        <div ng-include="'NgApp/MemberData/Views/Partials/MemberCard.html'"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="sp-services" ng-hide="page.thereIsData">
+                    <div class="sp-main-title">
+                        <h2> عفواً </h2>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="sp-member-data">
+                            <div class="row">
+
+                                <div class="col-md-12 col-sm-12">
+                                    <div ng-show="page.showLoad" class="text-center" data-loading>
+                                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                    </div>
+                                    <div class="col-md-12" ng-show="page.noData">
+                                        <div class="note note-danger" style="text-align:center !important">
+                                            عفواً . لا توجـد بيانات.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .cloading {
+        background-image: url('Content/Theme/dist/img/ajax-loader.gif');
+        background-repeat: no-repeat;
+        text-align: center;
+    }
+
+    elem {
+        width: 100%;
+        width: -moz-available; /* WebKit-based browsers will ignore this. */
+        width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+        width: fill-available;
+        height: 100%;
+        height: -moz-available; /* WebKit-based browsers will ignore this. */
+        height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+        height: fill-available;
+    }
+</style>

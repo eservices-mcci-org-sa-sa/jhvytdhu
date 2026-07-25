@@ -1,0 +1,165 @@
+﻿<div class="wizard-second-step">
+
+    <div class="form-box">
+        <div class="row">
+
+            <div class="col-xs-12  col-md-6">
+                <div class="custom-title">
+                    <h4>
+                        <i class="icon-menu font-blue"></i>
+                        بيانات المسابقة
+                    </h4>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input" show-errors="">
+                    <label for="promotionName"> اسم المـسـابقة </label>
+                    <input ng-model="AddRequestContestModel.ContestMainData.ContestName" ng-required="true" maxlength="100" autocomplete="off" ng-class="{'edited':ContactForm.promotionName.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" name="promotionName" type="text" required="required">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input" show-errors="">
+                    <label for="promotionName">  مكان توزيع المسابقة </label>
+                    <input ng-model="AddRequestContestModel.ContestMainData.ContestPlace" ng-required="true" maxlength="100" autocomplete="off" ng-class="{'edited':ContactForm.promotionName.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" name="promotionName" type="text" required="required">
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input">
+                    <label for="promoStartDateString">مدة المسابقة تبدا من</label>
+                    <date-control name="promoStartDateString" class="datepickgreg" isrequired="true"  onkeydown="return false;"  autocomplete="off" placeholder="اضغط لتحديد التاريخ " mydate="AddRequestContestModel.ContestMainData.ContestStartDate" title="هـ"><div style="padding-right:0 !important;" class="col-md-12 col-xs-12 no-padding input-group date form_datetime form_datetime bs-datetime"><div class="custom-date-input"><input type="text" name="promoStartDateString" placeholder="اضغط لتحديد التاريخ " class="WSSCalender ng-empty ng-valid ng-valid-required datepick form-control hasCalendarsPicker ng-touched" ng-disabled="isDisabled" ng-readonly="isReadonly" ng-required="isRequired" ng-model="mydate" readonly="readOnly"></div><div class="custom-date-button"><button class="WSSCalenderSwitch ng-binding" type="button">هـ</button></div></div></date-control>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input">
+                    <label for="promoStartDateString"> مدة المسابقة تنتهي في</label>
+                    <date-control name="promoEndDateString" class="datepickgreg" isrequired="true"  onkeydown="return false;"  autocomplete="off" placeholder="اضغط لتحديد التاريخ " mydate="AddRequestContestModel.ContestMainData.ContestEndDate" title="هـ"><div style="padding-right:0 !important;" class="col-md-12 col-xs-12 no-padding input-group date form_datetime form_datetime bs-datetime"><div class="custom-date-input"><input type="text" name="promoEndDateString" placeholder="اضغط لتحديد التاريخ " class="WSSCalender ng-empty ng-valid ng-valid-required datepick form-control hasCalendarsPicker" ng-disabled="isDisabled" ng-readonly="isReadonly" ng-required="isRequired" ng-model="mydate" readonly="readOnly"></div><div class="custom-date-button"><button class="WSSCalenderSwitch ng-binding" type="button">هـ</button></div></div></date-control>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input" show-errors="">
+                    <label for="promotionName"> طريقة توزيعـها </label>
+                    <input ng-model="AddRequestContestModel.ContestMainData.DistributionMethod" ng-required="true" maxlength="100" autocomplete="off" ng-class="{'edited':ContactForm.promotionName.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" name="promotionName" type="text" required="required">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input" show-errors="">
+                    <label for="promotionName">  مكان إستلام قسائم المسابقة </label>
+                    <input ng-model="AddRequestContestModel.ContestMainData.SortingPlace" ng-required="true" maxlength="100" autocomplete="off" ng-class="{'edited':ContactForm.promotionName.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" name="promotionName" type="text" required="required">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input">
+                    <label for="promoStartDateString">تاريخ إجراء الفرز</label>
+                    <date-control name="promoStartDateString" class="datepickgreg" isrequired="true"  onkeydown="return false;"  autocomplete="off" placeholder="اضغط لتحديد التاريخ " mydate="AddRequestContestModel.ContestMainData.SortingDate" title="هـ"><div style="padding-right:0 !important;" class="col-md-12 col-xs-12 no-padding input-group date form_datetime form_datetime bs-datetime"><div class="custom-date-input"><input type="text" name="promoStartDateString" placeholder="اضغط لتحديد التاريخ " class="WSSCalender ng-empty ng-valid ng-valid-required datepick form-control hasCalendarsPicker ng-touched" ng-disabled="isDisabled" ng-readonly="isReadonly" ng-required="isRequired" ng-model="mydate" readonly="readOnly"></div><div class="custom-date-button"><button class="WSSCalenderSwitch ng-binding" type="button">هـ</button></div></div></date-control>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input">
+                    <label for="promoStartDateString">تاريخ إعلان النتائج</label>
+                    <date-control name="promoStartDateString" class="datepickgreg" isrequired="true"  onkeydown="return false;"  autocomplete="off" placeholder="اضغط لتحديد التاريخ " mydate="dataForMemberCertificate.startDate" title="هـ"><div style="padding-right:0 !important;" class="col-md-12 col-xs-12 no-padding input-group date form_datetime form_datetime bs-datetime"><div class="custom-date-input"><input type="text" name="promoStartDateString" placeholder="اضغط لتحديد التاريخ " class="WSSCalender ng-empty ng-valid ng-valid-required datepick form-control hasCalendarsPicker ng-touched" ng-disabled="isDisabled" ng-readonly="isReadonly" ng-required="isRequired" ng-model="mydate" readonly="readOnly"></div><div class="custom-date-button"><button class="WSSCalenderSwitch ng-binding" type="button">هـ</button></div></div></date-control>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input">
+                    <label for="promoStartDateString">تاريخ توزيع الجوائز</label>
+                    <date-control name="promoStartDateString" class="datepickgreg" isrequired="true"  onkeydown="return false;"  autocomplete="off" placeholder="اضغط لتحديد التاريخ " mydate="dataForMemberCertificate.startDate" title="هـ"><div style="padding-right:0 !important;" class="col-md-12 col-xs-12 no-padding input-group date form_datetime form_datetime bs-datetime"><div class="custom-date-input"><input type="text" name="promoStartDateString" placeholder="اضغط لتحديد التاريخ " class="WSSCalender ng-empty ng-valid ng-valid-required datepick form-control hasCalendarsPicker ng-touched" ng-disabled="isDisabled" ng-readonly="isReadonly" ng-required="isRequired" ng-model="mydate" readonly="readOnly"></div><div class="custom-date-button"><button class="WSSCalenderSwitch ng-binding" type="button">هـ</button></div></div></date-control>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input" show-errors="">
+                    <label for="promotionName">  مكان إجراء الفرز </label>
+                    <input ng-model="dataForMemberCertificate.promotionName" ng-required="true" maxlength="100" autocomplete="off" ng-class="{'edited':ContactForm.promotionName.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" name="promotionName" type="text" required="required">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6">
+                <div class="custom-input" show-errors="">
+                    <label for="promotionName"> مكان توزيع الجوائز </label>
+                    <input ng-model="dataForMemberCertificate.promotionName" ng-required="true" maxlength="100" autocomplete="off" ng-class="{'edited':ContactForm.promotionName.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" name="promotionName" type="text" required="required">
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 col-md-12">
+                <div class="custom-input">
+                    <label for="notes">هدف وموضوع المسابقة </label>
+                    <textarea ng-model="dataForMemberCertificate.notes" maxlength="200" autocomplete="off" ng-class="{'edited':ContactForm.notes.$dirty}" rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength" name="notes" type="text"></textarea>
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+
+                <div class="custom-title">
+                    <h4>
+                        <i class="icon-menu font-blue"></i>
+                        اسئلة المسابقة
+                    </h4>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table table-bordered table-hover table-centered table-contest">
+                            <thead>
+                                <tr class="bg-blue font-white">
+                                    <th class="text-center"><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                    <th class="text-center">السؤال</th>
+                                    <th class="text-center">الاجابة </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="benefitDetail in benefitDetails">
+                                    <td>
+
+                                        <input type="checkbox" ng-model="benefitDetail.selected" />
+                                    </td>
+                                    <td>
+                                        <span show-errors>
+                                            <input type="text" name="benefitName" class="form-control" ng-model="benefitDetail.benefitName" ng-required="true" />
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span show-errors>
+                                            <input type="text" numbers-only maxlength="10" name="benefitId" class="form-control" ng-model="benefitDetail.benefitId" ng-required="true" ng-change="checkIdentityNumber(benefitDetail.benefitId)" />
+                                        </span>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="col-xs-12 text-right clearfix" style="margin-top:20px; padding-right:0;">
+                            <span class="btn-group">
+                                <button ng-hide="!benefitDetails.length" class="custom-btn  custom-btn-reverse btn-3" style="margin-left: 10px;" type="button" ng-click="remove()" ng-disabled="benefitDetails.length==1"><i class="fa fa-trash"></i>   حذف </button>
+                                <button class="custom-btn  custom-btn-reverse btn-3" type="button" ng-click="addNew()">  <i class="fa fa-check"></i> جديد</button>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

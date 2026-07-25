@@ -1,0 +1,253 @@
+﻿
+
+<div class="checkout  p-bottom-md">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="sp-main-box">
+                    <div>
+                        <div class="sp-main-title">
+                            <h2>
+                                بيانات التحويل
+                            </h2>
+                            <a class="sp-main-button sp-main-sm-button pull-left" ng-click="back()">
+                                العودة
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <!-- Account Permission -->
+                        <div class="flex-row sp-register-form col-md-12 col-xs-12" ng-if="!hasAccess">
+                            <div class="alert">
+                                <img src="../../../Content/Theme/assets/img/alert.svg">
+                                ليس لديك صلاحية تحويل الرصيد بين العضويات.
+                            </div>
+                        </div>
+
+                        <form name="transferForm" id="transferForm" novalidate="novalidate" class="clearfix" ng-show="hasAccess">
+                            <!-- WTransfer Content | NEW -->
+                            <div class="row flex-row sp-wtransfer-form" ng-if="!Sms.CodeSent && page.firstStep">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="wtransfer-money">
+                                        <div class="wtransfer-money-icon">
+                                            <img src="../../../Content/Theme/assets/img/bank.svg" alt="bank Icon" width="24" height="24" />
+                                        </div>
+                                        <div class="wtransfer-money-info">
+                                            <p class="money-info-title">الرصيد المتوفر</p>
+                                            <p class="money-info-content">
+                                                <span>{{model.AvailableBalance}}</span>
+                                                <!--<input ng-model="model.AvailableBalance" class="form-control input-no-borders" name="MemberId" type="text" />-->
+                                                ريال
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="wtransfer-account">
+                                        <div>
+                                            <div class="sp-main-title">
+                                                <h2>
+                                                    العضوية
+                                                </h2>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="account-no">
+                                                <span>رقم العضوية :</span>
+                                                <span class="account-no-data">
+                                                    {{model.MemberId}}</span>
+                                                    <!--<input ng-model="model.MemberId" class="form-control input-no-borders" name="MemberId" type="text" />-->
+                                            </div>
+                                            <div class="account-name">
+                                                <span>اسم العضوية :</span>
+                                                <span class="account-name-data">{{model.EstName}}</span>
+                                                <!--<input ng-model="model.EstName" class="form-control input-no-borders" name="EstName" type="text" />-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>الرصيد المتوفر</label>
+                                        <input ng-model="model.AvailableBalance" class="form-control input-no-borders" name="MemberId" type="text" />
+                                    </div>
+                                </div>-->
+
+                                <style>
+                                    .select2 > .select2-choice.ui-select-match {
+                                        /* Because of the inclusion of Bootstrap */
+                                        height: 29px;
+                                    }
+
+                                    .selectize-control > .selectize-dropdown {
+                                        top: 36px;
+                                    }
+
+                                    .ui-select-choices-group-label {
+                                        font-size: 20px;
+                                    }
+                                </style>
+                                <!--<div class="form-group switch-control">
+                                <div class="sp-forget-way" id="SwitchRow" ng-repeat="type in MembersType">
+                                <label>
+                                <input type="radio" ng-change="loadMembers(model.MemberType)" ng-required="true" id="id_{{$index}}" name="id_{{$index}}"
+                                ng-model="model.MemberType" value="{{type.key}}">
+                                {{type.name}}
+                                </label>
+                                </div>
+                                </div>
+                                <div ng-if="!model.MemberType  && isFormSubmitted">
+                                <p class="errors error-msg">من فضلك أختر طريقة الإرسال</p>
+                                </div>-->
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="wtransfer-input sp-main-form-inner form-group form-md-line-input has-success form-md-floating-label">
+                                        <label> تحويل إلي  </label>
+                                        <ui-select fix-focus-on-touch fix-focus-ui-select name="ToMember" ng-model="model.ToMember" theme="selectize">
+                                            ct
+                                            <ui-select-match allow-clear="true" placeholder="">
+                                                <span class="selected-value" ng-bind="$select.selected.estName"></span>
+                                                <a uib-tooltip="Clear" class="fa fa-times clear-button"
+                                                   ng-click="$select.clear($event); model.ToMember =null; $select.selected.memberId = null"></a>
+                                            </ui-select-match>
+                                            <ui-select-choices group-by="'relation'" repeat="c.memberId as c in MembersList | orderBy:'relatedType' |  propsFilter: {memberId: $select.search, estName: $select.search}">
+                                                <div ng-bind-html="sanitizeMe((c.estName | cut:true:25:' ...'))"></div>
+                                                <span class="" style="float:left; font-size:smaller; color:cornflowerblue"
+                                                      ng-bind-html="sanitizeMe((c.memberId))"></span>
+                                            </ui-select-choices>
+                                            <ui-select-no-choice ng-if="MembersList.length < 0">
+                                                لا توجد نتائج للبحث
+                                            </ui-select-no-choice>
+                                        </ui-select>
+                                        <div ng-messages="transferForm.ToMember.$error" ng-if=" transferForm.ToMember.$dirty  || isFormSubmitted">
+                                            <p class="errors error-msg" ng-message="required">العضوية مطلوبة</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="wtransfer-input sp-main-form-inner form-group form-md-line-input has-success form-md-floating-label">
+                                        <label>
+                                            المبلغ
+                                            <span>(بالريال)</span>
+                                        </label>
+                                        <div>
+                                            <input type="text" ng-required="true" maxlength="10" name="Amount"
+                                                   autocomplete="off" ng-model="model.Amount" autofocus
+                                                   class="form-control" min="1"
+                                                   placeholder="" restrict-input="{type: 'digitsOnly'}">
+                                        </div>
+                                        <div ng-messages="transferForm.Amount.$error" ng-if=" transferForm.Amount.$dirty  || isFormSubmitted">
+                                            <p class="errors error-msg" ng-message="required">مبلغ التحويل مطلوب</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="d-inline-block">
+                                        <button class="sp-main-button" ng-click="validateTransfer(transferForm,$event);">الخطوة التالية</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--OTP | OLD-->
+                            <div class="row sp-register-form" ng-if="Sms.CodeSent && page.secondStep">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group text-center">
+                                        <p class="verification-text">أدخل كود التحقق المٌرسل على جوالك.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group ver-code">
+                                    <input ng-repeat="digit in smsInputs  track by $index" type="text"
+                                           data-ng-model="digit.value" restrict-input="{type: 'digitsOnly'}" min="0"
+                                           max="9" move-Previous maxlength="1" ng-change="combineCode(digit,$index)"
+                                           class="form-control" autocomplete="off" />
+                                </div>
+                                <div class="text-center resend-time" ng-show="Sms.CodeSent && (page.showSmsTime || page.smsTimer != 0)">
+                                    <span>
+                                        يمكنك إعادة الإرسال بعد: {{page.smsTimer}} ثانية
+                                    </span>
+                                </div>
+                                <div class="sp-ver-code-buttons">
+                                    <a ng-show="Sms.CodeSent"
+                                       ng-click="!page.showSmsTime && validateTransfer(transferForm,$event);"
+                                       ng-disabled="page.showSmsTime" class="sp-main-button">
+                                        إعادة الإرسال
+                                    </a>
+                                    <a ng-click="Sms.Code && Reset();" ng-disabled="!Sms.Code" class="clear">
+                                        تفريغ
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!--Success | NEW-->
+                            <div class="row" ng-if="page.thirdStep">
+                                <!--NEW HTMl-->
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="sp-main-box">
+                                        <div class="sp-wtransfer-success">
+                                            <img src="../../../Content/Theme/assets/img/successful.svg" alt="Transfer Confirmed" width="100" height="100" class="margin-bottom-30" />
+                                            <p class="success-content">
+                                                تم تحويل رصيد للعضوية رقم
+                                                <span>{{model.ToMember}}</span>
+                                                بنجاح
+                                            </p>
+                                            <div class="row justify-content-center text-center">
+                                                <a ng-click="reload()" class="sp-main-button margin-right-10">عملية جديد</a>
+                                                <a ng-href="/#/WalletsTrans" class="sp-main-button sp-transparent-button margin-left-10">عرض حركات المحفظة</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--OLD-->
+                                <!--<div class="checkout-body sp-main-box">
+                                    <div class="checkout-methods sp-main-container">
+                                        <div class="credit-content clearfix front">
+                                            <div class="col-md-12 successIcon">
+                                                <div class="form-group">
+                                                    <div class="example-content success show  text-center">
+                                                        <div class="swal-icon swal-icon--success">
+                                                            <div class="swal-icon--success__line swal-icon--success__line--long"></div>
+                                                            <div class="swal-icon--success__line swal-icon--success__line--tip"></div>
+                                                            <div class="swal-icon--success__ring"></div>
+                                                            <div class="swal-icon--success__hide-corners"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="alert alert-success text-center" style="margin-top: 30px;">
+                                                        <strong>تم تحويل الرصيد للعضوية رقم {{model.ToMember}} بنجاح   </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-12  col-lg-6">
+                                                <a class="sp-main-button" ng-click="reload()">عملية جديدة</a>
+                                            </div>
+                                            <div class="col-md-12  col-lg-6">
+                                                <a class="sp-main-button" ng-href="/#/WalletsTrans">عرض حركات المحفظة </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+
+                        </form>
+                    </div>
+                    <div ng-hide="page.thereIsData" class="m-top-lg">
+                        <div ng-show="page.showLoad" class="text-center" data-loading>
+                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                        </div>
+                        <div class="col-md-12" ng-show="page.noData">
+                            <div class="note note-danger" style="text-align:center !important">
+                                عفواً . لا توجـد بيانات.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

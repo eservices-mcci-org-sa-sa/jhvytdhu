@@ -1,0 +1,153 @@
+﻿<modal class="sp-main-modal" title="أدخل رمز التحقق" visible="Sms.CodeSent">
+    <form class="form-horizontal text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="sp-register-form">
+                <div class="form-group ver-code login-ver-code">
+                    <input ng-repeat="digit in smsInputs  track by $index" type="text"
+                           data-ng-model="digit.value" restrict-input="{type: 'digitsOnly'}" min="0"
+                           max="9" move-Previous maxlength="1" ng-change="combineCode(digit,$index)"
+                           class="form-control" autocomplete="off" />
+                </div>
+            </div>
+            <div class="text-center resend-time" ng-show="Sms.CodeSent && (page.showSmsTime || page.smsTimer != 0)">
+                <span>
+                    يمكنك إعادة الإرسال بعد: {{page.smsTimer}} ثانية
+                </span>
+            </div>
+            <button ng-show="Sms.CodeSent" ng-click="!page.showSmsTime && SendSmsValidate();"
+                      ng-disabled="page.showSmsTime"  class="sp-main-button lg-padding">
+                إعادة إرسال
+            </button>
+            <button ng-click="Sms.Code && Reset();" ng-disabled="!Sms.Code" class="sp-main-button sp-transparent-button lg-padding">
+                تفريغ
+            </button>
+        </div>
+    </form>
+</modal>
+
+<div class="wss-memberships">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box margin-bottom-30">
+                    <div class="sp-main-title">
+                        <h2>
+                            بيانات طلب تفويض على عضوية
+                        </h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/Non-Members/Home">
+                            العودة
+                        </a>
+                    </div>
+
+                    <!--<form class="sp-main-form sp-main-form-inner" name="addForm">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="custom-input">
+                                    <label> رقم السجل </label>
+                                    <input type="text" name="CrNumber" ng-required="true" autocomplete="off" ng-minlength="10" ng-model="Addmodel.CrNumber" maxlength="10" only-Int prevent-typing-greater class="form-control" placeholder="أدخل رقم السجل" />
+                                </div>
+                                <div ng-messages="addForm.CrNumber.$error" ng-if="addForm.CrNumber.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">رقم السجل مطلوب </p>
+                                    <p class="text-danger error-msg" ng-message="minlength"> ادخل رقم السجل لا يقل عن 10 أرقام</p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="custom-input">
+                                    <label> رقم العضوية </label>
+                                    <input type="text" name="MemberId" ng-required="true" autocomplete="off" ng-minlength="12" ng-model="Addmodel.MemberId" maxlength="12" only-Int prevent-typing-greater class="form-control" placeholder="أدخل رقم العضوية" />
+                                </div>
+                                <div ng-messages="addForm.MemberId.$error" ng-if="addForm.MemberId.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">رقم العضوية مطلوب </p>
+                                    <p class="text-danger error-msg" ng-message="minlength"> ادخل رقم العضوية لا يقل عن 12 أرقام</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-bottom-md" ng-if="Addmodel.Verified && Addmodel.EstName">
+                            <div class="col-md-12">
+                                <h4>
+                                    <span class="font-sm"> طلب تفويض على عضوية :</span>  {{Addmodel.EstName}}
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button ng-if="!Addmodel.Verified" ng-click="Validate(addForm,$event)" class="sp-main-button">تحقق</button>
+                                <button ng-if="Addmodel.Verified" ng-click="SendSmsValidate();" class="sp-main-button">إرسال</button>
+                            </div>
+                        </div>
+                    </form>-->
+
+                    <form class="sp-main-form sp-main-form-inner"  name="addForm">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="custom-input">
+                                    <label> رقم السجل </label>
+                                    <input type="text" name="CrNumber" ng-required="true" autocomplete="off" ng-minlength="10" ng-model="Addmodel.CrNumber" maxlength="10" only-Int prevent-typing-greater class="form-control" placeholder="أدخل رقم السجل" />
+
+                                    <div ng-messages="addForm.CrNumber.$error" ng-if="addForm.CrNumber.$dirty || isFormSubmitted">
+                                        <p class="text-danger error-msg" ng-message="required">رقم السجل مطلوب </p>
+                                        <p class="text-danger error-msg" ng-message="minlength"> ادخل رقم السجل لا يقل عن 10 أرقام</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="custom-input">
+                                    <label> رقم العضوية </label>
+                                    <input type="text" name="MemberId" ng-required="true" autocomplete="off" ng-minlength="12" ng-model="Addmodel.MemberId" maxlength="12" only-Int prevent-typing-greater class="form-control" placeholder="أدخل رقم العضوية" />
+                                </div>
+                                <div ng-messages="addForm.MemberId.$error" ng-if="addForm.MemberId.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">رقم العضوية مطلوب </p>
+                                    <p class="text-danger error-msg" ng-message="minlength"> ادخل رقم العضوية لا يقل عن 12 أرقام</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <style>
+                            .check-input-icon {
+                                position: relative
+                            }
+
+                                .check-input-icon ion-icon {
+                                    position: absolute;
+                                    bottom: 10px;
+                                    left: 8px;
+                                    font-size: 25px;
+                                }
+                        </style>
+
+                        <div class="row" ng-if="!Addmodel.Verified" ng-click="Validate(addForm,$event)">
+                            <div class="col-md-5">
+                                <button class="sp-main-button"> التحقق </button>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="Addmodel.Verified && Addmodel.EstName">
+                            <div class="col-md-5">
+                                <div class="custom-input">
+                                    <p class="alert alert-success margin-top-15">
+                                        طلب تفويض على عضوية :
+                                        <b>  {{Addmodel.EstName}}</b>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"  ng-if="Addmodel.Verified" ng-click="SendSmsValidate();" >
+                            <div class="col-md-5">
+                                <button class="sp-main-button"> إرسال </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

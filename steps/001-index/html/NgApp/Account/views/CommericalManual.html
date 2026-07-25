@@ -1,0 +1,274 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<br />
+
+ 
+
+<div class="custom-regi commerical-manual">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="sp-main-box sp-forget-box sp-register-box">
+                    <div class="sp-main-title">
+                        <h2>الدليل التجاري</h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/">
+                            العودة
+                        </a>
+                    </div>
+                    <form class="sp-main-form" name="searchForm">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date">الغرفة  </label>
+                                    <!--{{invisible}}-->
+                                    <ui-select ng-model="searchModel.ChamberId" reset-search-input="true" theme="selectize" ng-required="true">
+                                        <ui-select-match>
+                                            <span class="selected-value" ng-bind="$select.selected.chamberName"></span>
+                                            <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="c.chamberId as c in ChamberList | filter: $select.search">
+                                            <small ng-bind-html="c.chamberName"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div ng-messages="searchForm.ChamberId.$error" ng-if="CheckForm.ChamberId.$dirty">
+                                        <p class="text-danger" ng-message="required">من فضلك أختر الغرفة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date"> الرقم الموحد (700) </label>
+                                    <input type="text" ng-model="searchModel.MM_UnifiedNumber" maxlength="15"
+                                           restrict-input="{type: 'digitsOnly'}"
+                                           class="form-control" placeholder="الرقم الموحد (700)" ng-pattern="/^\d{1,15}$/" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date"> رقم العضوية </label>
+                                    <input type="text" ng-model="searchModel.MM_MemberId" maxlength="12" minlength="12"
+                                           restrict-input="{type: 'digitsOnly'}"
+                                           class="form-control" placeholder="رقم العضوية" ng-pattern="/^\d{1,12}$/" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date">السجل التجارى  </label>
+                                    <input type="text" ng-model="searchModel.MM_CRNumber" ng-trim="false" minlength="10" maxlength="10"
+                                           restrict-input="{type: 'digitsOnly'}" only-English-Numbers-Letters-Input
+                                           class="form-control" placeholder="السجل التجارى" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date">إسم المنشأة  </label>
+                                    <input type="text" ng-model="searchModel.MM_EstNameAr" class="form-control" placeholder="إسم المنشأة" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date">النشاط  </label>
+                                    <input type="text" ng-model="searchModel.MM_MainActivity" class="form-control" placeholder="النشاط" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date">العنوان    </label>
+                                    <input type="text" ng-model="searchModel.MM_Address" class="form-control" placeholder="العنوان  " />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="custom-input ">
+                                    <label for="date">  الهاتف  </label>
+                                    <input type="text" maxlength="15" numbers-Only ng-model="searchModel.MM_AdrPhone1" class="form-control" placeholder="الهاتف  " />
+                                </div>
+                            </div>
+
+                            <div class="clearfix visible-lg visible-md"></div>
+
+                            <div class="col-md-12 col-xs-12 mt-3">
+                                <div class="text-right">
+                                    <div class="btn-group">
+                                        <button ng-click="GetSearchCommericalManual(searchForm,$event);" class="sp-main-button margin-right-10">
+                                            <i class="fa fa-search"></i>
+                                            بحث
+                                        </button>
+                                        <button ng-click="clearSearch()" class="sp-main-button">
+                                            <i class="fa fa-indent	Try it"></i>
+                                            تفريغ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container m-bottom-md" >
+        <div class="row">
+            <div class="col-md-12" ng-show="page.thereIsData">
+                <div class="sp-services">
+                    <div class="sp-main-title">
+                        <h2> البحث </h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/Login">
+                            العودة
+                        </a>
+                    </div>
+                    <div class="sp-services-list">
+                        <div class="table-responsive custom-table">
+                            <table class="table table-bordered table-hover table-centered">
+                                <thead>
+                                    <tr class="bg-blue font-white">
+                                        <th class="text-center">
+                                            <label>
+                                                <strong># </strong>
+                                            </label>
+                                        </th>
+                                        <!--<th class="text-center">
+                                            <label>
+                                                <strong>رقم العضوية </strong>
+                                            </label>
+                                        </th>-->
+                                        <th class="text-center">
+                                            <label>
+                                                <strong>إسم المنشأة</strong>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <strong> الخيارات </strong>
+                                            </label>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="white-bg">
+                                    <tr ng-repeat="x in items">
+                                        <td> {{$index+1}} </td>
+                                        <!--<td> {{x.mM_MemberId}} </td>-->
+                                        <td> {{x.mM_EstNameAr}} </td>
+                                        <td>
+                                            <a ng-if="!AllowTakamolService" ng-click="showDetails(x)" class="custom-btn btn-3 custom-btn-reverse"> تفاصيل </a>
+                                            <a ng-if="AllowTakamolService" ng-href="/#/CommericalManual/Intergation/Details/{{x.mM_MemberId}}" class="custom-btn btn-3 custom-btn-reverse"> تفاصيل </a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="text-center m-top-sm">
+                                <ul ng-if="pager.pages.length" class="pagination">
+                                    <li ng-class="{disabled:pager.currentPage === 1}">
+                                        <a ng-click="setPage(1)">الأول</a>
+                                    </li>
+                                    <li ng-class="{disabled:pager.currentPage === 1}">
+                                        <a ng-click="setPage(pager.currentPage - 1)">السابق</a>
+                                    </li>
+                                    <li ng-repeat="page in pager.pages" ng-class="{active:pager.currentPage === page}">
+                                        <a ng-click="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a ng-click="setPage(pager.currentPage + 1)">التالى</a>
+                                    </li>
+                                    <li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a ng-click="setPage(pager.totalPages)">الأخير</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="page.thereIsData" class="col-md-12">
+                <div ng-show="page.showLoad" class="text-center" data-loading>
+                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                </div>
+                <div class="col-md-12" ng-show="page.NoData" style="top: 10px;">
+                    <div class="note note-danger" style="text-align:center !important">
+                        عفواً . لا توجـد بيانات.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+</div>
+
+
+<modal visible="page.showPopup" title="التفاصيل">
+    <div class="portlet light bordered">
+        <div class="portlet-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>اسم المنشأة	 </td>
+                            <td>{{SelectedData.mM_EstNameAr}} </td>
+                        </tr>
+                        <!--<tr>
+                            <td>رقم السجل التجاري   	 </td>
+                            <td>{{SelectedData.mM_CRNumber}} </td>
+                        </tr>
+                        <tr>
+                            <td>رقم العضوية	 </td>
+                            <td>{{SelectedData.mM_MemberId}} </td>
+                        </tr>-->
+                        <tr>
+                            <td>النشاط </td>
+                            <td>{{SelectedData.mM_MainActivity}} </td>
+                        </tr>
+                        <tr>
+                            <td>العنوان  	 </td>
+                            <td>{{SelectedData.mM_Address}} </td>
+                        </tr>
+                        <tr>
+                            <td>صندوق البريد	 </td>
+                            <td>{{SelectedData.mM_AdrPOBox}} </td>
+                        </tr>
+                        <tr>
+                            <td>الرمز البريدي	 </td>
+                            <td>{{SelectedData.mM_AdrCode}} </td>
+                        </tr>
+                        <tr>
+                            <td>الهاتف  	 </td>
+                            <td>{{SelectedData.mM_AdrPhone1}} </td>
+                        </tr>
+                        <!--<tr>
+                            <td>رقم الجوال  	 </td>
+                            <td>{{SelectedData.mM_AdrMobile}} </td>
+                        </tr>-->
+                        <tr>
+                            <td>فاكس  	 </td>
+                            <td>{{SelectedData.mM_AdrFax}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</modal>

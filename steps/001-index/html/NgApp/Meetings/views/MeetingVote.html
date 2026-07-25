@@ -1,0 +1,252 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <!--<img src="assets/img/302.svg" alt="" />-->
+                    <img ng-if="chamberSettings.id" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+
+
+
+
+
+
+<div class="container" ng-if="!ValidationDone">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="sp-main-box sp-forget-box sp-register-box">
+                <div class="sp-main-title">
+                    <h2>التحقق من المشترك</h2>
+                    <a class="sp-main-button sp-main-sm-button pull-left" href="" ng-click="setBack()">
+                        العودة
+                    </a>
+                </div>
+
+                <div class="sp-main-form">
+                    <form form-autofill-fix autocomplete="off" ng-class="{'IsLoading':showSpin==true}" ng-show="showRegister"
+                          id="registerForm" role="form" name="registerForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                    <div class="input-icon left">
+                                        <label for="IdentityNo">رقم الهوية / الإقامة</label>
+                                        <div class="input-icon">
+                                            <input name="IdentityNo" maxlength="10" ng-minlength="10" autofocus only-Int ng-pattern="identityPattern"
+                                                   ng-model="RegisterModel.IdentityNo" ng-required="true" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div ng-messages="registerForm.IdentityNo.$error" ng-if="(registerForm.IdentityNo.$dirty || SubmitRegister)">
+                                        <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم الهوية</p>
+                                        <p class="text-danger error-msg" ng-message="pattern">من فضلك ادخل رقم الهوية أرقام وتبدأ ب 1 أو 2</p>
+                                    </div>
+                                </div>
+                                <p class="errors" ng-bind-html="Message"></p>
+                                <button type="submit" class="sp-main-button margin-bottom-20" ng-click="ValidateVote(registerForm,$event,false)">
+                                    <span ng-show="showSpin"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i></span>
+                                    التالي
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="confirm-form" form-autofill-fix ng-class="{'IsLoading':showSpin == true}" class="w3-animate-bottomm" ng-show="showTFA" role="form" name="confirmForm" novalidate>
+                        <div class="row">
+                            <div class="sp-main-form sp-otp sp-register-form">
+                                <div class="text-center margin-top-20 margin-bottom-20">
+                                    <h1>
+                                        الرجاء ادخل رقم التحقق الذي تم ارسالة على الجوال  &nbsp;&nbsp;  <span dir="ltr">{{currUserMobile}}</span>
+                                    </h1>
+                                    <div class="form-group ver-code login-ver-code">
+                                        <input id="{{'login-ver-code'+ $index}}" ng-repeat="digit in smsInputs  track by $index" type="number"
+                                               data-ng-model="digit.value" restrict-input="{type: 'digitsOnly'}" min="0"
+                                               max="9" move-Previous maxlength="1" ng-change="combineCode(digit,$index)"
+                                               class="form-control" autocomplete="off" />
+                                    </div>
+                                    <p class="errors" ng-bind-html="Message"></p>
+                                    <p ng-hide="showRetrySendCode">
+                                        يمكنك إعادة الإرسال بعد : {{timeElapsed}} ثانية
+                                    </p>
+                                    <a ng-if="Sms.CodeSent && showRetrySendCode"
+                                       ng-click="ValidateVote(registerForm,$event,true);"
+                                       class="sp-main-button">
+                                        إعادة الإرسال
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"> </div>
+                        <p class="errors"> {{confirmLoginErrors}}</p>
+                    </form>
+                    <div ng-if="Message && !showRegister" class="alert alert-warning margin-top-20" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        {{Message}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" ng-if="ValidationDone">
+    <div class="row" ng-show="!successRegisteration">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="sp-main-box sp-forget-box sp-register-box">
+                <div class="sp-main-title">
+                    <h2>التصويت في الجمعية العمومية</h2>
+                    <a ng-hide="chamberSettings.meetingDirectVotingAfterRegister" class="sp-main-button sp-main-sm-button pull-left" href="" ng-click="setBack()">
+                        العودة
+                    </a>
+                </div>
+
+
+                <div class="sp-main-form">
+                    <div class="text-center margin-top-20 margin-bottom-20">
+                        <div class="vote-container">
+                            <div class="vote-item" ng-repeat="term in Terms">
+                                <ul>
+                                    <li>
+                                        <p ng-bind-html="term.meetingTerm.description"></p> 
+                                    </li>
+                                    <li ng-if="term.meetingTermAttachments[0]">
+                                        <a href="" ng-click="showAttachmentHttp(term.meetingTermAttachments[0])">
+                                            <ion-icon name="cloud-download-outline"></ion-icon>
+                                            تحميل مرفق البند
+                                        </a>
+                                    </li>   
+                                </ul>
+                                 <div class="vote-action" ng-if="!term.subTerms.length">
+                                    <button ng-class="{'checked': term.meetingTerm.VoteAction == true}" ng-click="term.meetingTerm.VoteAction = true">موافق</button>
+                                    <button ng-class="{'uncheck': term.meetingTerm.VoteAction == false}" ng-click="term.meetingTerm.VoteAction = false">رافض</button>
+                                </div> 
+                                <!-- NEW Changes -->
+                                <div class="vote-action" ng-repeat="subTerm in term.subTerms  track by $index">
+                                    <ul class="vote-options-list">
+                                        <li>
+                                            <label>
+                                                <input type="radio" ng-model="$parent.selectedTerm" ng-value="$index" ng-change="selectSubTerm(term.subTerms,$index)">
+                                                {{subTerm.meetingTerm.description}}
+                                            </label>
+                                            <button ng-if="subTerm.meetingTermAttachments[0]" ng-click="showAttachmentHttp(subTerm.meetingTermAttachments[0])">تحميل المرفق</button>
+                                        </li> 
+                                    </ul>
+                                </div>
+                                <div class="vote-notes" ng-if="CurrentChamberId != 402"> 
+                                    <h4>ادخل ملاحظاتك بخصوص البند</h4>
+                                    <textarea ng-required="term.meetingTerm.VoteAction == false && chamberSettings.id != 104"
+                                              ng-model="term.meetingTerm.VoteNotes" placeholder="أكتب ملاحظاتك هنا.."></textarea>
+                                    <span ng-if="term.meetingTerm.VoteAction == false && chamberSettings.id != 104">فضلاً أدخل سبب الرفض</span>
+                                </div>
+                            </div>
+                            <div class="alert alert-primary">
+                                <span>
+                                    في حالة عدم الموافقة على بنود الجمعية يمكنك المشاركة في الاجتماع حضوريا أو افتراضيا لمناقشة ذلك
+
+                                </span>
+                            </div>
+                           
+                            <p class="errors" ng-bind-html="Message"></p>
+                            <div class="text-center" ng-if="Terms.length > 0">
+                                <button type="submit" ng-click="ConfirmVote(Terms);" class="sp-main-button">
+                                    <span ng-show="showSpin"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i></span>
+                                    إعتماد التصويت
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="successRegisteration">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="sp-main-box sp-forget-box sp-register-box">
+                <div class="sp-main-title">
+                    <h2>التسجيل في الجمعية العمومية</h2>
+                    <a class="sp-main-button sp-main-sm-button pull-left" href="" ng-click="setBack()">
+                        العودة
+                    </a>
+                </div>
+
+                <div class="sp-main-form sp-confirmation-msg">
+                    <div class="text-center margin-top-20 margin-bottom-20">
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        <h1>
+                            شكراً لك،
+                        </h1>
+                        <p>
+                            تم إعتماد تصويتك لقرارات الجمعية العمومية بنجاح .
+                        </p>
+                    </div>
+                    <div class="text-center margin-top-20 margin-bottom-20" ng-if="chamberSettings.meetingDirectVotingAfterRegister">
+                        <div ng-if="showMeetingLink">
+                            <h1>
+                                يمكنكم الإنضمام إلي إجتماع الجمعية العمومية عبر الرابط التالي
+                            </h1>
+                            <p>
+                                <a ng-href="{{conferenceLink}}" target="_blank" class="sp-main-button">
+                                    رابط الحضور
+                                </a>
+                            </p>
+                            <h1 class="margin-top-20">
+                                والذى سيكون متاح يوم {{meetingStartDate | date : "dd-MM-yyyy"}} الساعة  {{meetingStartDate | date : "h:mm:ss a"}}
+                            </h1>
+                        </div>
+                        <div ng-if="!showMeetingLink">
+                            <h1>
+                                يمكنكم الإنضمام إلي إجتماع الجمعية العمومية عبر رابط سيصلكم عبر البريد الإلكتروني ورسالة نصية
+                            </h1>
+                            <h1 class="margin-top-20">
+                                والذى سيكون متاح يوم {{meetingStartDate | date : "dd-MM-yyyy"}} الساعة  {{meetingStartDate | date : "h:mm:ss a"}}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .vote-item .vote-action .vote-options-list {
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 30px;
+    }
+
+    .vote-item .vote-action .vote-options-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 16px;
+    }
+    .vote-item .vote-action .vote-options-list li:not(:last-child){margin-bottom: 16px;}
+
+    .vote-item .vote-action .vote-options-list li > label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+    }
+
+    .vote-item .vote-action .vote-options-list li > label input[type="radio"]{min-height: auto !important;}
+</style>

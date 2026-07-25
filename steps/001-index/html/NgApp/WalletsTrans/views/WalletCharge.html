@@ -1,0 +1,127 @@
+﻿<style>
+    .WSSCalenderSwitch {
+        background-color: #5c9bd1;
+        color: white;
+        height: 33px;
+        border: none;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 20px;
+        height: 34px;
+        font-family: Tahoma, Times New Roman, Arial, Simplified Arabic;
+        padding-top: 0px;
+        border: 1px solid #aaa;
+        cursor: pointer;
+        right: 0px;
+        text-align: center !important;
+    }
+</style>
+
+<link href="../../../Scripts/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet" />
+<script src="../../../Scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+
+<div class="checkout  p-bottom-md">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="sp-main-box">
+                    <div ng-show="page.showTemplates">
+                        <div class="sp-main-title">
+                            <h2>
+                                حدد مبلغ شحن المحفظة
+                            </h2>
+                            <a class="sp-main-button sp-main-sm-button pull-left" href="/#/WalletsTrans/">
+                                العودة
+                            </a>
+                        </div>
+                        <div class="checkout-methods sp-checkout-methods text-center" ng-init="page.isSet==1;">
+                            <img src="../../../Content/Theme/dist/img/wallet.png" />
+                            <!--<div ng-class="{'col-md-6 col-xs-12': (MerchantData.CreditCardsIsActive || MerchantData.MadaIsActive)&& MerchantData.SadadIsActive,
+                             'col-md-6 col-xs-12': (MerchantData.CreditCardsIsActive || MerchantData.MadaIsActive) && !MerchantData.SadadIsActive}"
+                                 ng-show="MerchantData.CreditCardsIsActive || MerchantData.MadaIsActive">
+                                <div class="method-card credit-card aa" ng-class="{'active-tab': page.isSet === 1}" ng-click="page.isSet=1;resetForm();">
+                                    <i class="fa fa-check" ng-if="page.isSet === 1" aria-hidden="true"></i>
+                                    <div class="method-card-type">
+                                        <img src="../../../Content/Theme/dist/img/CridetCard-logo.png" class="img-responsive" />
+                                        <h3 ng-if="MerchantData.CreditCardsIsActive">  بطاقات إئتمانية</h3>
+                                        <h3 ng-if="!MerchantData.CreditCardsIsActive && MerchantData.MadaIsActive">  مدى</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-class="{'col-md-6 col-xs-12': (MerchantData.CreditCardsIsActive || MerchantData.MadaIsActive) && MerchantData.SadadIsActive,
+                             'col-md-6 col-xs-12': !MerchantData.CreditCardsIsActive && ! MerchantData.MadaIsActive &&  MerchantData.SadadIsActive}"
+                                 ng-show="MerchantData.SadadIsActive">
+                                <div class="method-card sadad-card aa" ng-class="{'active-tab': page.isSet === 2}" ng-click="page.isSet=2;goToWalletCharge(2);;resetForm();">
+                                    <i class="fa fa-check" ng-if="page.isSet === 2" aria-hidden="true"></i>
+                                    <div class="method-card-type">
+                                        <img src="../../../Content/Theme/dist/img/sadad-logo.png" class="img-responsive" />
+                                        <h3>سداد للدفع الإلكترونى</h3>
+                                    </div>
+                                </div>-->
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div>
+                        <div ng-include="MerchantData.PayTemplate"></div>
+                    </div>
+                </div>
+                <div ng-hide="page.showTemplates">
+                    <div ng-show="page.LoadingTemplates" class="text-center" data-loading>
+                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                    </div>
+                    <div class="col-md-12" ng-show="page.NoTemplates">
+                        <div class="note note-danger" style="text-align:center !important">
+                            عفوا الشحن الالكتروني غير متوفر حاليا , يمكنكم الشحن عن طريق زيارة مقر الغرفة.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div ng-bind-html="htmlVar"></div>
+
+<script type="text/ng-template" id="stackedModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title-{{name}}">The {{name}} modal!</h3>
+    </div>
+    <div class="modal-body" id="modal-body-{{name}}">
+        Having multiple modals open at once is probably bad UX but it's technically possible.
+    </div>
+</script>
+
+<script type="text/javascript">
+    $('.creditCardText').keyup(function () {
+        var foo = $(this).val().split("-").join(""); // remove hyphens
+        if (foo.length > 0) {
+            foo = foo.match(new RegExp('.{1,4}', 'g')).join("-");
+        }
+        $(this).val(foo);
+    });
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'focus',
+            html: 'true',
+            placement: 'bottom',
+            content: '<img src="../../../Content/CardNotes/front-card-name.jpg" />'
+        });
+        $('[data-toggle="popover1"]').popover({
+            trigger: 'focus',
+            html: 'true',
+            placement: 'bottom',
+            content: '<img src="../../../Content/CardNotes/front-card-number.jpg" />'
+        });
+        $('[data-toggle="popover3"]').popover({
+            trigger: 'focus',
+            html: 'true',
+            placement: 'bottom',
+            content: '<img src="../../../Content/CardNotes/back-digits-3.jpg" />'
+        });
+    });
+</script>

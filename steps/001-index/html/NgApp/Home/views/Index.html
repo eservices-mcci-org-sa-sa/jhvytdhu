@@ -1,0 +1,566 @@
+<div class=" new-req dashboard-content ">
+    <div class="embed-responsive">
+        <div class="container">
+            <div class="new-req-content">
+
+                
+                <div class="row nreq-categories">
+                    <div class="col-md-12 col-xs-12" ng-if="showMemberExpireAlret">
+                        <div class="alert">
+                            <img src="../../../Content/Theme/assets/img/alert.svg">
+                            تنبيه : إشتراك العضوية أوشك على الإنتهاء , فضلاً تجديد الإشتراك فى أقرب وقت.
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="sp-main-box margin-bottom-30" style="position:relative">
+                            <!--تم الايقاف بناء على طلب من شحتو لحين انتهاء عبدالرحيم من تحديث بيانات الغرفة-->
+                            <!--<button class="btn btn-primary" title="فى حالة وجود أختلاف فى بياناتك ، يمكن تحديث بيانات من خلال الضغط على الزر 'التالي'"  ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin && chamberSettings.allowActiveWathiq"
+                                    style="position:absolute;left:10px;top:10px;" ng-click="updateInformation(userInfo.globalSessionValues.CurrentMember.CrNumber)">تحديث السجل</button>-->
+                            <div class="sp-main-container">
+
+                                <div class="main-content-item main-content-item-reset sp-chamber-main-info">
+                                    <div class="sp-chamber-main-info-content">
+                                        <span class="img-holder">
+                                            <img ng-if="chamberSettings.id" ng-src="{{'/Logos/'+ (chamberSettings.isUnified ? userInfo.globalSessionValues.CurrentMember.ChamberId : chamberSettings.id ) +'.png'}}" alt="logo">
+                                        </span>
+                                        <span class="chamber-title">{{chamberSettings.isUnified ? userInfo.globalSessionValues.CurrentMember.ChamberFullArabicName :userInfo.globalSessionValues.ChamberData.CurrentChamberName}}</span>
+                                    </div>
+
+                                    <ul class="list-unstyled clearfix">
+
+                                        <li ng-if="userInfo.globalSessionValues.CurrentMember.MemberId">
+                                            <p>رقم العضوية:</p>
+                                            <span class="main-list-item-name">{{userInfo.globalSessionValues.CurrentMember.MemberId}}</span>
+                                        </li>
+                                        <li ng-if="userInfo.globalSessionValues.CurrentMember.MM_UnifiedNumber">
+                                            <p>الرقم الموحد (700) :</p>
+                                            <span class="main-list-item-name">{{userInfo.globalSessionValues.CurrentMember.MM_UnifiedNumber}}</span>
+                                        </li>
+                                        <li>
+                                            <p>رقم الســـــجل:</p>
+                                            <span class="main-list-item-name">{{userInfo.globalSessionValues.CurrentMember.CrNumber}}</span>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="sp-main-box margin-bottom-30">
+                            <div class="sp-main-container">
+
+                                <div class="main-content-item main-content-item-reset">
+                                    <ul class="list-unstyled clearfix">
+                                        <li>
+                                            <a href="/#/MemberData">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="id-card-outline"></ion-icon></span>
+                                                <span class="main-list-item-name">بيانات العضوية <span> استعراض بيانات عضويتك</span> </span>
+                                            </a>
+                                        </li>
+                                        <li ng-if="chamberSettings.viewFreeMemberCertificate&&chamberSettings.id !== 402&&chamberSettings.id !== 102&&chamberSettings.id !== 405">
+                                            <a href="/#/MemberData/Certificate">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="reader-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">شهادة العضوية <span>استعراض شهادة عضويتك</span> </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/#/Users">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="people-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">إدارة المفوضين <span>إدارة المفوضين على حسابك</span></span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- col-4-ends here-->
+
+                    <div class="col-md-8 col-sm-12">
+                        <div class="main_content">
+
+
+                            <div class="main-content-item sp-main-box margin-bottom-30">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        التصاديق
+                                    </h2>
+                                </div>
+                                <div class="sp-main-container">
+                                    <ul class="list-unstyled clearfix">
+                                        <li>
+                                            <a href="/#/NewRequest">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="documents-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">نماذج جاهزة <span>انشاء نماذج جاهزة</span></span>
+                                            </a>
+                                        </li>
+
+                                        <li ng-if="checkRequests(5) && !checkIsMostUsed(5)">
+                                            <a href="/#/NewRequest/5">
+                                                <span class="main-list-item-img img-holder"><ion-icon name="document-outline"></ion-icon></span>
+                                                <span class="main-list-item-name">نموذج مفتوح <span> إصدار نموذج مفتوح</span></span>
+                                            </a>
+                                        </li>
+
+                                        <li ng-if="checkRequests(4) && !checkIsMostUsed(4)">
+                                            <a href="/#/NewRequest/4">
+                                                <span class="main-list-item-img img-holder"><ion-icon name="document-text-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">طلبات وزارة الخارجية <span>إنشاء طلب لوزارة الخارجية</span></span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/#/AllRequests">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="document-text-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name"> طلباتى <span>مراجعة طلباتك </span></span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="main-content-item sp-main-box margin-bottom-30" ng-if="(ChamberActivatedRequests  | filter: {isMostUsed: true}).length > 0">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        الطلبات الأكثر إستخداماً
+                                    </h2>
+                                </div>
+                                <div class="sp-main-container">
+                                    <ul class="list-unstyled clearfix">
+                                        <li ng-repeat="request in ChamberActivatedRequests  | filter: {isMostUsed: true}">
+                                            <a href="/#/NewRequest/{{request.requestTypeId}}">
+                                                <span class="main-list-item-img img-holder"><ion-icon name="document-text-outline"></ion-icon>  </span>
+                                                <span class="main-list-item-name">{{request.nameAr}}<span> إنشاء {{request.nameAr}}</span></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div class="main-content-item sp-main-box margin-bottom-30" ng-if="(checkRequests(28) && !checkIsMostUsed(28))||(checkRequests(40) && !checkIsMostUsed(40))||(checkRequests(2) && !checkIsMostUsed(2))">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        التصاريح
+                                    </h2>
+                                </div>
+                                <div class="sp-main-container">
+                                    <ul class="list-unstyled clearfix">
+
+                                        <li ng-if="checkRequests(28) && !checkIsMostUsed(28)">
+                                            <a ng-href="{{userInfo.globalSessionValues.ChamberData.ChamberId == 201? '/#/NewRequest/57' :'/#/NewRequest/28'}}">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="medal-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">مسابقات تجارية  <span> إنشاء طلب مسابقة تجارية </span></span>
+                                            </a>
+                                        </li>
+
+                                        <li ng-if="checkRequests(40) && !checkIsMostUsed(40)">
+                                            <a href="/#/NewRequest/40">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="airplane-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">مشهد تايلند  <span> إنشاء طلب مشهد تايلند  </span></span>
+                                            </a>
+                                        </li>
+
+                                        <li ng-if="checkRequests(2) && !checkIsMostUsed(2)">
+                                            <a href="/#/NewRequest/2">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="exit-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">شهادة إعادة تصدير  <span> انشاء طلب شهادة إعادة تصدير </span></span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="main-content-item sp-main-box margin-bottom-30" ng-if="(checkRequests(41)&& !checkIsMostUsed(41)) || (userInfo.globalSessionValues.ChamberData.ChamberId == 201 && checkRequests(54) && !checkIsMostUsed(54))">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        الشهادات
+                                    </h2>
+                                </div>
+                                <div class="sp-main-container">
+                                    <ul class="list-unstyled clearfix">
+                                        <li ng-if="userInfo.globalSessionValues.ChamberData.ChamberId == 201 && checkRequests(54) && !checkIsMostUsed(54)">
+                                            <a href="/#/NewRequest/54">
+                                                <span class="main-list-item-img img-holder"><ion-icon name="receipt-outline"></ion-icon>  </span>
+                                                <span class="main-list-item-name">شهادة العضوية   <span> انشاء شهادة عضوية </span></span>
+                                            </a>
+                                        </li>
+
+                                        <li ng-if="checkRequests(41)&& !checkIsMostUsed(41)">
+                                            <a ng-href="{{userInfo.globalSessionValues.ChamberData.ChamberId == 201? '/#/NewRequest/53' :'/#/NewRequest/41'}}">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="receipt-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">شهادة تعريف   <span>انشاء شهادة تعريف </span></span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="main-content-item sp-main-box margin-bottom-30">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        المحفظة
+                                    </h2>
+                                </div>
+                                <div class="sp-main-container">
+                                    <ul class="list-unstyled clearfix">
+
+                                        <li>
+                                            <a href="/#/WalletCharge">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="wallet-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">شحن الرصيد <span>شحن رصيد لتقديم على الطلبات والخدمات</span></span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/#/WalletsTrans">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="cash-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">كشف الحساب <span>استعراض كشف حسابك</span></span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="main-content-item sp-main-box margin-bottom-30" ng-if="chamberSettings.useService && userInfo.globalSessionValues.ChamberData.ChamberId == 302">
+
+                                <div class="sp-main-title">
+                                    <h2>
+                                        الشريك التجارى
+                                    </h2>
+                                </div>
+                                <div class="sp-main-container">
+                                    <ul class="list-unstyled clearfix">
+                                        <li>
+                                            <a href="/#/CommercialPartner/AddSubscribtion">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="person-add-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">الاشتراك <span>الإشتراك في خدمات الشريك التجاري</span></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/#/CommercialPartner/Index">
+                                                <span class="main-list-item-img img-holder"> <ion-icon name="people-circle-outline"></ion-icon> </span>
+                                                <span class="main-list-item-name">اشتراكاتى <span>استعراض اشتراكاتك السابقة</span></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row ends here-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<modal visible="true" ng-if="chamberSettings.id === 203">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>اعلان </span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://marsad.fsc.org.sa/"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/203.jpeg" class="img-responsive" alt=" استبيان" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+
+<modal visible="true" ng-if="chamberSettings.id === 204">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>اعلان </span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://es.taifchamber.org.sa/#/Meetings/Subscription"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="اضغط للذهاب للرابط">
+  <img src="../../../img/204.jpeg" class="img-responsive" alt=" استبيان" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+<modal visible="true" ng-if="chamberSettings.id === 302">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>اعلان</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href=""
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/302.jpeg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+<!-- <modal visible="true" ng-if="chamberSettings.id === 302">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>الارشاد القانوني</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://legal.acca.sa/?utm_source=memberportal&utm_medium=popup&utm_campaign=launch2026"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="اضغط للذهاب للرابط">
+  <img src="../../../img/302.jpeg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal> -->
+
+<!-- <modal visible="true" ng-if="chamberSettings.id === 601">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>اعلان </span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://eservices.qcc.org.sa/#/Meetings/Subscription"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/601.jpeg" class="img-responsive" alt="الجمعية العمومية" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal> -->
+
+<!-- <modal visible="checkRequests(56)"> 
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;"> 
+                <span>{{getRequestName(56)}}</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <a ng-href="/#/NewRequest/56" data-balloon="إضغط للذهاب للطلب"><img src="../../../img/56.jpg" class="img-responsive" /></a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal> -->
+
+
+<!--<modal visible="true" ng-if="chamberSettings.id === 201"> 
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>اجتماع الجمعية العمومية</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <a ng-href="" data-balloon="إضغط للذهاب للطلب"><img src="../../../img/meeting-201.jpg" class="img-responsive" /></a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>-->
+
+<!-- <modal visible="true" ng-if="chamberSettings.id === 104">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>استطلاع</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <a ng-href="" data-balloon="امسح للذهاب للرابط"><img src="../../../img/104.jpg" class="img-responsive" /></a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal> -->
+
+ <!-- <modal visible="true" ng-if="chamberSettings.id === 604">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>استطلاع</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://forms.office.com/Pages/ResponsePage.aspx?id=OpfkU4dHZUmv6flv_K6i1y-uKfm4Z2BDu4AvcEJ1q3VURFpMOVNKMTQzRFdDTTNCU1BJQk9FNEtCMC4u&origin=QRCode"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/604.jpg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+
+
+<modal visible="true" ng-if="chamberSettings.id === 302">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>استطلاع</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://forms.office.com/Pages/ResponsePage.aspx?id=OpfkU4dHZUmv6flv_K6i1y-uKfm4Z2BDu4AvcEJ1q3VUM1MwOEpJWTNIT1RLUkM0UzBLVVdEMkpQTy4u&origin=QRCode"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/302.png" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+
+<modal visible="true" ng-if="chamberSettings.id === 601">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>استطلاع</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://forms.office.com/Pages/ResponsePage.aspx?id=OpfkU4dHZUmv6flv_K6i1y-uKfm4Z2BDu4AvcEJ1q3VUM1dNVUo5SFFNTERaTEIxWldWVjA3UE9IVC4u&origin=QRCode"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/601.jpg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+
+<modal visible="true" ng-if="chamberSettings.id === 203">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>استطلاع</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://forms.office.com/Pages/ResponsePage.aspx?id=OpfkU4dHZUmv6flv_K6i1y-uKfm4Z2BDu4AvcEJ1q3VUMEdPREFJOFNaTVJSTFQ0TFY2WEQzVldBVS4u"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/203.jpg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>
+
+<modal visible="true" ng-if="chamberSettings.id === 702">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>استطلاع</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href="https://forms.office.com/Pages/ResponsePage.aspx?id=OpfkU4dHZUmv6flv_K6i1y-uKfm4Z2BDu4AvcEJ1q3VUODZOWDJDUlJLM1k4Tk9RMVNRVkFLSzFYUC4u&origin=QRCode"
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="امسح للذهاب للرابط">
+  <img src="../../../img/702.jpg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal> -->
+
+
+<!-- <modal visible="true" ng-if="chamberSettings.id === 202">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            <div class="alert" style="background-color: #d0e7f9; color: #418bca; font-size: larger;">
+                <span>اعلان</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+<a ng-href=""
+   target="_blank"
+   rel="noopener noreferrer"
+   data-balloon="الدورة التدريبية">
+  <img src="../../../img/202.jpg" class="img-responsive" alt="Go to link" />
+</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="اغلاق" ng-click="closeVideo()" class="custom-btn btn-3" data-dismiss="modal">اغلاق</button>
+    </div>
+</modal>  -->
+
+<style>
+    body {
+        background: #f2f4f9;
+    }
+</style>
+
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+</script>
+
+

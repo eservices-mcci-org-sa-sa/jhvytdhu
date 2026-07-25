@@ -1,0 +1,128 @@
+﻿
+<style>
+    #Footer {
+        position: unset !important;
+    }
+</style>
+<style>
+    .fileDownloading {
+        pointer-events: none;
+        cursor: not-allowed;
+        position: relative;
+    }
+
+        .fileDownloading:after {
+            content: "";
+            background: url(/Content/Theme/dist/img/ajax-loader.gif) no-repeat;
+            background-size: contain;
+            position: absolute;
+            top: 40%;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            width: 50px;
+            z-index: 99999;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .fileDownloading:before {
+            content: "";
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: absolute;
+            background: rgba(255,255,255,0.8);
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            z-index: 9999;
+        }
+
+
+
+
+    @media (max-width: 768px) {
+        .all-requests .custom-table {
+            padding-bottom: 105px !important;
+        }
+    }
+</style>
+
+<div class="container p-top-sm" id='divToSend' ng-class="{'fileDownloading':IsDownloading==true}">
+
+
+    <div class="row" ng-show="page.thereIsData">
+        <div class="custom-member-details sp-main-box margin-bottom-30">
+            <div class="sp-main-container">
+                <div id='newprint' pdf-save-content="newprint">
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 custom-member-content">
+                        <ul style="width:50%; float:right; display:block;" class="date list-unstyled">
+                            <li class="margin-bottom-20">التاريخ <span>&#58;</span>  {{page.currentDateHijri}} </li>
+                            <li>{{page.currentDate | date:'dd-MM-yyyy' | ngArabicNumber: true}} م</li>
+                        </ul>
+
+                        <ul style="float:left; display:block;" class="date list-unstyled">
+                            <li class="margin-bottom-20">تاريخ الطلب <span>&#58;</span>  {{RequestModel.RequestDate | date:'dd-MM-yyyy' | ngArabicNumber: true}} م</li>
+                            <li>الرقم المرجعي <span>&#58;</span>  {{RequestModel.RequestId | ngArabicNumber: true}} </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv">
+            <!--<iframe ng-if="RequestDataModel.isAttachment" style="height: 900px;width:100%" ng-src="{{printTemplate.contentValue}}"></iframe>-->
+            <embed ng-if="RequestDataModel.isAttachment" embed-src="{{trustSrc(printTemplate.contentValue)}}" style="height: 900px;width:100%" width="100%" height="100%" />
+
+            <ng-include ng-if="!RequestDataModel.isAttachment" src="templateUrl(RequestModel)"></ng-include>
+
+        </div>
+
+        <div class="text-center margin-bottom-30 m-top-md">
+            <button type="button" ng-if="RequestModel.RequestStatus === 4" ng-hide="hideprint" id="ddownload" ng-click="FileDownload()"
+                    class="sp-main-button"> {{IsOnlyForPrint ? 'طباعة' :'تحميل'}}  <i ng-class="{'fa fa-download':IsOnlyForPrint==false,'fa fa-print':IsOnlyForPrint==true}" class=""></i></button>
+            <site-footer back="عوده"></site-footer>
+        </div>
+    </div>
+    <div ng-hide="page.thereIsData" class="p-top-lg">
+        <div ng-show="page.showLoad" class="text-center" data-loading>
+            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;margin-top:50px;">
+        </div>
+        <div class="col-md-12" ng-show="page.noData && !page.showDownloadAlert">
+            <div class="note note-danger" style="text-align:center !important">
+                عفواً . لا توجـد بيانات.
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12" ng-show="page.noData && page.showDownloadAlert">
+            <div class="alert alert-danger text-center"><h2>  عذراً / تم طباعة الشهادة سابقاً يمكنك تقديم طلب جديد.</h2></div>
+        </div>
+        <div ng-show="!page.showLoad" class="text-center margin-bottom-30">
+            <site-footer back="عوده"></site-footer>
+        </div>
+    </div>
+</div>
+
+<style>
+    contentDiv {
+        margin-top: 8px !important;
+        min-height: 267px !important;
+    }
+
+    #contentDiv .footer-note {
+        padding-top: 15px !important;
+    }
+
+    iframe.hidden {
+        display: none
+    }
+</style>
+
+<iframe id="pdf-frame" name="pdf-frame" width="0" height="0" tabindex="-1" title="empty" class="hidden"></iframe>

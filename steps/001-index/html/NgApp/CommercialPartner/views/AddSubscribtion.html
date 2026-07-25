@@ -1,0 +1,283 @@
+﻿<div ng-if="!LoggedIn" class="custom-regi">
+
+    <!-- header start-->
+    <header class="sp-header sp-header-register">
+        <div class="container h-100">
+            <div class="row align-items-center h-100">
+                <div class="col-md-12">
+                    <div class="sp-outer-logo">
+                        <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                    </div>
+                    <div class="sp-outer-logos" ng-cloak>
+                        <!--<img src="assets/img/302.svg" alt="" />-->
+                        <img ng-cloak ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo">
+                        <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                        <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end-->
+</div>
+
+<div class="packages-intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-12">
+                <div class="packages-title">
+                    <h3>
+                        ماهي خدمة الشريك التجاري؟
+                    </h3>
+                </div>
+                <p>
+                    {{serviceDesc}}
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <img style="width:100%" src="../../../Content/Theme/dist/img/package-thumbnail.svg" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="packages-features">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="packages-title">
+                    <h3>
+                        انضمامك في برنامج الشريك التجاري يتيح لك
+                    </h3>
+                </div>
+            </div>
+            <div ng-repeat="x in featuresData">
+                <div class="col-md-3 col-sm-12">
+                    <div class="package-feature">
+                        <i class="{{x.featureIcon}}" aria-hidden="true"></i>
+                        <h3>{{x.featureName}}</h3>
+                        <p>{{x.featureDesc}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="packages-registration">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="packages-title">
+                    <h3>
+                        شروط التسجيل
+                    </h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div class="package-regi-box">
+                    <span class="num"> 1 <span></span> </span>
+                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                    <h3>
+                        إشتراك ساري المفعول
+                    </h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div class="package-regi-box">
+                    <span class="num"> 2 <span></span> </span>
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    <h3>
+                        اختيار باقة الإشتراك المطلوبة
+                    </h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div class="package-regi-box">
+                    <span class="num"> 3 <span></span> </span>
+                    <i class="fa fa-percent" aria-hidden="true"></i>
+                    <h3>
+                        الالتزام بتقديم خصم لمنتسبين الغرفةلا يقل عن 5%
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="price-table-container">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="packages-title">
+                    <h3>
+                        الباقات المتاحة
+                    </h3>
+                </div>
+            </div>
+
+            <div class="price-table-content">
+                <div class="table-responsive">
+                    <table class="price-table">
+                        <tbody>
+
+                            <tr class="pk-{{PackageWidth}}" ng-repeat="x in packagesData" ng-class="{'price-table-head': x.propertyId == -3}">
+                                <td>
+                                    <span ng-if="x.propertyId!=99999" data-balloon="{{x.propertyName }}" data-balloon-pos="bottom" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-circle" aria-hidden="true" ng-if="x.propertyId>0 && x.propertyId<99999"></i>{{ x.propertyName}}  </span>
+                                    <div class="tacbox" ng-show="x.propertyId==99999 && LoggedIn">
+                                        <input ng-change="agremmentCheckChange(isChecked);" id="checkbox" ng-model="isChecked" type="checkbox" />
+                                        <label for="checkbox"> أوافق على هذه <a target="_blank" href="#/CommercialPartner/ConditionsAndAgreements">الشروط والأحكام</a></label>
+                                        <p style="color:#c0392b" ng-show="agremmentMessage"> <i class="fa fa-info-circle"></i> {{agremmentMessage}} </p>
+                                    </div>
+                                </td>
+                                <td ng-repeat="y in x.packageDetailsShow">
+                                    <div ng-if="y.isHead==true">
+                                        <span ng-if="x.propertyId == -3">{{y.detailDescription}}</span>
+                                        <span ng-if="x.propertyId == -2"><i class="package-icon {{y.detailDescription}}"></i></span>
+                                        <span ng-if="x.propertyId == -1" class="price"> {{y.detailDescription}} ريال</span>
+                                        <div ng-if="x.propertyId==99999" class="package-submit-container">
+                                            <button ng-if="LoggedIn" ng-disabled="isChecked!=true" ng-click="AddSubscription(y.detailDescription,isChecked)" class="package-submit"> الإشتراك </button>
+                                            <a  ng-if="!LoggedIn" ng-disabled="isChecked!=true" ng-href="/#/Login/redirectUrl=CommercialPartner+AddSubscribtion" class="package-submit"> الدخول للإشتراك </a>
+                                        </div>
+                                    </div>
+                                    <div ng-if="!y.isHead==true">
+                                        <div ng-if="y.packageDetailId==null">
+                                            <i class="fa fa-times" style="color:#D8D6E3"></i>
+                                        </div>
+                                        <div ng-if="y.packageDetailId!=null">
+                                            <i class="fa fa-check"></i>
+                                            <p class="package-value-details">{{y.detailDescription+' '+((y.propertyDegrees==null)?'':'(خاص بالدرجة'+y.propertyDegreesName+')')}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="note-conditions" ng-if="LoggedIn">
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> <span> نرجو الموافقة على <a target="_blank" href="#/CommercialPartner/ConditionsAndAgreements">الشروط والأحكام</a> قبل الإشتراك في الباقة </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="cp-contact">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="packages-title">
+                    <h3>
+                        التواصل
+                    </h3>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <a class="cp-contact-box" href="whatsapp://send?text=الإنضمام الي خدمة الشريك التجاري&phone=+966543237913">
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                    <h3>
+                        التواصل عبر واتس اب
+                    </h3>
+                    <p> 00966543237913 </p>
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <a class="cp-contact-box" href="tel:58202020">
+                    <i class="fa fa-phone-square" aria-hidden="true"></i>
+                    <h3> رقم المنشأة </h3>
+                    <p> 920021174 </p>
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <a class="cp-contact-box" href="mailto:h3fsa@hcci.org.sa">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <h3>التواصل عبر البريد الإلكتروني</h3>
+                    <p> mailto:h3fsa@hcci.org.sa </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<modal class="send-code" title="تم الإشتراك بنجاح" visible="showSuccesesPopUp">
+    <form class="form-horizontal  text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <div class="form-group has-success statmodal">
+                        <div class="modal-body" style="padding: 0;">
+                            <svg class="staticon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                                <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                                <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+                            </svg>
+                            <h1>تم إرسال طلب الإشتراك بنجاح !</h1>
+                            <p>
+                                سوف يتم النظر فى طلب إشتراككم و سوف يتم الرد عليكم فى أقرب وقت
+                                عن طريق البريد الإلكتروني الخاص بكم
+                            </p>
+                            <a href="#/Home" class="cp-btn"> الإنتقال إلي الرئيسية </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</modal>
+
+<modal class="send-code" title=" نعتذر لك! " visible="showFailurePopUp">
+    <form class="form-horizontal  text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <div class="form-group has-success statmodal">
+                        <div class="modal-body" style="padding: 0;">
+                            <svg class="staticon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                                <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+                                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" />
+                            </svg>
+                            <h1> نعتذر! المبلغ المطلوب غير متوفر</h1>
+                            <p>
+                                {{ErrorMessage}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <button class="custom-btn custom-btn-reverse btn-6" data-dismiss="modal" type="button">
+                        الرجوع
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <!--ng-href="/#/WalletCharge"-->
+                    <a class="custom-btn custom-btn-reverse btn-6" ng-click="GoToWalletCharge()">
+                        <i class="fa fa-files-o"></i>  شحن المحفظة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</modal>
+
+<!--[if lte IE 9]>
+  <style>
+    .path {stroke-dasharray: 0 !important;}
+  </style>
+<![endif]-->
+<style>
+    .price-table .price{padding: 0px;}
+</style>

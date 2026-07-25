@@ -1,0 +1,57 @@
+﻿<div class="p-top-md p-bottom-md">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="custom-title">
+                    <h4>
+                        <i class="fa fa-chart-pie"></i>
+                        إحصائيات الطلبات
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center">
+            <div ng-show="page.thereIsData" style="padding:50px 0" class="hidden-xs">
+                <fusioncharts id="revenue-pie"
+                              width="100%"
+                              height="600"
+                              type="pie2d"
+                              dataFormat="json"
+                              dataSource="{{dataSource}}">
+                </fusioncharts>
+            </div>
+
+
+            <div ng-hide="page.thereIsData" style="margin-right:80px;margin-left:80px;">
+                <div ng-show="page.showLoad" class="text-center" data-loading>
+                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                </div>
+                <div class="col-md-12" ng-show="page.NoData">
+                    <div class="note note-danger" style="text-align:center !important">
+                        عفواً . لا توجـد بيانات.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #revenue-pie text{
+        direction:rtl;
+    }
+    #revenue-pie text tspan{
+        direction: ltr;
+    }
+</style>
+
+<script>
+    // window width and resize
+    window.addEventListener('resize', calc_width);
+    window.addEventListener('DOMContentLoaded', calc_width);
+
+    function calc_width() {
+        window.innerWidth;
+        console.log(window.innerWidth)
+    }
+</script>

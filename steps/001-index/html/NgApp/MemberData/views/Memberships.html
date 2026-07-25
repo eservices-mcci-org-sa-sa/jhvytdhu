@@ -1,0 +1,126 @@
+﻿<div class="users-content grey-color p-top-sm p-bottom-lg">
+    <div class="container">
+        <div class="col-md-12 col-xs-12" ng-if="!userInfo.globalSessionValues.CurrentMember && objects.length">
+            <div class="alert alert-info text-center "><h2>قم بتحديد عضوية واحدة على الأقل لتتمكن من إستخدام خدمات بوابة خدمات المشتركين</h2></div>
+        </div>
+        <div class="col-md-12 col-xs-12" ng-if="!objects.length">
+            <div class="alert alert-info text-center "><h2>هذه الهوية غير تابعة أو مٌفوضة لأي عضوية داخل الغرفة. </h2></div>
+        </div>
+        <div class="clearfix"></div>
+        <form name="searchForm" novalidate="novalidate" role="form" autocomplete="off">
+            <div class="row">
+                <div class="all-req-box clearfix white-bg p-top-sm">
+                    <div class="col-md-6 col-xs-12">
+                        <div class="custom-input ">
+                            <label for="date">إسم العضوية </label>
+                            <input type="text" ng-model="searchModel.estName" class="form-control" placeholder="إسم العضوية" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="custom-input ">
+                            <label for="date">رقم العضوية</label>
+                            <input type="text" ng-model="searchModel.memberId" maxlength="12" restrict-input="{type: 'digitsOnly'}" class="form-control" placeholder="رقم العضوية" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="submit small-submit text-center">
+                    <div class="btn-group">
+                        <a ng-click="Search();" class="custom-btn btn-3">
+                            <i class="fa fa-search"></i>
+                            بحـث
+                        </a>
+                        <a ng-click="searchModel.estName = '';searchModel.memberId = ''" class="custom-btn btn-3">
+                            <i class="fa fa-indent	Try it"></i>
+                            تفريغ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="clearfix p-bottom-md"></div>
+    <div class="container" ng-show="page.thereIsData">
+        <div class="user-container no-padding">
+            <div class="row">
+                <div class="custom-user-table">
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="light bordered">
+                                <div class="portlet-body form">
+                                    <div class="table-scrollable">
+                                        <table class="table table-striped table-bordered table-hover table-checkable order-column no-footer">
+                                            <thead>
+                                                <tr style="background-color: #b8e0d0;">
+                                                    <th colspan="3">العضويات التابعة لي</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="c in objects | filter:{ relatedType: 1 } | filter:searchModel.estName | filter:searchModel.memberId">
+                                                    <td class="text-center"><input style="min-height: 0 !important;" type="checkbox" ng-model="c.checked" /></td>
+                                                    <td class="text-center">{{c.memberId}}</td>
+                                                    <td class="text-center">{{c.estName}}</td>
+                                                </tr>
+                                                <tr ng-show="(objects | filter:{ relatedType: 1 } | filter:searchModel.estName | filter:searchModel.memberId).length==0">
+                                                    <td colspan="3">لا توجد عضويات تابعة</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="light bordered">
+                                <div class="portlet-body form">
+                                    <div class="table-scrollable">
+                                        <table class="table table-striped table-bordered table-hover table-checkable order-column no-footer">
+                                            <thead>
+                                                <tr style="background-color: #b8e0d0;">
+                                                    <th colspan="3">العضويات المفوض عليها</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="c in objects | filter:{ relatedType: 2 } | filter:searchModel.estName | filter:searchModel.memberId">
+                                                    <td class="text-center"><input style="min-height: 0 !important;" type="checkbox" ng-model="c.checked" /></td>
+                                                    <td class="text-center">{{c.memberId}}</td>
+                                                    <td class="text-center">{{c.estName}}</td>
+                                                </tr>
+                                                <tr ng-show="(objects | filter:{ relatedType: 2 } | filter:searchModel.estName | filter:searchModel.memberId).length==0">
+                                                    <td colspan="3">لا توجد عضويات مفوض عليها</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix p-bottom-sm"></div>
+                    <div class="submit small-submit text-center">
+                        <div class="btn-group">
+                            <a ng-click="UpdateIdentityMembers();" class="custom-btn btn-3">
+                                <i class="fa fa-save"></i>
+                                حفظ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div ng-hide="page.thereIsData" class="m-top-lg">
+        <div ng-show="page.showLoad" class="text-center" data-loading>
+            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+        </div>
+        <div class="col-md-12" ng-show="page.noData">
+            <div class="note note-danger" style="text-align:center !important">
+                عفواً . لا توجـد بيانات.
+            </div>
+        </div>
+    </div>
+</div>
+

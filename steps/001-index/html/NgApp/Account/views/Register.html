@@ -1,0 +1,1359 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo"
+                         ng-if="chamberSettings.id"
+                         ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}"
+                         alt="logo" />
+                </div>
+                <div class="sp-outer-logos" ng-cloak>
+                    <img ng-cloak
+                         ng-if="chamberSettings.id && !chamberSettings.isUnified"
+                         ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}"
+                         alt="logo"
+                         class="sp-chamber-logo" />
+                    <img ng-cloak
+                         ng-if="loadChamberLogo && !chamberSettings.id"
+                         src="/Content/Theme/dist/img/loadingImg.gif"
+                         alt="logo" />
+                    <img src="../../../Content/Theme/assets/img/2030.svg"
+                         alt=""
+                         class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<div class="custom-regi">
+    <section class="sp-register-steps">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <ul>
+                        <li ng-class="{'active': !page.AgreementAccepted,
+                            'done':page.AgreementAccepted }">
+                            <p>1</p>
+                            <span>الإتفاقية</span>
+                        </li>
+                        <li ng-class="{'active': firstStep && page.AgreementAccepted, 'done':!firstStep || Sms.CodeSent || secondStep || Sms.CodeSent || page.successRedirectLogin }">
+                            <p>2</p>
+                            <span>ادخال رقم الهوية / الإقامة</span>
+                        </li>
+                        <li ng-class="{'active': firstStep && Sms.CodeSent, 'done':secondStep || (secondStep && Sms.CodeSent) || page.successRedirectLogin }">
+                            <p>3</p>
+                            <span ng-if="chamberSettings.useAbshir || chamberSettings.allowNafath">التحقق من رقم الهوية / الإقامة</span>
+                            <span ng-if="!chamberSettings.useAbshir && !chamberSettings.allowNafath">
+                                التحقق من رقم الهوية / الإقامة و الجوال
+                            </span>
+                        </li>
+                        <li ng-class="{'active':  secondStep, 'done': (secondStep && Sms.CodeSent) || page.successRedirectLogin }">
+                            <p>4</p>
+                            <span>ادخال بيانات العضوية</span>
+                        </li>
+                        <li ng-class="{'active': secondStep && Sms.CodeSent, 'done':page.successRedirectLogin }">
+                            <p>5</p>
+                            <span>التحقق من رقم الجوال</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <form id="registerForm" name="registerForm" autocomplete="off">
+        <!--NEW DESIGN-->
+        <div class="container">
+            <div class="row">
+                <!-- search section -->
+                <div ng-cloak
+                     class="col-md-8 col-md-offset-2"
+                     ng-if="chamberSettings.isUnified && firstStep && !page.AgreementAccepted  && !page.successRedirectLogin">
+                    <div class="sp-main-box sp-membership-box margin-bottom-30"
+                         id="related">
+                        <div class="sp-main-title">
+                            <h2>
+                                <i class="fa fa-user mc-color-reverse"></i>
+                                تحديد الغرفة
+                            </h2>
+                            <a class="sp-main-button sp-main-sm-button pull-left"
+                               href="/#/MemberLogin">
+                                العودة
+                            </a>
+                        </div>
+                        <div class="sp-main-form sp-membership-inner-box">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="MC_ImporterCountry"> اختيار الغرفة </label>
+                                    <div class="custom-input">
+                                        <ui-select name="ChamberId"
+                                                   ng-model="registerData.ChamberId"
+                                                   ng-change="onChamberDomainChange()"
+                                                   reset-search-input="true"
+                                                   theme="selectize"
+                                                   ng-required="true">
+                                            <ui-select-match>
+                                                <span class="selected-value"
+                                                      ng-bind="$select.selected.chamberName"></span>
+                                                <a class="fa fa-times clear-button"
+                                                   ng-click="$select.clear($event);"></a>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="c.chamberId as c in ChamberList | filter: $select.search">
+                                                <small ng-bind-html="c.chamberName"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <div ng-messages="registerForm.ChamberId.$error"
+                                             ng-if="registerForm.ChamberId.$touched">
+                                            <p class="text-danger" ng-message="required">
+                                                من فضلك أختر الغرفة
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="sp-main-box sp-register-box form-wizard register-pg"
+                         id="form_wizard_1">
+                        <div class="sp-main-title">
+                            <h2>
+                                تسجيل مستخدم جديد
+                                <span ng-if="secondStep || (firstStep && Sms.CodeSent)">
+                                    ( رقم الهوية: {{registerData.IdentityNo}} )
+                                </span>
+                            </h2>
+                        </div>
+
+                        <div>
+                            <input autocomplete="false"
+                                   name="hidden"
+                                   type="text"
+                                   class="hidden" />
+                            <div class="sp-register-form">
+                                <div ng-if="firstStep && !page.AgreementAccepted  && !page.successRedirectLogin">
+                                    <div ng-if="(chamberSettings.useAbshir && !Sms.CodeSent) || (chamberSettings.useAbshir == false && PhoneNumbersList.length <= 0)">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div ng-bind-html="chamberSettings.agreementText"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           class="checkbox-input"
+                                                           name="agree"
+                                                           data-ng-model="AgreementAccepted"
+                                                           ng-required="true" />
+                                                    <span> أوافق على هذه الشروط </span>
+                                                </label>
+                                                <div ng-messages="registerForm.agree.$error "
+                                                     ng-if="registerForm.agree.$touched  || isFormSubmitted">
+                                                    <p class="text-danger" ng-message="required">
+                                                        فضلاً قم بالموافقة على الإتفاقية
+                                                    </p>
+                                                </div>
+                                                <hr />
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <button type="submit"
+                                                        ng-click="acceptAgreement(AgreementAccepted,registerForm);"
+                                                        class="sp-main-button">
+                                                    التالى
+                                                </button>
+                                                <div class="margin-top-15"
+                                                     ng-messages="registerForm.ChamberId.$error"
+                                                     ng-if="registerForm.ChamberId.$invalid &&  registerForm.ChamberId.$touched ">
+                                                    <p class="text-danger" ng-message="required">
+                                                        من فضلك أختر الغرفة
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Step one | IdentityNo & verification -->
+                                <div ng-if="firstStep && page.AgreementAccepted && !page.successRedirectLogin">
+                                    <div ng-if="(chamberSettings.useAbshir && !Sms.CodeSent && !loginWays.allowNafath) || (chamberSettings.useAbshir == false && PhoneNumbersList.length <= 0)">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                                <!--<ul class="login-tab-list" ng-if="chamberSettings.allowNafath">
+                                                    <li class="tab-item" ng-click="swapTabs(1)" ng-class="{'active': !loginWays.allowNafath}">
+                                                        <a>اسم المستخدم</a>
+                                                    </li>
+                                                    <li class="tab-item" ng-click="swapTabs(2)" ng-class="{'active': loginWays.allowNafath}">
+                                                        <a>
+                                                            <div class="nafath-title">
+                                                                <img src="../../../Content/Theme/img/nafath-logo.svg" width="100%" alt="Nafath Logo" />
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>-->
+                                                <div class="tab-content">
+                                                    <div id="tab1" class="tab-pane" ng-show="!loginWays.allowNafath">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label for="IdentityNo">رقم الهوية / الإقامة </label>
+                                                                    <input ng-required="true"
+                                                                           ng-model="registerData.IdentityNo"
+                                                                           has-focus
+                                                                           autocomplete="off"
+                                                                           maxlength="10"
+                                                                           restrict-input="{type: 'digitsOnly'}"
+                                                                           ng-pattern="identityPattern"
+                                                                           class="form-control IdentityNo"
+                                                                           name="IdentityNo"
+                                                                           type="text"
+                                                                           placeholder="رقم الهوية / الإقامة" />
+                                                                    <div ng-messages="registerForm.IdentityNo.$error"
+                                                                         ng-if="registerForm.IdentityNo.$dirty  ||  isFormSubmitted">
+                                                                        <p class="text-danger error-msg"
+                                                                           ng-message="required && isFormSubmitted">
+                                                                            رقم الهوية مطلوب
+                                                                        </p>
+                                                                        <p class="text-danger error-msg"
+                                                                           ng-message="pattern">
+                                                                            أدخل رقم الهوية أرقام وتبدأ ب 1 أو 2
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="g-recaptcha"
+                                                                         vc-recaptcha
+                                                                         size="normal"
+                                                                         theme="'light'"
+                                                                         key="captcha.captchaKey"
+                                                                         lang="ar"
+                                                                         ng-model="captcha.captchaKey"
+                                                                         name="captchaKey"
+                                                                         ng-required="true"
+                                                                         on-create="setWidgetId(widgetId)"
+                                                                         on-success="setResponse(response)"
+                                                                         on-expire="cbExpiration()"></div>
+                                                                    <div ng-messages="registerForm.captchaKey.$error"
+                                                                         ng-if="registerForm.captchaKey.$touched &&(registerForm.captchaKey.$dirty || isFormSubmitted)">
+                                                                        <p class="text-danger" ng-message="required">
+                                                                            من فضلك قُم بالتحديد
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <button ng-show="firstStep && !Sms.CodeSent"
+                                                                        ng-click="page.AgreementAccepted = false;AgreementAccepted=false;"
+                                                                        type="button"
+                                                                        class="custom-back-btn">
+                                                                    السابق
+                                                                </button>
+                                                                <button ng-if="firstStep && !Sms.CodeSent"
+                                                                        ng-disabled="page.showSmsTime"
+                                                                        ng-click="SendValidateIdentity(registerForm,$event,false);"
+                                                                        type="submit"
+                                                                        class="sp-main-button">
+                                                                    التحقق
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="tab2" class="tab-pane" ng-show="loginWays.allowNafath">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div ng-if="chamberSettings.allowNafath && !loginWays.allowNafath">
+                                                                   
+                                                                            <div class="form-group">
+                                                                                <label for="IdentityNo">رقم السجل المدني </label>
+                                                                                <input ng-required="true"
+                                                                                       ng-model="registerData.IdentityNo"
+                                                                                       has-focus
+                                                                                       autocomplete="off"
+                                                                                       maxlength="10"
+                                                                                       restrict-input="{type: 'digitsOnly'}"
+                                                                                       ng-pattern="identityPattern"
+                                                                                       class="form-control IdentityNo"
+                                                                                       name="IdentityNo"
+                                                                                       type="text"
+                                                                                       placeholder="رقم السجل المدني" />
+                                                                                <div ng-messages="registerForm.IdentityNo.$error"
+                                                                                     ng-if="registerForm.IdentityNo.$dirty  ||  isFormSubmitted">
+                                                                                    <p class="text-danger error-msg"
+                                                                                       ng-message="required && isFormSubmitted">
+                                                                                        رقم السجل المدني
+                                                                                    </p>
+                                                                                    <p class="text-danger error-msg"
+                                                                                       ng-message="pattern">
+                                                                                        أدخل رقم الهوية أرقام وتبدأ ب 1 أو 2
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        
+                                                                   
+                                                                            <div class="form-group">
+                                                                                <div class="g-recaptcha"
+                                                                                     vc-recaptcha
+                                                                                     size="normal"
+                                                                                     theme="'light'"
+                                                                                     key="captcha.captchaKey"
+                                                                                     lang="ar"
+                                                                                     ng-model="captcha.captchaKey"
+                                                                                     name="captchaKey"
+                                                                                     ng-required="true"
+                                                                                     on-create="setWidgetId(widgetId)"
+                                                                                     on-success="setResponse(response)"
+                                                                                     on-expire="cbExpiration()"></div>
+                                                                                <div ng-messages="registerForm.captchaKey.$error"
+                                                                                     ng-if="registerForm.captchaKey.$touched &&(registerForm.captchaKey.$dirty || isFormSubmitted)">
+                                                                                    <p class="text-danger" ng-message="required">
+                                                                                        من فضلك قُم بالتحديد
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                      
+                                                                   
+                                                                            <button ng-show="firstStep && !Nafath.Sent"
+                                                                                    ng-click="page.AgreementAccepted = false;AgreementAccepted=false;"
+                                                                                    type="button"
+                                                                                    class="custom-back-btn">
+                                                                                السابق
+                                                                            </button>
+                                                                            <button ng-if="firstStep && !Nafath.Sent"
+                                                                                    ng-disabled="page.showSmsTime"
+                                                                                    ng-click="SendValidateIdentityViaNafath(registerForm,$event,false);"
+                                                                                    type="submit"
+                                                                                    class="sp-main-button">
+                                                                                تسجيل
+                                                                            </button>
+                                                                      
+                                                                     
+                                                                            <div class="nafath-mobile-app">
+                                                                                <p>لتتمكن من الدخول بسهولة قم بتحميل تطبيق نفاذ</p>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="https://appgallery.huawei.com/app/C106870695" target="_blank" class="">
+                                                                                            <img src="../../../Content/Theme/img/appGallary.svg" width="100%" alt="App Gallery" />
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid" target="_blank" class="">
+                                                                                            <img src="../../../Content/Theme/img/googleplay2.svg" width="100%" alt="Google PLay" />
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="https://apps.apple.com/sa/app/%D9%86%D9%81%D8%A7%D8%B0-nafath/id1598909871" target="_blank" class="">
+                                                                                            <img src="../../../Content/Theme/img/appstore.svg" width="100%" alt="App Store" />
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row"
+                                         ng-if="!loginWays.allowNafath && !chamberSettings.useAbshir && PhoneNumbersList.length > 0 && !Sms.CodeSent">
+                                        <!--<div class="row">-->
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group text-center">
+                                                <p class="verification-text">
+                                                    أختر رقم الجوال الخاص بك من الأرقام التالية لإستكمال
+                                                    التسجيل
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group switch-control">
+                                            <div class="sp-forget-way"
+                                                 id="SwitchRow"
+                                                 ng-repeat="phone in PhoneNumbersList">
+                                                <label>
+                                                    <input type="radio"
+                                                           ng-required="true"
+                                                           id="id_{{$index}}"
+                                                           name="id_{{$index}}"
+                                                           ng-model="registerData.Mobile"
+                                                           value="{{phone}}" />
+                                                    {{hashNumber(phone)}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row"
+                                         ng-if="!loginWays.allowNafath && !chamberSettings.useAbshir && registerData.Mobile  && !Sms.CodeSent">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <button ng-click="SendCodeMobile(registerForm,$event,false);"
+                                                    type="submit"
+                                                    class="sp-main-button">
+                                                تأكيد رقم الجوال
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row"
+                                         ng-if="!loginWays.allowNafath && !chamberSettings.useAbshir && registerData.Mobile && Sms.CodeSent">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <button ng-click="Sms.CodeSent = false;page.showSmsTime = false;registerData.Mobile = null"
+                                                    type="submit"
+                                                    class="sp-main-button">
+                                                إختيار رقم أخر
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row"
+                                         ng-if="!loginWays.allowNafath && !chamberSettings.useAbshir && registerData.Mobile && Sms.CodeSent">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group text-center">
+                                                <p class="verification-text">
+                                                    أدخل الكود الذي تم إرساله لرقم الجوال الذي تم إدخاله.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ver-code">
+                                            <input ng-repeat="digit in smsInputs  track by $index"
+                                                   type="text"
+                                                   data-ng-model="digit.value"
+                                                   restrict-input="{type: 'digitsOnly'}"
+                                                   min="0"
+                                                   max="9"
+                                                   move-Previous
+                                                   maxlength="1"
+                                                   ng-change="combineCode(digit,$index)"
+                                                   class="form-control"
+                                                   autocomplete="off" />
+                                        </div>
+                                        <div class="text-center resend-time"
+                                             ng-show="Sms.CodeSent && (page.showSmsTime || page.smsTimer != 0)">
+                                            <span>
+                                                يمكنك إعادة الإرسال بعد: {{page.smsTimer}} ثانية
+                                            </span>
+                                        </div>
+                                        <div class="sp-ver-code-buttons">
+                                            <a ng-show="Sms.CodeSent"
+                                               ng-click="!page.showSmsTime && SendCodeMobile(registerForm,$event,true);"
+                                               ng-disabled="page.showSmsTime"
+                                               class="sp-main-button">
+                                                إعادة الإرسال
+                                            </a>
+                                            <a ng-click="Sms.Code && Reset();"
+                                               ng-disabled="!Sms.Code"
+                                               class="clear">
+                                                تفريغ
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row m-top-md"
+                                         ng-if="!loginWays.allowNafath && firstStep && !chamberSettings.useAbshir && PhoneNumbersList.length <= 0  && !Sms.CodeSent && validateWithoutAbshirDone">
+                                        <!--<div class="row">-->
+                                        <div class="col-sm-12 col-md-12 col-lg-12"
+                                             ng-if="!identityFounded">
+                                            <div class="form-group">
+                                                <div class="alert">
+                                                    <img src="../../../Content/Theme/assets/img/alert.svg" />
+                                                    بياناتك غير مُسجلة بالغرفة كمالك أو مفوض , يرجي
+                                                    التواصل مع الغرفة .
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12"
+                                             ng-if="PhoneNumbersList.length <= 0 && identityFounded">
+                                            <div class="form-group">
+                                                <div class="alert">
+                                                    <img src="../../../Content/Theme/assets/img/alert.svg" />
+                                                    لا توجد أرقام جوال مرتبطة برقم الهوية المدخلة ، يرجي
+                                                    التواصل مع الغرفة.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row"
+                                         ng-if="!loginWays.allowNafath && Sms.CodeSent && (chamberSettings.useAbshir || (!chamberSettings.useAbshir && PhoneNumbersList.length <= 0 && registerData.Mobile))">
+                                        <!--<div class="row">-->
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group text-center">
+                                                <p class="verification-text">
+                                                    أدخل كود التحقق الذي تم ارسالة لجوالك المرتبط برقم
+                                                    الهوية المدخلة
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- verification -->
+                                        <div class="form-group ver-code">
+                                            <input ng-repeat="digit in smsInputs  track by $index"
+                                                   type="text"
+                                                   data-ng-model="digit.value"
+                                                   restrict-input="{type: 'digitsOnly'}"
+                                                   min="0"
+                                                   max="9"
+                                                   move-Previous
+                                                   maxlength="1"
+                                                   ng-change="combineCode(digit,$index)"
+                                                   class="form-control"
+                                                   autocomplete="off" />
+                                        </div>
+                                        <!-- verification end -->
+
+                                        <div class="text-center resend-time"
+                                             ng-show="Sms.CodeSent && (page.showSmsTime || page.smsTimer != 0)">
+                                            <span>
+                                                يمكنك إعادة الإرسال بعد: {{page.smsTimer}} ثانية
+                                            </span>
+                                        </div>
+
+                                        <div class="sp-ver-code-buttons">
+                                            <a ng-if="firstStep"
+                                               ng-show="Sms.CodeSent"
+                                               ng-click="!page.showSmsTime && SendValidateIdentity(registerForm,$event,true);"
+                                               ng-disabled="page.showSmsTime"
+                                               class="sp-main-button">
+                                                إعادة الإرسال
+                                            </a>
+
+                                            <a ng-click="Sms.Code && Reset();"
+                                               ng-disabled="!Sms.Code"
+                                               class="clear">
+                                                تفريغ
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!--NAFATH CONFIRMATOIN-->
+                                    <div class="row text-center"
+                                         ng-if="Nafath.Sent && loginWays.allowNafath">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <p class="nafath-title">
+                                                <img src="../../../Content/Theme/img/nafath-logo.svg" width="100%" alt="Nafath Logo" />
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <!--NAFATH CONFIRMATION NUMBER-->
+                                            <div class="nafath-mobile-app mt-0">
+                                                <p class="font-weight-bold" ng-show="Nafath.Sent && (page.showSmsTime || page.smsTimer != 0)">الرجاء فتح تطبيق نفاذ وتأكيد الطلب باختيار الرقم</p>
+                                                <div class="nafath-confirmation-number" ng-show="Nafath.Sent && (page.showSmsTime || page.smsTimer != 0)">
+                                                    <span>{{Nafath.Random}}</span>
+                                                </div>
+                                                <div class="text-center resend-time"
+                                                     ng-show="Nafath.Sent && (page.showSmsTime || page.smsTimer != 0)">
+                                                    <div ng-if="!Nafath.IsResend">
+                                                        يمكنك اعادة الارسال بعد: {{page.smsTimer}} ثانية
+                                                    </div>
+                                                </div>
+                                                <div ng-show="!page.showSmsTime" class="row">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="g-recaptcha"
+                                                                     style=" display: grid; place-items: center; margin-bottom: 25px;"
+                                                                     vc-recaptcha
+                                                                     size="normal"
+                                                                     theme="'light'"
+                                                                     key="captcha.captchaKey"
+                                                                     lang="ar"
+                                                                     ng-model="captcha.captchaKey"
+                                                                     name="captchaKey"
+                                                                     ng-required="true"
+                                                                     on-create="setWidgetId(widgetId)"
+                                                                     on-success="setResponse(response)"
+                                                                     on-expire="cbExpiration()"></div>
+                                                                <div ng-messages="registerForm.captchaKey.$error"
+                                                                     ng-if="registerForm.captchaKey.$touched &&(registerForm.captchaKey.$dirty || isFormSubmitted)">
+                                                                    <p class="text-danger" ng-message="required">
+                                                                        من فضلك قُم بالتحديد
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <a ng-show="Nafath.Sent"
+                                                           class="sp-main-button"
+                                                           ng-click="!page.showSmsTime && SendValidateIdentityViaNafath(registerForm,$event,true);"
+                                                           ng-disabled="page.showSmsTime">
+                                                            إعادة الإرسال
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--NAFATH APP LINKS-->
+                                            <div class="nafath-mobile-app">
+                                                <p>لتتمكن من الدخول بسهولة قم بتحميل تطبيق نفاذ</p>
+                                                <ul class="justify-content-center">
+                                                    <li>
+                                                        <a href="/" class="">
+                                                            <img src="../../../Content/Theme/img/appgallary.svg" width="100%" alt="App Gallery" />
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/" class="">
+                                                            <img src="../../../Content/Theme/img/googleplay2.svg" width="100%" alt="Google PLay" />
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/" class="">
+                                                            <img src="../../../Content/Theme/img/applestore.svg" width="100%" alt="App Store" />
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="custom-card-footer text-right">
+                                                <button ng-click="Back();"
+                                                        type="button"
+                                                        class="custom-back-btn">
+                                                    العودة
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Step two | Full Form & mobile verification -->
+                                <div ng-if="secondStep && page.AgreementAccepted && !page.successRedirectLogin">
+                                    <!--<div>-->
+                                    <div class="row flex-row" ng-if="!Sms.CodeSent">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="alert">
+                                                    <img src="../../../Content/Theme/assets/img/alert.svg" />
+                                                    يرجي العلم أن رقم الجوال سيتم إستخدامه للتحقق وتسجيل
+                                                    الدخول داخل البوابة .
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label>الإسم بالكامل باللغة العربية</label>
+                                                <input maxlength="100"
+                                                       ng-maxlength="100"
+                                                       minlength="5"
+                                                       onfocus="javascript: this.removeAttribute('readonly')"
+                                                       ng-pattern="/^[\u0621-\u064A\u0660-\u0669 -]+$/"
+                                                       ng-model="registerData.UserFullName"
+                                                       ng-required="true"
+                                                       autocomplete="off"
+                                                       ng-disabled="chamberSettings.changePhoneOwnerSendCode && !page.authOwnerPhone"
+                                                       ng-trim="false"
+                                                       class="form-control UserFullName"
+                                                       name="UserFullName"
+                                                       type="text"
+                                                       placeholder="الإسم بالكامل باللغة العربية" />
+                                                <div ng-messages="registerForm.UserFullName.$error"
+                                                     ng-if="registerForm.UserFullName.$dirty || isFormSubmitted">
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="required">
+                                                        الإسم بالكامل باللغة العربية مطلوب
+                                                    </p>
+                                                    <p class="text-danger error-msg" ng-message="pattern">
+                                                        أدخل الإسم باللغة العربية بشكل صحيح
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="maxlength">
+                                                        اسم المستخدم لا يمكن ان يتخطي 100 حرف
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="minlength">
+                                                        اسم المستخدم لا يقل عن 5 أخرف
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label>الإسم بالكامل باللغة الإنجليزية</label>
+                                                <input maxlength="100"
+                                                       ng-disabled="Sms.CodeSent"
+                                                       ng-maxlength="100"
+                                                       ng-pattern="/^[\w -]*$/"
+                                                       onfocus="javascript: this.removeAttribute('readonly')"
+                                                       minlength="5"
+                                                       ng-model="registerData.UserFullNameEn"
+                                                       ng-required="true"
+                                                       autocomplete="off"
+                                                       ng-trim="false"
+                                                       class="form-control UserFullName"
+                                                       name="UserFullNameEn"
+                                                       type="text"
+                                                       placeholder="الإسم بالكامل باللغة الإنجليزية"
+                                                       ng-disabled="ownerInfo.mO_NameEN" />
+                                                <div ng-messages="registerForm.UserFullNameEn.$error"
+                                                     ng-if="registerForm.UserFullNameEn.$dirty || isFormSubmitted">
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="required">
+                                                        الإسم بالكامل باللغة الإنجليزية مطلوب
+                                                    </p>
+                                                    <p class="text-danger error-msg" ng-message="pattern">
+                                                        أدخل الإسم باللغة الإنجليزية بشكل صحيح
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="maxlength">
+                                                        اسم المستخدم لا يمكن ان يتخطي 100 حرف
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="minlength">
+                                                        اسم المستخدم لا يقل عن 5 أخرف
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label class="d-flex-align-center-justify-between">
+                                                    <span>رقم الجوال</span>
+                                                    <a class="btn text-primary p-0 text-underline"
+                                                       ng-click="changePhoneNo()"
+                                                       ng-if="chamberSettings.changePhoneOwnerSendCode && !page.authOwnerPhone">
+                                                        تغيير رقم الجوال ؟
+                                                    </a>
+                                                </label>
+
+                                                <input ng-required="true"
+                                                       only-Int
+                                                       ng-pattern="/^(05)([0-9]{8})$/"
+                                                       readonly="readonly"
+                                                       minlength="10"
+                                                       maxlength="10"
+                                                       onfocus="javascript: this.removeAttribute('readonly')"
+                                                       ng-model="registerData.PhoneNumber"
+                                                       autocomplete="off"
+                                                       class="form-control PhoneNumber"
+                                                       name="PhoneNumber"
+                                                       type="text"
+                                                       placeholder="رقم الجوال"
+                                                       ng-disabled="chamberSettings.changePhoneOwnerSendCode && !page.authOwnerPhone" />
+                                                <div ng-messages="registerForm.PhoneNumber.$error"
+                                                     ng-if="registerForm.PhoneNumber.$dirty || isFormSubmitted">
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="required">
+                                                        رقم الجوال مطلوب
+                                                    </p>
+                                                    <p class="text-danger error-msg" ng-message="pattern">
+                                                        فضلا ادخل مالايقل عن 10 ارقام يبدأ ب (05)
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label>البريد الإلكترونى</label>
+                                                <input ng-required="true"
+                                                       ng-disabled="Sms.CodeSent"
+                                                       ng-model="registerData.Email"
+                                                       autocomplete="off"
+                                                       class="form-control"
+                                                       name="Email"
+                                                       type="email"
+                                                       placeholder="البريد الإلكترونى" />
+                                                <div ng-if="registerForm.Email.$error">
+                                                    <p class="text-danger error-msg"
+                                                       ng-show="registerForm.Email.$error.required">
+                                                        البريد الإلكترونى مطلوب
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-show="registerForm.Email.$error.email">
+                                                        فضلا أدخل بريد إلكترونى صحيح
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label>كلمة المرور</label>
+                                                <!--ng-model-options="{ debounce: 2000 }"-->
+                                                <input autocomplete="autocomplete_off_hack_xfr4!k"
+                                                       value=""
+                                                       ng-disabled="Sms.CodeSent"
+                                                       ng-pattern="/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,30})$/"
+                                                       ng-model="registerData.Password"
+                                                       maxlength="30"
+                                                       onfocus="javascript: this.removeAttribute('readonly')"
+                                                       minlength="8"
+                                                       ng-required="true"
+                                                       class="form-control"
+                                                       check-Password-Pattern
+                                                       name="Password_f"
+                                                       id="submit_form_password"
+                                                       type="password"
+                                                       placeholder="كلمة المرور" />
+                                                <div ng-messages="registerForm.Password_f.$error"
+                                                     ng-if="registerForm.Password_f.$dirty || isFormSubmitted">
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="required">
+                                                        من فضلك ادخل كلمة المرور
+                                                    </p>
+                                                    <p class="text-danger error-msg" ng-message="pattern">
+                                                        يجب ألا تقل كلمة المرور عن 8 خانات تحتوى على الاقل
+                                                        على رقم وحرف
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="minlength">
+                                                        يجب ألا تقل كلمة المرور عن 8 خانات تحتوى على الاقل
+                                                        على رقم وحرف
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="maxlength">
+                                                        يجب ألا تزيد كلمة المرور عن 30 خانات تحتوى على الاقل
+                                                        على رقم وحرف
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label>تأكيد كلمة المرور</label>
+                                                <input ng-required="true"
+                                                       ng-disabled="Sms.CodeSent"
+                                                       readonly="readonly"
+                                                       maxlength="30"
+                                                       minlength="8"
+                                                       ng-pattern="/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,30})$/"
+                                                       onfocus="javascript: this.removeAttribute('readonly')"
+                                                       ng-model="registerData.ConfirmPassword"
+                                                       compare-to="registerData.Password"
+                                                       autocomplete="off"
+                                                       class="form-control"
+                                                       name="ConfirmPassword_f"
+                                                       type="password"
+                                                       placeholder="تأكيد كلمة المرور" />
+                                                <div ng-messages="registerForm.ConfirmPassword_f.$error"
+                                                     ng-if="registerForm.ConfirmPassword_f.$dirty || isFormSubmitted">
+                                                    <p class="text-danger error-msg"
+                                                       ng-message="required">
+                                                        من فضلك أعد إدخال كلمة المرور
+                                                    </p>
+                                                    <p class="text-danger error-msg" ng-message="pattern">
+                                                        يجب ألا تقل كلمة المرور عن 8 خانات تحتوى على الاقل
+                                                        على رقم وحرف
+                                                    </p>
+                                                    <p class="text-danger error-msg"
+                                                       ng-if="registerForm.Password_f.$valid"
+                                                       ng-message="compareTo">
+                                                        كلمات المرور غير متشابه
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <button type="submit"
+                                                    ng-if="secondStep && !Sms.CodeSent"
+                                                    ng-click="SendCode(registerForm,$event,false);"
+                                                    class="sp-main-button">
+                                                التحقق و التسجيل
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-if="Sms.CodeSent">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group text-center">
+                                                <p class="verification-text">
+                                                    أدخل الكود الذي تم إرساله لرقم الجوال الذي تم إدخاله.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ver-code">
+                                            <input ng-repeat="digit in smsInputs  track by $index"
+                                                   type="text"
+                                                   data-ng-model="digit.value"
+                                                   restrict-input="{type: 'digitsOnly'}"
+                                                   min="0"
+                                                   max="9"
+                                                   move-Previous
+                                                   maxlength="1"
+                                                   ng-change="combineCode(digit,$index)"
+                                                   class="form-control"
+                                                   autocomplete="off" />
+                                        </div>
+                                        <div class="text-center resend-time"
+                                             ng-show="Sms.CodeSent && (page.showSmsTime || page.smsTimer != 0)">
+                                            <span>
+                                                يمكنك إعادة الإرسال بعد: {{page.smsTimer}} ثانية
+                                            </span>
+                                        </div>
+                                        <div class="sp-ver-code-buttons">
+                                            <a ng-if="secondStep"
+                                               ng-show="Sms.CodeSent"
+                                               ng-click="!page.showSmsTime && SendCode(registerForm,$event,true);"
+                                               ng-disabled="page.showSmsTime"
+                                               class="sp-main-button">
+                                                إعادة الإرسال
+                                            </a>
+                                            <a ng-click="Sms.Code && Reset();"
+                                               ng-disabled="!Sms.Code"
+                                               class="clear">
+                                                تفريغ
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Loader  -->
+                            <!--<div class="row row-model"
+                                       ng-show="page.isLoading && isFormSubmitted && !page.successRedirectLogin">
+                                      <div class="form-actions ">
+                                          <div class="text-center">
+                                              <p>يرجى الإنتظار ...</p>
+                                              <div class="col-xs-12">
+                                                  <div class="text-center" data-loading>
+                                                      <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>-->
+                            <!-- Registration successful & redirect msg -->
+                            <div class="row row-model" ng-if="page.successRedirectLogin">
+                                <div class="sp-register-success">
+                                    <div class="circle-done">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <h2>تم التسجيل بنجاح.</h2>
+
+                                    <h3 class="text-center">
+                                        يرجى الإنتظار , جاري تسجيل الدخول إلي بوابة خدمات المشتركين
+                                        الإلكترونية ...
+                                    </h3>
+                                    <div class="text-center" data-loading>
+                                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif"
+                                             style="width: 80px" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Footer -->
+                            <div class="custom-card-footer"
+                                 ng-hide="(firstStep && !Sms.CodeSent && chamberSettings.useAbshir) ||(firstStep && chamberSettings.useAbshir==false && PhoneNumbersList.length <= 0)"
+                                 ng-if="!page.successRedirectLogin && (!page.isLoading || !isFormSubmitted)">
+                                <button ng-hide="firstStep && !Sms.CodeSent  && chamberSettings.useAbshir"
+                                        ng-click="Back();"
+                                        type="button"
+                                        class="custom-back-btn">
+                                    السابق
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--NEW NAFATH number-->
+                <!--<div class="col-md-8 col-md-offset-2" ng-if="firstStep && page.AgreementAccepted && !page.successRedirectLogin && chamberSettings.allowNafath && !loginWays.allowNafath">
+                    <div class="sp-main-box sp-register-box form-wizard register-pg"
+                         id="form_wizard_1">
+                        <div class="sp-main-title">
+                            <h2>
+                                تسجيل مستخدم جديد بواسطة النفاذ الوطني
+                            </h2>
+                        </div>
+
+                        <div>
+                            <div class="sp-register-form">-->
+                                <!-- Step one | IdentityNo & verification -->
+                                <!--<div>
+                                    <div ng-if="chamberSettings.allowNafath && !loginWays.allowNafath">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-5">
+                                                <div class="form-group">
+                                                    <label for="IdentityNo">رقم السجل المدني </label>
+                                                    <input ng-required="true"
+                                                           ng-model="registerData.IdentityNo"
+                                                           has-focus
+                                                           autocomplete="off"
+                                                           maxlength="10"
+                                                           restrict-input="{type: 'digitsOnly'}"
+                                                           ng-pattern="identityPattern"
+                                                           class="form-control IdentityNo"
+                                                           name="IdentityNo"
+                                                           type="text"
+                                                           placeholder="رقم السجل المدني" />
+                                                    <div ng-messages="registerForm.IdentityNo.$error"
+                                                         ng-if="registerForm.IdentityNo.$dirty  ||  isFormSubmitted">
+                                                        <p class="text-danger error-msg"
+                                                           ng-message="required && isFormSubmitted">
+                                                            رقم السجل المدني
+                                                        </p>
+                                                        <p class="text-danger error-msg"
+                                                           ng-message="pattern">
+                                                            أدخل رقم الهوية أرقام وتبدأ ب 1 أو 2
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="g-recaptcha"
+                                                         vc-recaptcha
+                                                         size="normal"
+                                                         theme="'light'"
+                                                         key="captcha.captchaKey"
+                                                         lang="ar"
+                                                         ng-model="captcha.captchaKey"
+                                                         name="captchaKey"
+                                                         ng-required="true"
+                                                         on-create="setWidgetId(widgetId)"
+                                                         on-success="setResponse(response)"
+                                                         on-expire="cbExpiration()"></div>
+                                                    <div ng-messages="registerForm.captchaKey.$error"
+                                                         ng-if="registerForm.captchaKey.$touched &&(registerForm.captchaKey.$dirty || isFormSubmitted)">
+                                                        <p class="text-danger" ng-message="required">
+                                                            من فضلك قُم بالتحديد
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <button ng-show="firstStep && !Nafath.Sent"
+                                                        ng-click="page.AgreementAccepted = false;AgreementAccepted=false;"
+                                                        type="button"
+                                                        class="custom-back-btn">
+                                                    السابق
+                                                </button>
+                                                <button ng-if="firstStep && !Nafath.Sent"
+                                                        ng-disabled="page.showSmsTime"
+                                                        ng-click="SendValidateIdentityViaNafath(registerForm,$event,false);"
+                                                        type="submit"
+                                                        class="sp-main-button">
+                                                    تسجيل
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="nafath-mobile-app">
+                                                    <p>لتتمكن من الدخول بسهولة قم بتحميل تطبيق نفاذ</p>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="https://appgallery.huawei.com/app/C106870695" target="_blank" class="">
+                                                                <img src="../../../Content/Theme/img/appGallary.svg" width="100%" alt="App Gallery" />
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid" target="_blank" class="">
+                                                                <img src="../../../Content/Theme/img/googleplay2.svg" width="100%" alt="Google PLay" />
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://apps.apple.com/sa/app/%D9%86%D9%81%D8%A7%D8%B0-nafath/id1598909871" target="_blank" class="">
+                                                                <img src="../../../Content/Theme/img/appstore.svg" width="100%" alt="App Store" />
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>-->
+
+                            <!-- Footer -->
+                            <!--<div class="custom-card-footer"
+                                 ng-hide="(firstStep && !Sms.CodeSent && chamberSettings.useAbshir) ||(firstStep && chamberSettings.useAbshir==false && PhoneNumbersList.length <= 0)"
+                                 ng-if="!page.successRedirectLogin && (!page.isLoading || !isFormSubmitted)">
+                                <button ng-hide="firstStep && !Sms.CodeSent  && chamberSettings.useAbshir"
+                                        ng-click="Back();"
+                                        type="button"
+                                        class="custom-back-btn">
+                                    السابق
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </form>
+    <modal class="sp-main-modal"
+           title="يرجي إدخال الكود المرسل لجوالك"
+           visible="showOtpModal2">
+        <form class="form-horizontal text-right"
+              id="verifyForm"
+              name="verifyForm"
+              novalidate="novalidate">
+            <div ng-if="otp.isResend">
+                <div class="clearfix"></div>
+                <div class="col-md-12 margin-bottom-30" style="margin-top: 30px">
+                    <div class="form-group form-md-line-input has-success form-md-floating-label cr_no">
+                        <div vc-recaptcha
+                             theme="'light'"
+                             key="captcha2.captchaKey"
+                             lang="ar"
+                             ng-model="captcha2.response"
+                             name="captchaKey"
+                             ng-required="true"
+                             on-create="setWidgetId2(widgetId)"
+                             on-expire="cbExpiration2()"></div>
+                        <div ng-messages="verifyForm.captchaKey.$error"
+                             ng-if="verifyForm.captchaKey.$touched ">
+                            <p class="text-danger error-msg" ng-message="required">
+                                من فضلك قُم بالتحديد
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                    <button ng-click="sendOtp2(verifyForm)"
+                            type="submit"
+                            class="sp-main-button">
+                        ارسال
+                    </button>
+                </div>
+            </div>
+            <div class="form-body row text-center" ng-if="!otp.isResend">
+                <div class="sp-main-form sp-main-form-inner"
+                     ng-show="true || otp.isSent">
+                    <label>
+                        ادخل كود التحقق الذى تم ارسالة على الجوال المرتبط بالهوية
+                        ابشر
+                    </label>
+                    <div class="custom-input check-input-icon">
+                        <input ng-required="true"
+                               ng-disabled="showSpin"
+                               restrict-input="{type: 'digitsOnly'}"
+                               ng-pattern="/^\d{4,6}$/"
+                               class="form-control"
+                               autocomplete="off"
+                               maxlength="6"
+                               prevent-typing-greater
+                               ng-model="otp.code"
+                               name="code"
+                               type="text" />
+                        <!--<ion-icon name="checkmark-circle-outline"></ion-icon>-->
+                    </div>
+                    <div ng-show="false" class="text-center" data-loading>
+                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif"
+                             style="width: 80px" />
+                    </div>
+                    <div class="sp-countdown">
+                        <span>
+                            يمكنك إعادة الإرسال بعد {{otp.timer}} ثانية
+                            <a ng-click="sendCode2();"
+                               ng-class="{'disabledAnchor':otp.timer > 0 || otp.showTimer}"
+                               ng-if="otp.timer == 0 || !otp.showTimer">إعادة الإرسال</a>
+                        </span>
+                    </div>
+
+                    <div ng-messages="verifyForm.code.$error"
+                         ng-if="verifyForm.$submitted || verifyForm.code.$touched">
+                        <p class="text-danger" ng-message="required">
+                            من فضلك ادخل رقم الكود
+                        </p>
+                        <p class="text-danger" ng-message="pattern">فضلا ادخل رقم صحيح</p>
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="sp-main-button lg-padding"
+                        ng-click="hideOtpModal2()">
+                    إغلاق
+                </button>
+            </div>
+        </form>
+    </modal>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $("#submit_form_password").attr("data-random", Math.random());
+            });
+        });
+    </script>
+
+    <style>
+        #page-wrapper {
+            position: inherit;
+            margin: 0 0px 0 0;
+            padding: 0 30px;
+            border-right: 1px solid #e7e7e7;
+        }
+
+        .fadeIn {
+            visibility: hidden;
+        }
+
+        #dashboard {
+            background-image: none !important;
+            padding-bottom: 0px !important;
+            height: 100%;
+        }
+
+        body {
+            background-color: #f2f4f9;
+        }
+
+        .DomainLink {
+            color: black !important;
+        }
+    </style>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .sp-forget-way label {
+            font-size: 15px !important;
+            margin: 2px !important;
+        }
+
+        .p-0 {
+            padding: 0px;
+        }
+
+        .text-underline {
+            text-decoration: underline !important;
+        }
+    </style>
+
+    <style>
+        .nafath-title {
+            display: inline-flex;
+            padding: 0;
+            width: 45px;
+            margin-bottom: 15px;
+        }
+
+        .nafath-mobile-app {
+            margin-top: 20px;
+        }
+
+            .nafath-mobile-app ul {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+                list-style: none;
+            }
+
+                .nafath-mobile-app ul li {
+                    background: transparent;
+                    margin: 0;
+                    padding: 0;
+                    height: 30px;
+                }
+
+                    .nafath-mobile-app ul li img {
+                        height: 24px;
+                        width: auto;
+                        border-radius: 4px;
+                    }
+
+            .nafath-mobile-app p {
+                font-size: 14px;
+                padding-block: 0;
+            }
+
+            .nafath-mobile-app .nafath-confirmation-number {
+                text-align: center;
+            }
+
+                .nafath-mobile-app .nafath-confirmation-number > span {
+                    padding: 10px;
+                    font-size: 16px;
+                    font-weight: 700;
+                    border-radius: 100%;
+                    background: var(--main-color);
+                    width: 35px;
+                    height: 35px;
+                    margin-block: 15px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    line-height: 1.2;
+                }
+
+            .nafath-mobile-app:has(.nafath-confirmation-number) {
+                margin-bottom: 40px;
+            }
+
+            .nafath-mobile-app.mt-0 {
+                margin-top: 0;
+            }
+    </style>
+    <style>
+        .login-tab-list {
+            display: flex;
+            align-items: center;
+            background: #f5f7f7;
+            margin: 10px 20px;
+            padding: 5px;
+            border: 0;
+            border-radius: 6px;
+            list-style: none;
+        }
+
+            .login-tab-list .nafath-title > img {
+                width: 50px;
+                height: 30px;
+            }
+
+            .login-tab-list > * {
+                flex: 1;
+            }
+
+            .login-tab-list .tab-item a {
+                padding: 4px;
+                text-align: center;
+                border: 0;
+                border-radius: 6px;
+                background: transparent;
+                font-weight: 700;
+                color: var(--main-text-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                line-height: 30px;
+            }
+
+            .login-tab-list .tab-item.active a {
+                background: white;
+                color: var(--color-main)
+            }
+
+            .login-tab-list .tab-item {
+                border: 0;
+                padding: 0;
+                background: transparent;
+                margin:0 !important;
+            }
+
+
+
+        .tab-content > .tab-pane {
+            display: block;
+        }
+    </style>
+</div>

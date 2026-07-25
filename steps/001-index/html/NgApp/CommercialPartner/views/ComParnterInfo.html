@@ -1,0 +1,213 @@
+﻿ 
+<div class="users-content grey-color p-top-lg p-bottom-lg" ng-show="thereIsData">
+    <div class="container">
+        <div class="user-container no-padding">
+            <div class="row">
+                <div class="custom-user-table">
+                    <div class="submit small-submit text-center">
+                        <div class="bg-white">
+                            <h2>
+                                بياناتي
+                            </h2>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="clearfix"></div>
+
+                    <form class="form-inline add-users" ng-submit="Save(AddForm,$event)" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="custom-title">
+                                    <h4>
+                                        <i class="icon-menu font-blue"></i>
+                                        بياناتي
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="col-xs-12">
+                                    <div class="user-input img-upload-custom">
+                                        <label> شعار المنشأة</label>
+                                        <div>
+                                            <div class="img-frame">
+                                                <img ng-if="image.Url == null" src="../../../img/profile.png" alt="" />
+                                                <img ng-if="image.Url != null" ng-src="{{image.Url}}" />
+                                            </div>
+
+                                            <label for="company-img" class="custom-btn custom-btn-reverse btn-3">
+                                                <span> اختر ملف</span>
+                                            </label>
+                                            <span class="hint">برجاء اختيار شعار ذو جودة عالية</span>
+                                            <input type='file' name="companyImg" ng-required="true" id="company-img" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                                            <div ng-messages="AddForm.companyImg.$error" ng-if="AddForm.EstName.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">شعار المنشأة مطلوب </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-9">
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label>اسم المنشأة</label>
+                                        <div>
+                                            <input type="text" ng-required="true" readonly="readonly" name="EstName" ng-model="AddModel.EstName" class="form-control  input-no-borders">
+                                            <div ng-messages="AddForm.EstName.$error" ng-if="AddForm.EstName.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">إسم المنشأة مطلوب </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label> نشاط المنشأة</label> <span class="alert-danger" ng-if="showActivityAlert">تم تغيير النشاط من قبل الغرفةإضغط حفظ لإعتماد النشاط</span>
+                                        <div>
+                                            <input type="text" ng-required="true" ng-readonly="!showActivityAlert" name="EstActivity" ng-model="AddModel.EstActivity" ng-class="{'input-no-borders': showActivityAlert != true}" class="form-control">
+                                            <div ng-messages="AddForm.EstActivity.$error" ng-if="AddForm.EstActivity.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">نشاط المنشأة مطلوب </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label>البريد الإلكتروني</label>
+                                        <div>
+                                            <input type="email" autocomplete="off" name="Email" class="form-control" ng-model="AddModel.Email" 
+                                                   ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" ng-required="true">
+                                            <div ng-messages="AddForm.Email.$error" ng-if="AddForm.Email.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">البريد الإلكتروني مطلوب </p>
+                                                <p class="text-danger" ng-message="pattern">البريد الإلكتروني مطلوب بشكل صحيح </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label>رقم الجوال</label>
+                                        <div>
+                                            <input type="text" numbers-only ng-pattern="/^(05)([0-9]{8})$/" minlength="10" maxlength="10" name="Mobile" class="form-control" ng-model="AddModel.Mobile" ng-required="true">
+                                            <div ng-messages="AddForm.Mobile.$error" ng-if="AddForm.Mobile.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">رقم الجوال مطلوب</p>
+                                                <p class="text-danger" ng-message="pattern">  ادخل مالايقل عن 10 ارقام يبدأ ب (05)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label> نوع الخصم</label>
+                                        <div>
+                                            <div class="custom-input">
+                                                <ui-select ng-model="AddModel.DiscountType" reset-search-input="true" theme="selectize" name="DiscountType" ng-required="true">
+                                                    <ui-select-match>
+                                                        <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                        <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="c.id as c in DiscountTypes | filter: $select.search">
+                                                        <small ng-bind-html="c.nameAr"></small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                                <div ng-messages="AddForm.DiscountType.$error" ng-if="AddForm.DiscountType.$dirty || isFormSubmitted">
+                                                    <p class="text-danger" ng-message="required">نوع الخصم مطلوب</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label>نسبة الخصم </label>
+                                        <div>
+                                            <input type="text" name="DiscountPercentage" ng-paste="$event.preventDefault()" maxlength="3"
+                                                   restrict-input="{type: 'decimalInteger'}" ng-pattern="/^[0-9]+\.?[0-9]*$/" class="form-control" ng-required="true" ng-model="AddModel.DiscountPercentage">
+                                            <div ng-messages="AddForm.DiscountPercentage.$error" ng-if="AddForm.DiscountPercentage.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">نسبة الخصم مطلوبة</p>
+                                                <p class="text-danger" ng-message="pattern">أدخل أرقام صحيحة أو كسور</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label> رابط حساب تويتر (Twitter)</label>
+                                        <div>
+                                            <input type="url" class="form-control" name="TwitterLink" ng-model="AddModel.TwitterLink" ng-required="true">
+                                            <div ng-messages="AddForm.TwitterLink.$error" ng-if="AddForm.TwitterLink.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">رابط حساب تويتر مطلوب</p>
+                                                <p class="text-danger" ng-message="url">أدخل رابط حساب تويتر صحيح</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label> رابط حساب انستقرام (Instagram)</label>
+                                        <div>
+                                            <input type="url" class="form-control" name="InstagramLink" ng-model="AddModel.InstagramLink" ng-required="true">
+                                            <div ng-messages="AddForm.InstagramLink.$error" ng-if="AddForm.InstagramLink.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">رابط حساب انستقرام مطلوب</p>
+                                                <p class="text-danger" ng-message="url">أدخل رابط حساب انستقرام صحيح</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="user-input">
+                                        <label> رابط حساب سناب شات (SnapChat)</label>
+                                        <div>
+                                            <input type="url" class="form-control" name="SnapchatLink" ng-model="AddModel.SnapchatLink" ng-required="true">
+                                            <div ng-messages="AddForm.SnapchatLink.$error" ng-if="AddForm.SnapchatLink.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">رابط حساب سناب شات مطلوب</p>
+                                                <p class="text-danger" ng-message="url">أدخل رابط حساب سناب شات صحيح</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row"> 
+                            <div class="clearfix"></div>
+                            <div class="submit small-submit text-center">
+                                <button  type="submit"  class="custom-btn btn-3">
+                                    حفظ <i class="fa fa-check"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="thereIsData">
+    <div ng-show="showLoad" class="text-center" data-loading>
+        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+    </div>
+    <div class="col-md-12" ng-show="noData">
+        <div class="note note-danger" style="text-align:center !important">
+            عفواً . لا توجـد بيانات.
+        </div>
+    </div>
+</div>

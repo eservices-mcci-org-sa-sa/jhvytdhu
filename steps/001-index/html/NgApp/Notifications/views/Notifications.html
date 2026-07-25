@@ -1,0 +1,127 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="sp-main-box margin-bottom-30">
+            <div class="sp-main-title">
+                <h2>بحث الإشعارات</h2>
+            </div>
+
+            <form name="searchForm" novalidate="novalidate" role="form" autocomplete="off">
+                <div class="sp-main-form sp-main-form-inner">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <div class="custom-input custom-cal">
+                                <label for="date">تاريخ من</label>
+                                <date-control name="FromDate" class="datepickgreg" onkeydown="return false;" autocomplete="off"
+                                              placeholder="تاريخ من " mydate="searchModel.FromDate" title="{{IsHijriTitle}}"></date-control>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="custom-input custom-cal">
+                                <label for="date">تاريخ إلي</label>
+                                <date-control name="ToDate" class="datepickgreg" onkeydown="return false;"
+                                              autocomplete="off" placeholder="تاريخ إلى "
+                                              mydate="searchModel.ToDate" title="{{IsHijriTitle}}"></date-control>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sp-main-form sp-main-form-inner">
+                        <div class="row justify-content-center text-center">
+                            <a ng-click="GetData();" class="sp-main-button margin-right-10">
+                                <span><ion-icon name="search-outline"></ion-icon></span>
+                                بحـث
+                            </a>
+                            <a ng-click="clearSearchModel()" class="sp-main-button sp-transparent-button margin-left-10">
+                                <span><ion-icon name="reload-outline"></ion-icon></span>
+                                تفريغ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="sp-main-box margin-bottom-30">
+        <div class="sp-main-title">
+            <h2>قائمة الإشعارات</h2>
+        </div>
+
+        <div class="sp-main-form sp-main-form-inner">
+            <div class="form-data white-bg moveto p-bottom-md">
+                <div class="row">
+                    <!-- notification item-->
+                    <div pagination-id="paginateId" ng-click="showDetailsModal(obj)" class="notification-item" dir-paginate-start="obj in objects | itemsPerPage: searchModel.ItemsPerPage" current-page="searchModel.CurrentPage" total-items="searchModel.TotalCount">
+                        <div class="content-icon">
+                            <div class="content">
+                                <p> <i class="fa fa-bell"></i>{{obj.notifyText}}</p>
+                            </div>
+                        </div>
+
+                        <div class="meta-data">
+                            <p class="date">
+                                <i class="fa fa-calendar"></i>
+                                {{obj.createdDate  | date:'dd-MM-yyyy' | ngArabicNumber: true}}
+                                <i class="fa fa-clock-o"></i>
+                                {{obj.createdDate  | date:'h:mma' | ngArabicNumber: true}}
+                            </p>
+                        </div>
+                    </div>
+                    <div dir-paginate-end="">
+                    </div>
+                </div>
+                <div ng-hide="page.thereIsData">
+                    <div ng-show="page.showLoad" class="text-center" data-loading>
+                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                    </div>
+                    <div class="col-md-12" ng-show="page.noData">
+                        <div class="text-center">
+                            عفواً . لا توجـد إشعارات.
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-hide="objects.length == 0">
+                    <ul class="nav nav-pills center-nav notification-pagination">
+                        <li>
+                            <a href="javascript:;">
+                                رقم الصفحة
+                                <span class="badge badge-custom"> {{ searchModel.CurrentPage  | ngArabicNumber: true}} </span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <dir-pagination-controls max-size="7" pagination-id="paginateId"
+                                                     direction-links="true"
+                                                     boundary-links="true"
+                                                     on-page-change="GetData()">
+                            </dir-pagination-controls>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                إجمالى السجلات
+                                <span class="badge badge-custom"> {{ objects[0].rowsCount | ngArabicNumber: true }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<modal visible="showModal" title="تفاصيل الإشعار">
+    <div class="row">
+
+        <div class="col-md-7 col-xs-12">
+            <div class="user-input">
+                <label>  نص الإشعار</label>
+                <div>
+                    <label>{{currentObject.NotifyText}}</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</modal>

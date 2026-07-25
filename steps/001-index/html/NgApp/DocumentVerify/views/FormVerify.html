@@ -1,0 +1,162 @@
+﻿<!--<style>
+    .custom-member-details {
+        background: #fff;
+        padding: 30px;
+    }
+
+    .custom-member-title {
+        background-color: #e9e9e9;
+    }
+
+        .custom-member-title h2 {
+            font-family: 'Droid Arabic Kufi', sans-serif;
+            font-size: 18px;
+        }
+
+    .custom-member-details .custom-note {
+        padding-top: 20px;
+        border-bottom: 2px solid #e9e9e9;
+        background: #fff;
+    }
+
+    .custom-member-content {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+        .custom-member-content h3 {
+            font-family: 'Droid Arabic Kufi', sans-serif;
+            font-size: 16px;
+            padding-bottom: 20px;
+        }
+
+        .custom-member-content h4 {
+            font-family: 'Droid Arabic Kufi', sans-serif;
+            font-size: 14px;
+            padding-bottom: 20px;
+        }
+
+    p.custom-member-role {
+        padding-top: 50px;
+    }
+
+    p.custom-thankfull {
+        padding-top: 30px;
+    }
+
+    .footer-note {
+        padding-top: 30px;
+    }
+</style>-->
+
+
+
+
+ <!--<span>{{mm}}</span>-->
+
+<div class="container">
+    <div class="row" ng-show="thereIsData">
+
+        
+
+        <div class="custom-member-details" id='newprint'>
+
+            <!--<div>
+                loooooooogo
+            </div>-->
+            <div id="HeadDiv">
+                <!--<div class="col-md-6 col-xs-6 text-right">
+                    <ul class="list-unstyled">
+                        <li>شركة عالم النظم والبرامج</li>
+                        <li>العضوية : {{memberData.memberID}}</li>
+                        <li>السجل التجاري : {{memberData.crNumber}}</li>
+                        <li>{{memberData.cityName}}- هاتف: {{memberData.phone}} - فاكس : {{memberData.fax}}</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6 col-xs-12 text-left">
+                    <ul class="list-unstyled">
+                        <li>Member id : {{memberData.memberID}}</li>
+                        <li>C.R. : {{memberData.crNumber}}</li>
+                        <li>{{memberData.cityName}} - Tel: {{memberData.phone}} - Fax : {{memberData.fax}}</li>
+                    </ul>
+                </div>-->
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="custom-note text-center" style="margin-top: 20px;">
+                <p>صدرت هذه الوثيقة بناء علي طلب المشترك أعلاه</p>
+            </div>
+            <!--| date:'yyyy-MM-dd'-->
+            <div class="custom-member-content">
+                <ul style="width:50%; float:right; display:block;" class="date list-unstyled">
+                    <li>التاريخ : {{memberData.currentDateHijri}} هـ</li>
+                    <li>{{memberData.currentDate | date:'yyyy-MM-dd'}} مـ</li>
+                </ul>
+
+                <div style="display:block; float:left; text-align:left;"> <p> الرقم المرجعى : {{RequestDataModel.requestId}} </p></div>
+                <div class="clearfix"> </div>
+
+                <div id="contentDiv" style="margin-top:20px;max-height:600px;min-height:550px;overflow:hidden;">
+
+                    
+                </div>
+            </div>
+
+            <div class="custom-footer text-center clearfix">
+                <div class="col-xs-12">
+                    <p style="background-color:#f1f1f1; text-align:right;padding:10px;line-height:25px;margin-bottom:5px;">
+
+                        اي اضافة او كشط على الوثيقة تعتبر لاغية..
+                        <br>
+
+                        تعتبر هذه الوثيقة الاكترونية مستوفية للاجراءات النظامية المتبعة بغرفة المدينة..
+                    </p>
+                </div>
+
+                <div class="col-xs-3 col-md-3">
+                    مدير عام
+                    <br />
+                    <br />
+                    {{signatureData.personName}}
+                </div>
+                <div id="SignatureDiv" class="col-xs-3 col-md-3">
+                    <!--<img ng-src="data:image/jpeg;base64,{{signatureData.signatureIamge}}" style="width: 100px; height:100px; " />-->
+                </div>
+                <div class="col-xs-3 col-md-3">
+                    <img style="width: 100px; height:100px; " ng-src="data:image/jpeg;base64,{{qrCodeImage}}" />
+                </div>
+                <div class="col-xs-3 col-md-3">
+
+                </div>
+
+
+            </div>
+            <!--<div class="clearfix"></div>-->
+            <div id="ExtraFooter" class="footer-note text-center" style="background-color:#f1f1f1; text-align:right;padding:10px;line-height:25px;margin-bottom:20px; text-align:center; margin-top:0px">
+                <!--<p>للتحقق من بيانات هذه الوثيقة فضلا الدخول الي الرابط التالي www.chamber.sa او الاتصال علي رقم المنشأة  00920004565</p>-->
+            </div>
+
+
+        </div>
+
+        <div class="text-center clearfix">
+            <button type="button" ng-hide="hideprint" ng-click="printDiv('newprint')" class="btn btn-default blue">طباعه <i class="fa fa-print"></i></button>
+            <site-footer back="عوده"></site-footer>
+        </div>
+    </div>
+
+
+    <div ng-hide="thereIsData">
+        <div ng-show="showLoad" class="text-center" data-loading>
+            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;margin-top:50px;">
+        </div>
+        <div class="col-md-12" ng-show="NoData">
+            <div class="note note-danger" style="text-align:center !important">
+                عفواً . لا توجـد بيانات.
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,325 @@
+﻿<style>
+    .ErrorPwdPattern {
+        color: #f98c9d !important;
+    }
+
+    body {
+        background: #f2f4f9;
+    }
+
+    .portlet-body .table tbody > tr > td {
+        padding: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    [data-balloon] {
+        position: inherit !important;
+        z-index: 99999 !important;
+    }
+</style>
+<modal class="send-code sp-main-modal" title="فضلاً, أدخل الكود الذي تم إرساله لرقم الجوال المرتبط برقم هوية المُفوض المُدخلة" visible="Sms.CodeSent">
+    <form class="form-horizontal text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-sm-12">
+                <div class="main-modal-title">
+                    أدخل الكود الذي تم إرساله لرقم الجوال المرتبط برقم هوية المُفوض المُدخلة
+                </div>
+            </div>
+
+            <div ng-show="!Sms.CodeSent" class="text-center" data-loading>
+                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+            </div>
+
+            <div class="col-xs-12" ng-show="Sms.CodeSent">
+                <div class="col-xs-12">
+                    <div class="sp-main-form sp-main-form-inner">
+
+                        <div class="has-success">
+                            <div class="custom-input">
+                                <label for="Code">  كود التحقق</label>
+                                <input ng-required="true" ng-if="chamberSettings.useAbshir" ng-disabled="showSpin" restrict-input="{type: 'digitsOnly'}" ng-pattern="/^\d{4,6}$/" class="form-control"
+                                       autocomplete="off" maxlength="6"
+                                       ng-model="Sms.Code" name="Code" type="text">
+                                <input ng-required="true" ng-if="!chamberSettings.useAbshir" ng-disabled="showSpin" restrict-input="{type: 'digitsOnly'}" ng-pattern="/^\d{4}$/" class="form-control"
+                                       autocomplete="off" maxlength="4"
+                                       ng-model="Sms.Code" name="Code" type="text">
+                            </div>
+                            <p style="color: #8998AA;" ng-show="page.showSmsTime || page.smsTimer != 0">
+                                يمكنك إعادة الإرسال بعد:   {{page.smsTimer}} ثانية
+                            </p>
+                            <div ng-messages="verifyForm.Code.$error" ng-if="verifyForm.$submitted || verifyForm.Code.$touched">
+                                <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم الكود</p>
+                                <p class="text-danger error-msg" ng-message="pattern"> فضلا ادخل رقم صحيح</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <button ng-click="ResendOTP();" ng-disabled="page.showSmsTime" class="sp-main-button">
+                        إعادة إرسال
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+
+            </div>
+        </div>
+    </form>
+</modal>
+
+<div class="users-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box margin-bottom-30" ng-if="!userInfo.globalSessionValues.CurrentMember.IsAdmin">
+                    <div class="sp-main-title">
+                        <h2>لا توجد صلاحية</h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <div class="alert text-center">
+                            <img src="../../../Content/Theme/assets/img/alert.svg">
+                            عفواً , ليس لديك صلاحية الوصول لهذه الشاشة.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sp-main-box margin-bottom-30" ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin">
+                    <div class="sp-main-title">
+                        <h2>بيانات المفوض</h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/Users/">
+                            العودة
+                        </a>
+                    </div>
+                    <div class="sp-main-form sp-main-form-inner">
+
+                        <form class="form-inline add-users" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate">
+                            <div class="row">
+
+                                <div class="col-md-7 col-xs-12" ng-if="!userId">
+                                    <div class="alert">
+                                        <img src="../../../Content/Theme/assets/img/alert.svg">
+                                        تنبيه : سيتم إرسال رسالة تأكيد لرقم الجوال المرتبط برقم الهوية الذي سيتم إدخاله لتأكيد إضافة المٌفوض.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-7 col-xs-12" ng-if="page.inlineMessage">
+                                    <div class="alert alert-danger text-center">  {{page.inlineMessage}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-4 col-xs-12" ng-if="userId">
+                                    <div class="user-input">
+                                        <label>إسم المٌفوض  </label>
+                                        <div class="custom-input">
+                                            <input type="text" class="form-control input-no-borders" ng-model="NewUser.UserFullName" name="UserFullName" autocomplete="off" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="user-input">
+                                        <label>رقم الهوية / الإقامة</label>
+                                        <div ng-if="userId === null || userId === undefined || userId === ''">
+                                            <!--restrict-input="{type: chamberSettings.useSaudiIdentityOnlyForUser==yes? 'saudiIdentity':'identity'}"  check-Identity-exist-with-auth -->
+                                            <input type="text" ng-readonly="showPrivileges" class="form-control" ng-model="NewUser.IdentityNo"
+                                                   ng-pattern="identityPattern"
+                                                   restrict-input="{type: 'digitsOnly'}"
+                                                   name="IdentityNo" autocomplete="off" maxlength="10" ng-required="true">
+                                            <div ng-messages="AddForm.IdentityNo.$error" ng-if="AddForm.IdentityNo.$dirty ||isFormSubmitted" class="margin-top-10">
+                                                <p class="text-danger error-msg" ng-message="required">
+                                                    {{chamberSettings.useSaudiIdentityOnlyForUser===yes?'ادخل رقم هوية سعودي':'أدخل رقم الهوية'}}
+                                                </p>
+                                                <p class="text-danger error-msg" ng-message="checkIdentityExistWithAuth">رقم الهوية موجود مسبقاً</p>
+                                                <p class="text-danger error-msg" ng-message="pattern">من فضلك ادخل رقم الهوية أرقام وتبدأ ب 1 أو 2</p>
+                                            </div>
+                                        </div>
+                                        <div class="custom-input" ng-if="userId !== null && userId !== undefined && userId !== ''">
+                                            <input type="text" class="form-control  input-no-borders" autocomplete="off" ng-model="NewUser.IdentityNo"
+                                                   ng-required="true" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="sp-main-box margin-bottom-30" ng-if="showPrivileges">
+                    <form class="form-inline add-users" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate">
+
+                        <div class="sp-main-title">
+                            <h2>صلاحيات المفوض</h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <div class="row">
+                                <div class="col-md-4 col-xs-12 custom-check-input">
+                                    <div class="user-input no-margin">
+                                        <div class="form-group">
+                                            <div class="checkbox no-margin">
+                                                <label>
+                                                    <input type="checkbox" class="checkboxes select-all-checkbox" ng-click="toggleAll(NewUser.IsAdmin)"
+                                                           data-ng-model="NewUser.IsAdmin">إسناد كافة الصلاحيات
+                                                </label>
+                                                <div class="alert m-top-sm" ng-if="NewUser.IsAdmin">
+                                                    <i class="fa fa-exclamation"></i>
+                                                    تنويه : سيكون لديه جميع الصلاحيات مساويه لمالك العضوية
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="!NewUser.IsAdmin">
+
+                            <div class="sp-main-title">
+                                <h2>
+                                    1- الوصول للطلبات
+                                </h2>
+                            </div>
+                            <div class="sp-main-container">
+                                <div class="row">
+                                    <div class="col-md-4 col-xs-12 custom-check-input">
+                                        <div class="user-input no-margin">
+                                            <div class="form-group">
+                                                <div class="checkbox no-margin">
+                                                    <label>
+                                                        <input type="checkbox" class="checkboxes select-all-checkbox" ng-click="selectAllPrv()"
+                                                               data-ng-model="NewUser.AllSelected">تحديد الكل
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sp-main-container">
+                                <div class="light bordered" ng-show="OriginalPrvsArr.length > 0">
+                                    <div class="col-md-3" ng-repeat="r in OriginalPrvsArr | filter: {type : 1 }:true | orderBy:orderByLength">
+                                        <div class="permission-item">
+                                            <div class="number">{{$index+1}}</div>
+                                            <div class="title">{{r.name}}</div>
+                                            <div class="check">
+                                                <input type="checkbox" class="checkboxes" ng-change="checkOne($index,r,r.isSelected)" ng-model="r.isSelected">
+                                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="portlet-body form">
+                                        <div class="form-body">
+                                            <div class="row" ng-show="showNoData">
+                                                <div class="note note-danger" style="text-align:center !important">
+                                                    عفواً . لا توجـد بيانات.
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-hide="!EmpsList.length">
+                                                <pagination total-items="totalItemsModal" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-model="currentPageModal" ng-change="pageChangedd()" class="pagination-sm" items-per-page="numPerPageModal"></pagination>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sp-main-container">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        2- صلاحيات عامه
+                                    </h2>
+                                </div>
+
+                                <div class="light bordered" ng-show="OriginalPrvsArr.length > 0">
+                                    <div class="portlet-body form">
+                                        <div class="form-body">
+                                            <div class="col-md-3" ng-repeat="r in OriginalPrvsArr | filter: {type : 2 }:true | orderBy:orderByLength">
+                                                <div class="permission-item">
+                                                    <div class="number">{{$index+1}}</div>
+                                                    <div class="title">{{r.name}}</div>
+                                                    <div class="check">
+                                                        <input type="checkbox" class="checkboxes" ng-change="checkOne($index,r,r.isSelected)" ng-model="r.isSelected">
+                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="table-scrollable">
+                                                <table class="table table-striped table-bordered table-hover table-checkable order-column no-footer">
+                                                    <tr ng-repeat="c in PrvsArr">
+                                                        <td class="text-center" ng-repeat-start="p in c | filter: {type : 2 }:true">{{p.index}}</td>
+                                                        <td class="text-center">{{p.name}}</td>
+                                                        <td class="text-center" ng-repeat-end>
+                                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                <input type="checkbox" class="checkboxes" ng-change="checkOne($index,p,p.isSelected)" ng-model="p.isSelected">
+                                                                <span></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>-->
+
+                                            <div class="row" ng-show="showNoData">
+                                                <div class="note note-danger" style="text-align:center !important">
+                                                    عفواً . لا توجـد بيانات.
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-hide="!EmpsList.length">
+                                                <pagination total-items="totalItemsModal" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-model="currentPageModal" ng-change="pageChangedd()" class="pagination-sm" items-per-page="numPerPageModal"></pagination>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="sp-main-container">
+
+
+                            <div class=" text-center">
+                                <button id="advanced-search-btn" ng-click="AddEditUser(NewUser,AddForm,$event)" class="sp-main-button lg-padding">
+                                    <span><ion-icon name="checkmark-outline"></ion-icon></span>
+                                    حفظ
+                                </button>
+                                <a ng-href="/#/Users" class="sp-main-button lg-padding " style="display:inline-block">
+                                    <span><ion-icon name="close-outline"></ion-icon></span>
+                                    الغاء
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal remove user-->
+<modal class="sp-main-modal" title="إلغاء تفويض" visible="visible">
+    <form class="form-horizontal text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+
+            <div class="main-modal-title">
+                هل أنت متأكد من إلغاء تفويض هذا المستخدم
+            </div>
+
+            <button class="sp-main-button sp-transparent-button lg-padding">
+                الغاء
+            </button>
+
+            <button class="sp-main-button lg-padding">
+                موافق
+            </button>
+
+
+        </div>
+
+    </form>
+</modal>

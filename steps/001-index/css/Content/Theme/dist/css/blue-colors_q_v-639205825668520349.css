@@ -1,0 +1,521 @@
+
+/* 
+*** Logo *** 
+*/
+h3.logo,
+.navbar-brand {
+    background: url(../../../../../images/Content/Theme/dist/img/logo.svg);
+    height: 56px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+h3.logo {
+    width: 280px;
+    height: 80px;
+}
+img.loginlogo {
+    background: #fff;
+}
+.login-page div.logo {
+    background: url(../../../../../images/Content/Theme/dist/img/light-logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 280px;
+    height: 80px;
+}
+
+/* 
+*** Buttons *** 
+*/
+button.custom-btn,
+a.custom-btn {
+    background: #fff;
+    border: 2px solid #fff;
+    color: #4183d7;
+}
+
+button.custom-btn-reverse,
+a.custom-btn-reverse {
+    background: #4183d7;
+    border: 2px solid #4183d7;
+    color: #fff !important;
+}
+
+button.custom-btn::before,
+button.custom-btn::after,
+a.custom-btn::before,
+a.custom-btn::after {
+    background: #4183d7;
+}
+
+button.custom-btn-reverse::before,
+button.custom-btn-reverse::after,
+a.custom-btn-reverse::before,
+a.custom-btn-reverse::after {
+    background: #fff;
+}
+
+button.custom-btn-reverse:hover,
+a.custom-btn-reverse:hover {
+    color: #4183d7 !important;
+}
+
+button.custom-btn:hover,
+a.custom-btn:hover {
+    color: #fff;
+}
+
+.custom-regi a.back-btn {
+    background: #4183d7;
+    color: #fff;
+}
+
+.button.custom-resend-btn {
+    color: #fff;
+    background-color: #428bca;
+}
+
+/* 
+*** Login *** 
+*/
+
+.slide {
+    background-color: #4183d7;
+}
+
+.slide:before {
+    background: #4183d7;
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    /*IE7-*/ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    /*IE8+*/ -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+.tab-navigation h2 {
+    background-color: #4183d7;
+    color: #fff;
+}
+
+footer {
+    background: #4183d7;
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+.links h2 {
+    color: #4183d7;
+}
+
+.links i {
+    color: #4183d7;
+}
+
+.links a:hover {
+    background-color: #4183d7;
+    color: #fff;
+}
+
+/* Change This Banner (Login Page)*/
+
+.showcase {
+    background: url(../../../../../images/Content/Theme/dist/img/box-blue-background.jpg);
+}
+
+.showcase h2.title {
+    color: #4183d7;
+}
+
+.showcase p.sub-title {
+    background-color: rgba(63, 79, 246, 0.2);
+    color: #4183d7;
+}
+
+#ngProgress {
+    background-color: #2098d1 !important;
+    color: #5e6574 !important;
+}
+
+
+.bar-heading {
+    background: #4183d7;
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    /*IE7-*/ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    /*IE8+*/ -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+/* 
+*** Labels *** 
+*/
+
+ol.custom-breadcrumb {
+    background-color: rgba(255,255,255,8);
+    color: #5E6573
+}
+
+ol .custom-breadcrumb li.active {
+    color: #5E6573;
+}
+
+
+
+header {
+    background: #4183d7;
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    /*IE7-*/ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    /*IE8+*/ -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color: #428bca;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #2387F5;
+}
+
+.nreq-pinned {
+    background-color: #4183d7;
+}
+
+.nreq-wizard .active .nreq-wizard-item {
+    background-color: #4183d7 !important;
+    color: #fff !important;
+}
+
+.bg-blue {
+    border-color: #4183d7 !important;
+    background-color: #4183d7 !important;
+    color: #FFFFFF !important;
+}
+
+
+
+.blue-color {
+    background-color: #428bca;
+}
+
+.login-controls a:hover {
+    color: #2387F5;
+}
+
+
+h3.validate-title {
+    color: #4183d7;
+    border-bottom: 2px solid #4183d7;
+}
+
+
+.SendWay {
+    color: #498fdc !important;
+}
+
+.switch.checked {
+    background: #4183d7 !important;
+    border-color: #4183d7 !important;
+}
+
+.mouse {
+    border: 1px solid #4384cd;
+    background: #fff;
+}
+
+.mouse:after {
+    background-color: #4384cd;
+}
+
+
+.profile-data {
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    /*IE7-*/ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    /*IE8+*/ -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+.record-title h3 span {
+    color: #4183d7;
+}
+
+.tabbable-custom > .nav-tabs > li.active > a {
+    background-color: #fff;
+    color: #4183d7;
+    border: 2px solid #4183d7 !important;
+}
+
+.record-title h3:after {
+    background: #4183d7;
+}
+
+.tabbable-custom > .nav-tabs > li a p {
+    color: #4183d7;
+}
+
+.tabbable-custom > .nav-tabs > li.active > a:hover {
+    background-color: #fff;
+    color: #4183d7;
+    border: 2px solid #4183d7 !important;
+}
+
+
+a.edit-address-btn {
+    color: #4183d7;
+}
+
+.modal .modal-header {
+    border-bottom: 1px solid #4183d7;
+    color: white;
+    background-color: #4183d7;
+}
+
+.WSSCalenderSwitch {
+    background-color: #5c9bd1;
+    color: white;
+}
+
+.table-controls button:hover,
+.table-controls a:hover {
+    background: #4083d8;
+    color: #fff !important;
+}
+
+
+.nreq-category h3 {
+    background-color: #4183d7;
+    color: #fff;
+}
+
+.nreq-pinned-item a span {
+    background-color: #0785cd;
+}
+
+
+.nreq-category ul li a span {
+    background-color: #0785cd;
+}
+
+.custom-title h4 {
+    color: #4183d7;
+    border-bottom: 2px solid #4183d7;
+}
+
+.font-blue {
+    color: #4B8DF8 !important;
+}
+
+.req-validation-msg {
+    border: 2px dashed #4183d7;
+}
+
+
+.form-box h4 {
+    color: #2387F5;
+}
+
+
+.req-file-upload span.upload-btn-cs {
+    background: #4183d7;
+    color: #fff;
+}
+
+.submit {
+    background: #4183d7;
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    /*IE7-*/ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    /*IE8+*/ -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+.WSSCalenderSwitch {
+    background: #2387F5 !important;
+}
+
+table .bg-grey-silver {
+    background-color: #4384cd !important;
+}
+
+.badge-custom {
+    background: #4183d7;
+}
+
+button.customized-btn {
+    background: #4183d7;
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+.checkout-body .title {
+    color: #fff;
+    background: #4183d7;
+    background: linear-gradient(#1c3f99, #4183d7);
+    background-image: -webkit-linear-gradient(#1c3f99, #4183d7);
+    background-image: -moz-linear-gradient(#1c3f99, #4183d7);
+    background-image: -o-linear-gradient(#1c3f99, #4183d7);
+    background-image: -ms-linear-gradient(#1c3f99, #4183d7);
+    /*IE7-*/ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0);
+    /*IE8+*/ -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1c3f99', endColorStr='#4183d7', GradientType=0)";
+}
+
+.credit-card i, .sadad-card i {
+    color: #428bca;
+}
+
+.payment-button {
+    color: #fff;
+    background-color: #4183d7;
+    box-shadow: 0px 5px 0px 0px #1c3f99;
+}
+
+#PaymentForm ul.nav li a {
+    border: 3px solid #428bca;
+}
+
+#PaymentForm ul.nav li.active a {
+    background-color: #428bca;
+    color: #fff;
+}
+
+
+.record-title h3:after {
+    background: #4183d7;
+}
+
+table .nav-pills > li > a {
+    background-color: #fff;
+    color: #428bca;
+}
+
+.change-pass .has-success .input-icon > i {
+    color: #4384cd;
+}
+
+
+/* Register */
+
+.form-wizard .steps > li > a.step > .desc {
+    background-color: #4384cd;
+}
+
+
+.form-wizard .steps > li.active > a.step > .desc {
+    background: #2a62a0;
+    color: #fff;
+    border: 4px solid rgba(255, 255, 255,0.3);
+}
+
+.form-steps:before {
+    background: #2a62a0;
+}
+
+.print-icon a{
+    color:#4183d7;
+}
+
+.login-modal .modal-content {
+    background-color: #3a5b85 !important;
+}
+
+.custom-promo-details h4 {
+    color: #4183d7;
+    border-bottom: 2px solid #4183d7;
+}
+
+.wizard-step-ul li .wizard-step-item:hover {
+    border: 2px solid #4384CC;
+}
+
+.wizard-step-ul li.active > div {
+    border-color: #4384cd !important;
+}
+
+.wizard-step-ul li.active > div:after {
+    background: #7C8495 !important;
+}
+
+.wizard-step-ul li .wizard-step-item:hover {
+    border: 2px solid #7C8495;
+}
+
+
+btn.confirm {
+    background-color: #4183d7 !important;
+}
+
+.req-file-upload .remove {
+    background: #4183d7;
+}
+
+.req-file-upload .remove:hover {
+    background: #3468ac;
+}
+
+.bill-receipt-action .btn-primary,
+.bill-receipt-action .btn-primary:hover{
+background-color: #4183d7 !important;
+}
+
+.req-content h4 {
+    color: #4183d7;
+    border-bottom: 2px solid #4183d7;
+}
+
+.iconbox-icon {
+    background-color: #4183d7;
+}
+
+.calendars-month-header, .calendars-month-header select, .calendars-month-header input {
+    background-color: #4183d7 !important;
+}
+
+.calendars-ctrl {
+    background-color: #4183d7;
+}
+
+/* Request Colors */
+
+.req-price {
+    background: #4183d7;
+}
+
+.request-app a:hover {
+    background: #4183d7;
+}
+
+
+/* Landing Page */
+.mc-color-reverse {
+    color: #4183d7;
+    background: #fff;
+}
+.mc-color {
+    background: #4183d7;
+    color: #fff;
+}
+
+    .custom-card-btn,
+    .mc-color .custom-card-footer .custom-btn {
+        background: #f2f4f9;
+        color: #333;
+    } 

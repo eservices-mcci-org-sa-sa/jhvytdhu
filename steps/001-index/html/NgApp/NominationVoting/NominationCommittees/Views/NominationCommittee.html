@@ -1,0 +1,604 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+
+<div class="es-sectral-committees">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            {{ CommitteeDetail.isAvailableToVote ? 'تصويت لمرشحي لجنة' :  'تقديم طلب الترشح للجنة'}}
+                            {{CommitteeDetail.title}}
+                        </h2>
+                        <div class="sp-main-toolbar">
+                            <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center" ng-click="GoBack()">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-container">
+                        <div class="sp-committee-view-info">
+                            <div class="info-logo">
+                                <span ng-bind-html="sanitizeMe(slogan)"></span>
+                            </div>
+                            <h3>{{CommitteeDetail.title}}</h3>
+                            <p class="textAreaDisplay">{{CommitteeDetail.description}}</p>
+                            <!-- <div class="members-count">
+                                <div class="icon-holder">
+                                    <ion-icon name="people-outline"></ion-icon>
+                                </div>
+                                <span>
+                                    عدد الاعضاء :
+                                    <span class="bold">{{CommitteeDetail.membersCount}}</span>
+
+                                </span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!--
+                    It is conditionally hidden based on the following condition:
+                    - Committee win is announced (CommitteeDetail.winAnnounced is true), OR
+                    - Both voting and nomination are not available (!CommitteeDetail.isAvailableToVote && !CommitteeDetail.isAvailableToNomination).
+                -->
+                <div class="main-content-item sp-main-box margin-bottom-30" ng-hide="!memberShip.memberId">
+                    <div class="sp-main-container"  ng-hide="CommitteeDetail.winAnnounced || (!CommitteeDetail.isAvailableToVote && !CommitteeDetail.isAvailableToNomination) || (memberShip.unifiedNumber == null ||memberShip.unifiedNumber == '') ">
+                        <button class="sp-main-button w-100" ng-click="GoToNominate()" ng-if="CommitteeDetail.isAvailableToNomination">
+                            الترشح للجنة
+                        </button>
+                        <button class="sp-main-button w-100" ng-click="goToVote()" ng-if="CommitteeDetail.isAvailableToVote">
+                            التصويت
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-12">
+
+                <div class="main-content-item sp-main-box margin-bottom-30" ng-if="WinnersList.length>0">
+                    <div class="sp-main-title">
+                        <h2>
+                            قائمة الفائزين
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <ul class="candidates-winners-list">
+                            <!--<li class="list-item" dir-paginate-start="winner in WinnersList | itemsPerPage : winnersPage.itemsPerPage"
+                current-page="winnersPage.currentPage" pagination-id="paginateId_winner">-->
+                            <li class="list-item" ng-repeat-start="winner in WinnersList" ng-repeat-end="">
+
+
+                                <div class="item-icon">
+                                    <span>{{getShortName(winner.candidateName)}}</span>
+
+                                </div>
+                                <h3 class="item-title">{{winner.candidateName}}</h3>
+                                <p class="item-desc">{{winner.estName}}</p>
+                            </li>
+                            <li dir-paginate-end="">
+                            </li>
+                        </ul>
+
+                        <div class="btn-group pull-left wss-noprint" id="noprint">
+                            <a href="" ng-hide="winnersPage.totalItems === WinnersList.length" ng-click="showMore(winnersPage.currentPage + 1)"
+                               class="custom-btn custom-btn-reverse btn-3">
+                                تحميل المزيد ..
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title">
+                        <h2>
+                            مواعيد الترشح
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="vote-date">
+                                    <div class="icon-holder">
+                                        <ion-icon name="calendar-outline"></ion-icon>
+                                    </div>
+                                    <div class="date-wrapper">
+                                        <h5>تاريخ البداية</h5>
+                                        <p>{{CommitteeDetail.nominationFromDate | date:'dd/MM/yyyy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="vote-date">
+                                    <div class="icon-holder">
+                                        <ion-icon name="calendar-outline"></ion-icon>
+                                    </div>
+                                    <div class="date-wrapper">
+                                        <h5>تاريخ النهاية</h5>
+                                        <p>{{CommitteeDetail.nominationToDate | date:'dd/MM/yyyy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title">
+                        <h2>
+                            مواعيد التصويت
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="vote-date">
+                                    <div class="icon-holder">
+                                        <ion-icon name="calendar-outline"></ion-icon>
+                                    </div>
+                                    <div class="date-wrapper">
+                                        <h5>تاريخ البداية</h5>
+                                        <p>{{CommitteeDetail.votingFromDate | date:'dd/MM/yyyy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="vote-date">
+                                    <div class="icon-holder">
+                                        <ion-icon name="calendar-outline"></ion-icon>
+                                    </div>
+                                    <div class="date-wrapper">
+                                        <h5>تاريخ النهاية</h5>
+                                        <p>{{CommitteeDetail.votingToDate | date:'dd/MM/yyyy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-content-item sp-main-box margin-bottom-30" ng-if="CommitteeDetail.isAvailableToNomination">
+                    <div class="sp-main-title">
+                        <h2>
+                            شروط الترشح للجنة
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <h3 class="sp-general-title">
+                            توجد شروط محددة يجب توافرها للانضمام الي
+                            {{CommitteeDetail.title}}
+                            , وتضمن هذه الشروط عادة:
+                        </h3>
+                        <p class="sp-general-title text-black textAreaDisplay" ng-bind-html="CommitteeDetail.conditions"></p>
+                    </div>
+                </div>
+
+
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title">
+                        <h2>
+                            أنشطة اللجنة
+                        </h2>
+                    </div>
+                    <div class="sp-main-container" >
+                        <ul class="sp-comm-activities-list es-scroll"   infinite-scroll="loadMoreActivities()">
+                            <li ng-repeat="activity in paginatedActivities | orderBy:'code'">
+                                <h4>{{activity.name}}</h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<div class="main-content-item sp-main-box margin-bottom-30">
+        <div class="sp-main-title">
+            <h2>
+                أنشطة اللجنة
+            </h2>
+        </div>
+        <div class="sp-main-container">
+            <ul class="sp-comm-activities-list">
+                <li ng-repeat="activity in CommitteeDetail.activities | orderBy:'code'">
+                    <h4>{{activity.name}}</h4>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<modal visible="IsShowModal" title="تنبيه">
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="form-group">
+                    <p class="d-flex-align-center" ng-if="!IsNominationDateExpired">
+                        <span class="icon-wrapper">
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                        </span>
+                        يرجي العلم بأن  موعد الترشح للجنة سيكون متاح من
+                    </p>
+                    <div class="d-flex-align-center-justify-around" ng-if="!IsNominationDateExpired">
+                        <div class="vote-date">
+                            <div class="icon-holder">
+                                <ion-icon name="calendar-outline"></ion-icon>
+                            </div>
+                            <div class="date-wrapper">
+                                <h5>تاريخ البداية</h5>
+                                <p>{{CommitteeDetail.nominationFromDate | date:'dd/MM/yyyy'}}</p>
+                            </div>
+                        </div>
+                        <div class="vote-date">
+                            <div class="icon-holder">
+                                <ion-icon name="calendar-outline"></ion-icon>
+                            </div>
+                            <div class="date-wrapper">
+                                <h5>تاريخ النهاية</h5>
+                                <p>{{CommitteeDetail.nominationToDate | date:'dd/MM/yyyy'}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <p class="d-flex-align-center" ng-if="IsNominationDateExpired">
+                        <span class="icon-wrapper">
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                        </span>
+                        موعد الترشح قد انتهي
+                    </p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="text-center">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </div>
+</modal>
+
+
+<style>
+    .d-flex-align-center {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .d-flex-align-center-justify-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .d-flex-align-center-justify-around {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 10px;
+    }
+
+    .text-black {
+        color: black !important;
+    }
+
+    .main-content-item .sp-general-title {
+        font-size: 13px;
+        color: var(--main-color);
+        font-weight: 700;
+        line-height: 23px;
+        margin-bottom: 10px;
+    }
+
+    .sp-committee-view-info {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .sp-committee-view-info .info-logo {
+            margin-bottom: 20px;
+            height: 80px;
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 100%;
+            border: 6px solid #F5F7F7;
+        }
+
+            .sp-committee-view-info .info-logo > * {
+                object-fit: contain;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+            }
+
+            .sp-committee-view-info .info-logo svg {
+                width: 100%;
+                height: 100%;
+            }
+
+        .sp-committee-view-info h3 {
+            color: var(--main-color);
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 30px;
+        }
+
+        .sp-committee-view-info p {
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 24px;
+            padding-inline: 23px;
+        }
+
+        .sp-committee-view-info .members-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            border-radius: 40vw;
+            background: #F3F8FF;
+            padding-inline-end: 20px;
+            color: #8191A6;
+        }
+
+            .sp-committee-view-info .members-count .icon-holder {
+                padding: 5px;
+                border-radius: 100%;
+                background: var(--main-color);
+                color: white;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sp-committee-view-info .members-count span span {
+                color: var(--main-text-color);
+            }
+
+    .py-30 {
+        padding-block: 30px;
+    }
+
+    ul.sp-comm-activities-list {
+        list-style: none;
+        padding-inline-start: 20px;
+    }
+
+        ul.sp-comm-activities-list li::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            background: var(--main-color);
+            position: absolute;
+            inset-block: 0;
+            top: 3px;
+            inset-inline-start: -20px;
+        }
+
+        ul.sp-comm-activities-list li {
+            position: relative;
+            padding: 0;
+            border: 0;
+        }
+
+            ul.sp-comm-activities-list li:not(:last-child) {
+                margin-bottom: 20px;
+            }
+
+            ul.sp-comm-activities-list li h4 {
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+            ul.sp-comm-activities-list li p {
+                font-size: 12px;
+                color: #8191A6;
+            }
+
+    .vote-date {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+        .vote-date .icon-holder {
+            padding: 8px;
+            border-radius: 100%;
+            background: white;
+            border: 4px solid #F5F7F7;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--main-color);
+        }
+
+        .vote-date .date-wrapper h5 {
+            margin: 0;
+            font-size: 12px;
+            /* margin-bottom: 10px; */
+            line-height: 23px;
+            color: #8191A6;
+        }
+
+        .vote-date .date-wrapper p {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+    .textAreaDisplay {
+        white-space: pre-wrap;
+    }
+
+    ul.candidates-winners-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+    }
+
+    @media screen and (max-width: 767.89px) {
+        ul.candidates-winners-list {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        ul.candidates-winners-list {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    ul.candidates-winners-list li.list-item {
+        border: 0;
+        padding: 25px;
+        background: #F5F7F7;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+        ul.candidates-winners-list li.list-item .item-icon {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            justify-content: center;
+            color: var(--main-color);
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+            ul.candidates-winners-list li.list-item .item-icon:before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                inset: 0;
+                margin: auto;
+                background: var(--main-color);
+                border-radius: 100%;
+                z-index: -1;
+                opacity: 0.2;
+            }
+
+        ul.candidates-winners-list li.list-item .item-title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 27px;
+            margin: 0;
+        }
+
+        ul.candidates-winners-list li.list-item .item-desc {
+            font-size: 12px;
+            opacity: 0.7;
+            margin: 0;
+        }
+
+
+        /*scroll*/
+    .es-scroll {
+        --scroll-min-height: 200px;
+        --scroll-padding-iend: 10px;
+        --scroll-bg: rgba(23, 105, 204, 0.17);
+        --scroll-clr: var(--main-color);
+        --scroll-width: 6px;
+        --scroll-border-width: 0px;
+        --scroll-border-style: solid;
+        --scroll-border-clr: var(--main-color);
+        --scroll-track-border-radius: 8px;
+        --scroll-thumb-border-radius: 8px;
+    }
+
+        .es-scroll.scroll-h-300 {
+            --scroll-min-height: 300px;
+        }
+
+        .es-scroll.scroll-h-500 {
+            --scroll-min-height: 500px;
+        }
+
+    .es-scroll {
+        padding-inline-end: var(--scroll-padding-iend);
+        max-height: var(--scroll-min-height);
+        object-fit: contain;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .es-scroll {
+        scrollbar-width: auto;
+        scrollbar-color: var(--scroll-clr);
+    }
+
+        .es-scroll::-webkit-scrollbar {
+            width: var(--scroll-width);
+        }
+
+        .es-scroll::-webkit-scrollbar-track {
+            background: var(--scroll-bg);
+            border-radius: var(--scroll-border-radius);
+        }
+
+        .es-scroll::-webkit-scrollbar-thumb {
+            background-clip: content-box;
+            background-color: var(--scroll-clr);
+            border: var(--scroll-border-width) var(--scroll-border-style) var(--scroll-border-clr);
+            border-radius: var(--scroll-thumb-border-radius);
+        }
+
+</style>
+

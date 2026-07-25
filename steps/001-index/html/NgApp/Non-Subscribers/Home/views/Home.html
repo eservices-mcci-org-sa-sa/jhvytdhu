@@ -1,0 +1,42 @@
+﻿<div class="wss-memberships">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- non subscribed -->
+                <!-- tabs -->
+                <div class="sp-nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link" ng-click="pageIndex  =1" ng-class="{'active': pageIndex ==1}" id="nav-requests-tab" data-toggle="tab" href="#nav-requests" role="tab" aria-controls="nav-requests" aria-selected="true">طلبات عامة</a>
+                    <a class="nav-item nav-link" ng-click="pageIndex  =2;getNonMemberRequests();searchModel.currentPage = 1;" ng-class="{'active':  pageIndex ==2}" id="nav-all-requests-tab" data-toggle="tab" href="#nav-all-requests" role="tab" aria-controls="nav-all-requests" aria-selected="false">سجل الطلبات</a>
+                    <a class="nav-item nav-link" ng-click="pageIndex = 3;getDelegationRequests();" ng-class="{'active': pageIndex ===3}" id="nav-all-requests-tab" data-toggle="tab" href="#nav-all-requests" role="tab" aria-controls="nav-all-requests" aria-selected="false">سجل طلبات التفويض</a>
+                </div>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div ng-show="pageIndex === 1" ng-include="'NgApp/Non-Subscribers/Home/Views/Templates/GeneralRequests.html'"></div>
+                    <div ng-show="pageIndex === 2" ng-include="'NgApp/Non-Subscribers/Home/Views/Templates/AllRequests.html'"></div>
+                    <div ng-show="pageIndex === 3" ng-include="'NgApp/Non-Subscribers/Home/Views/Templates/DelegationRequests.html'"></div>
+                </div>
+
+
+                
+               
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<modal class="sp-main-modal" title=" سبب الرفض" visible="showRejectReasonModel">
+    <form class="form-horizontal text-right" id="verifyForm" name="rejectForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="sp-register-form">
+                <div class="form-group">
+                    <input ng-model="rejectModel.reason" type="text" name="reason" ng-required="true" class="form-control input-no-borders" autocomplete="off" />
+                </div>
+            </div>
+            <button ng-click="cancel();" class="sp-main-button sp-transparent-button lg-padding">
+                عودة
+            </button>
+        </div>
+    </form>
+</modal>

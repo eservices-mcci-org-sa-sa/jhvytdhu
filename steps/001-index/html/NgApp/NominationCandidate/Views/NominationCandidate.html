@@ -1,0 +1,2376 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+<div class="custom-regi">
+
+
+    <!-- NEW SPRINT 21 -->
+    <!--START: Sector Committees || Step 1 -->
+    <div class="es-sectral-committees">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                خدمة الترشح للجان القطاعية
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-inlineflex-align-center">
+                                    تسجيل الدخول للترشح والتصويت
+                                </button>
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                ما هي خدمة الترشح للجان القطاعية
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <p class="sp-general-title text-black">
+                                تتيح هذه الخدمة للاعضاء المسجلين فرصة الاطلاع علي اللجان القطاعية المتاحة، التقديم للترشح للجان المطابقة لعضوياتهم، و المشاركة في العملية التنظيمية للجان.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                خطوات استخدام الخدمة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <ul class="sp-comm-activities-list">
+                                <li>
+                                    <h4>تسجيل الدخول</h4>
+                                    <p>قم بتسجيل الدخول للوصول الي تفاصيل اللجان المتاحة.</p>
+                                </li>
+                                <li>
+                                    <h4>استعراض اللجان المتاحة</h4>
+                                    <p>بعد الجخول يمكنك تصفح جميع اللجان ذات الصلة ، مع معرفة مواعيد الترشح و التصويت  بالاضافة الي تفاصيل الانشطة الخاصة بكل لجنة.</p>
+                                </li>
+                                <li>
+                                    <h4>تقديم طلب الترشح</h4>
+                                    <p>اختر اللجنة المناسبة لعضويتك وقدم طلب الترشحبسهولة عبر المنصة.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                خدمات اضافية لدعم تجربتك
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <ul class="sp-comm-activities-list">
+                                <li>
+                                    <h4>التحقق من حالة الطلب</h4>
+                                    <p>بعد التقديم، يمكنك متابعة حالة طلبك بشكل دوري لمعرفة آخر لمستجدات.</p>
+                                </li>
+                                <li>
+                                    <h4>التصويت علي الترشيحات</h4>
+                                    <p>كن جزءا من عملية اتخاذ القرار من خلا المشاركة في التصويت لاختيار المرشحين المناسبين للجان.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+
+        .d-flex-align-center {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .d-flex-align-center-justify-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .d-flex-align-center-justify-around {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .text-black {
+            color: black !important;
+        }
+
+        .main-content-item .sp-general-title {
+            font-size: 13px;
+            color: var(--main-color);
+            font-weight: 700;
+            line-height: 23px;
+            margin-bottom: 10px;
+        }
+
+
+        ul.sp-comm-activities-list {
+            list-style: none;
+            padding-inline-start: 20px;
+        }
+
+            ul.sp-comm-activities-list li::before {
+                content: '';
+                width: 10px;
+                height: 10px;
+                border-radius: 100%;
+                background: var(--main-color);
+                position: absolute;
+                inset-block: 0;
+                top: 3px;
+                inset-inline-start: -20px;
+            }
+
+            ul.sp-comm-activities-list li {
+                position: relative;
+                padding: 0;
+                border: 0;
+            }
+
+                ul.sp-comm-activities-list li:not(:last-child) {
+                    margin-bottom: 20px;
+                }
+
+                ul.sp-comm-activities-list li h4 {
+                    font-size: 14px;
+                    font-weight: 700;
+                }
+
+                ul.sp-comm-activities-list li p {
+                    font-size: 12px;
+                    color: #8191A6;
+                }
+    </style>
+
+    <!--END: Sector Committees || Step 1 -->
+
+    <!--START: Sector Committees || Step 2 -->
+
+    <div class="es-sectral-committees">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                التصويت علي اللجان
+                            </h2>
+                            <div class="sp-main-toolbar d-flex-align-center">
+                                <button class="sp-main-button sp-inlineflex-align-center">
+                                    <ion-icon name="search"></ion-icon>
+                                    التحقق من حالة الطلب
+                                </button>
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    <ion-icon name="reader-outline"></ion-icon>
+                                    التصويت على ترشيح اللجان
+                                </button>
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                حدد العضويات
+                            </h2>
+                        </div>
+                         <div class="sp-main-container">
+                             <div class="alert alert-landing">
+                                 <img src="../../../Content/Theme/assets/img/alert.svg" />
+                                 فضلا حدد نوع العضوية لعرض اللجان المناسبة لأنشطتك.
+                             </div>
+                             <ul class="sp-memberships-list">
+                                 <li>
+                                     <label class="">
+                                         <input type="checkbox" id="chex1" value="4">
+                                         <div class="">
+                                             <h3>شركة مناهل الايمان الاهلية</h3>
+                                             <p>الغرفة التجارية الصناعية بجدة</p>
+                                         </div>
+                                     </label>
+                                 </li>
+                                 <li>
+                                     <label class="">
+                                         <input type="checkbox" id="chex1" value="4">
+                                         <div class="">
+                                             <h3>شركة مناهل الايمان الاهلية</h3>
+                                             <p>الغرفة التجارية الصناعية بجدة</p>
+                                         </div>
+                                     </label>
+                                 </li>
+                                 <li>
+                                     <label class="">
+                                         <input type="checkbox" id="chex1" value="4">
+                                         <div class="">
+                                             <h3>شركة مناهل الايمان الاهلية</h3>
+                                             <p>الغرفة التجارية الصناعية بجدة</p>
+                                         </div>
+                                     </label>
+                                 </li>
+                                 <li>
+                                     <label class="">
+                                         <input type="checkbox" id="chex1" value="4">
+                                         <div class="">
+                                             <h3>شركة مناهل الايمان الاهلية</h3>
+                                             <p>الغرفة التجارية الصناعية بجدة</p>
+                                         </div>
+                                     </label>
+                                 </li>
+                                 <li>
+                                     <label class="">
+                                         <input type="checkbox" id="chex1" value="4">
+                                         <div class="">
+                                             <h3>شركة مناهل الايمان الاهلية</h3>
+                                             <p>الغرفة التجارية الصناعية بجدة</p>
+                                         </div>
+                                     </label>
+                                 </li>
+                                 <li>
+                                     <label class="">
+                                         <input type="checkbox" id="chex1" value="4">
+                                         <div class="">
+                                             <h3>شركة مناهل الايمان الاهلية</h3>
+                                             <p>الغرفة التجارية الصناعية بجدة</p>
+                                         </div>
+                                     </label>
+                                 </li>
+                             </ul>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                اللجان المتاحة للتصويت بناءا علي العضويات المختارة اعلاه
+                            </h2>
+                        </div>
+                        <div class="sp-main-subtitle">
+                            <h2>اللجان القطاعية</h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="sp-sectral-committees-list">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!--NEW Design When Selected-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="sp-selected-membership-title">شركة مناهل الايمان الاهلية</h4>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="sp-selected-membership-title">شركة مناهل الايمان الاهلية</h4>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        ul.sp-memberships-list {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            overflow-x: auto;
+            gap: 16px;
+            list-style: none;
+            padding-bottom: 16px;
+        }
+
+        ul.sp-memberships-list li {
+            border: 0;
+            min-width: 23%;
+            padding: 0;
+        }
+
+        ul.sp-memberships-list li > label {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 10px !important;
+            border-radius: 8px;
+            background: #F5F7F7;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        ul.sp-memberships-list li > label > div h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 4px;
+        }
+
+        ul.sp-memberships-list li > label > div p {
+            font-size: 12px;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        ul.sp-memberships-list li > label > input[type='checkbox'] {
+            min-height: auto !important;
+            min-width: 20px;
+        }
+
+        .sp-inlineflex-align-center {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
+        .sp-main-subtitle {
+            padding: 14px;
+            border-bottom: 1px solid #eaecec;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sp-main-subtitle h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--main-color);
+        }
+
+        .sp-sectral-committees-list .committee-item {
+            padding: 25px;
+            border-radius: 15px;
+            background: #F5F7F7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            height: 130px;
+            margin-bottom: 30px;
+        }
+
+        .sp-sectral-committees-list .committee-item h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .sp-sectral-committees-list .committee-item .icon-holder {
+            padding: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background: white;
+            color: var(--main-color);
+        }
+
+        .sp-sectral-committees-list .committee-item .icon-holder > * {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        h4.sp-selected-membership-title {
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 21px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eaecec;
+            margin-bottom: 20px;
+        }
+
+        /*scroll*/
+        .es-scroll-h {
+            /*--scroll-min-height: 200px;*/
+            /*--scroll-padding-iend: 10px;*/
+            --scroll-bg: rgba(23, 105, 204, 0.17);
+            --scroll-clr: var(--main-color);
+            --scroll-width: 6px;
+            --scroll-border-width: 0px;
+            --scroll-border-style: solid;
+            --scroll-border-clr: var(--main-color);
+            --scroll-track-border-radius: 8px;
+            --scroll-thumb-border-radius: 8px;
+        }
+
+        .es-scroll-h {
+            /*padding-inline-end: var(--scroll-padding-iend);
+            wi: var(--scroll-min-height);
+            object-fit: contain;*/
+            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .es-scroll-h {
+            scrollbar-width: auto;
+            scrollbar-color: var(--scroll-clr);
+        }
+
+            .es-scroll-h::-webkit-scrollbar {
+                width: var(--scroll-width);
+            }
+
+            .es-scroll-h::-webkit-scrollbar-track {
+                background: var(--scroll-bg);
+                border-radius: var(--scroll-border-radius);
+            }
+
+            .es-scroll-h::-webkit-scrollbar-thumb {
+                background-clip: content-box;
+                background-color: var(--scroll-clr);
+                border: var(--scroll-border-width) var(--scroll-border-style) var(--scroll-border-clr);
+                border-radius: var(--scroll-thumb-border-radius);
+            }
+    </style>
+
+    <!--END: Sector Committees || Step 2 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--START: Committees List-->
+
+    <div class="es-sectral-committees">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                اختر اللجنة المراد الترشح لها
+                            </h2>
+                        </div>
+                        <div class="sp-main-subtitle">
+                            <h2>اللجان القطاعية</h2>
+                            <div class="subtitle-toolbar">
+                                <button class="sp-main-button sp-inlineflex-align-center">
+                                    <ion-icon name="search"></ion-icon>
+                                    التحقق من حالة الطلب
+                                </button>
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    <ion-icon name="reader-outline"></ion-icon>
+                                    التصويت على ترشيح اللجان
+                                </button>
+                            </div>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="sp-sectral-committees-list">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="" class="committee-item">
+                                            <div class="icon-holder">
+                                                <ion-icon name="people-outline"></ion-icon>
+                                            </div>
+                                            <h3>لجنة التجارة والتجزئة</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .sp-inlineflex-align-center {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
+        .sp-main-subtitle {
+            padding: 14px;
+            border-bottom: 1px solid #eaecec;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            .sp-main-subtitle h2 {
+                font-size: 16px;
+                font-weight: 700;
+                margin: 0;
+                color: var(--main-color);
+            }
+
+        .sp-sectral-committees-list .committee-item {
+            padding: 25px;
+            border-radius: 15px;
+            background: #F5F7F7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            height: 130px;
+            margin-bottom: 30px;
+        }
+
+            .sp-sectral-committees-list .committee-item h3 {
+                font-size: 14px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            .sp-sectral-committees-list .committee-item .icon-holder {
+                padding: 10px;
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
+                background: white;
+                color: var(--main-color);
+            }
+
+                .sp-sectral-committees-list .committee-item .icon-holder > * {
+                    height: 100%;
+                    object-fit: contain;
+                }
+    </style>
+
+    <!--END: Committees List-->
+    <!--START: Committee VIEW -->
+    <div class="es-sectral-committees">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                تقديم طلب الترشح للجنة {{committee.title}}
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-container">
+                            <div class="sp-committee-view-info">
+                                <div class="info-logo">
+                                    <img src="../../../Content/Theme/assets/img/logo-default.png" alt="Committee Logo" />
+                                </div>
+                                <h3>لجنة التجارة والتجزئة</h3>
+                                <p>يشمل جميع المنشآت التي تعمل في مجال التبادل الطوعي للسلع المملكومة عن طريق البيع بالجملة او بالتجزئة, مثل تجارة المنتجات الغذائية والملبوسات وغيرها</p>
+                                <div class="members-count">
+                                    <div class="icon-holder">
+                                        <ion-icon name="people-outline"></ion-icon>
+                                    </div>
+                                    <span>
+                                        عدد الاعضاء :
+                                        <span class="bold">24</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-container">
+                            <button class="sp-main-button w-100">
+                                قائمة الفائزين
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-12">
+
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                قائمة الفائزين
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <ul class="candidates-winners-list">
+                                <li class="list-item">
+                                    <div class="item-icon">
+                                        <span>م ن</span>
+                                    </div>
+                                    <h3 class="item-title">ماهر ناصر</h3>
+                                    <p class="item-desc">فرع شركة الراجحي المصرفية للاستثمار</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                شروط الترشح للجنة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <h3 class="sp-general-title">توجد شروط محددة يجب توافرها للانضمام الي اللجنة الصناعية, وتصصمن هذه الشروط عادة: </h3>
+                            <p class="sp-general-title text-black">.الخبرة والكفاءة : يجب ان يكون للفرد خبرة واسعة فى مجال الصناعة المعنية او خلفية تقنية متخصصة تجعله مؤهلا للمساعهمة لفاعلية فى انشطة اللجنه</p>
+                        </div>
+                    </div>
+
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                أنشطة اللجنة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <ul class="sp-comm-activities-list">
+                                <li>
+                                    <h4>زراعة الحبوب</h4>
+                                    <p>يشمل (القمح والشعير وحبوب الذرة الصفراء والبيضاء ... الخ)</p>
+                                </li>
+                                <li>
+                                    <h4>زراعة المحاصيل البقولية</h4>
+                                    <p>يشمل (الفول والفاصوليا والحمص والبازلاء ... الخ)</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                مواعيد الترشح
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="vote-date">
+                                        <div class="icon-holder">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </div>
+                                        <div class="date-wrapper">
+                                            <h5>تاريخ البداية</h5>
+                                            <p>24/3/2024</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="vote-date">
+                                        <div class="icon-holder">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </div>
+                                        <div class="date-wrapper">
+                                            <h5>تاريخ النهاية</h5>
+                                            <p>24/3/2024</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                مواعيد التصويت
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="vote-date">
+                                        <div class="icon-holder">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </div>
+                                        <div class="date-wrapper">
+                                            <h5>تاريخ البداية</h5>
+                                            <p>24/3/2024</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="vote-date">
+                                        <div class="icon-holder">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </div>
+                                        <div class="date-wrapper">
+                                            <h5>تاريخ النهاية</h5>
+                                            <p>24/3/2024</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <modal visible="false" title="تنبيه">
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="form-group">
+                        <p class="d-flex-align-center">
+                            <span class="icon-wrapper">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                            </span>
+                            يرجي العلم بأن  موعد الترشح للجنة سيكون متاح من
+                        </p>
+                        <div class="d-flex-align-center-justify-around">
+                            <div class="vote-date">
+                                <div class="icon-holder">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                </div>
+                                <div class="date-wrapper">
+                                    <h5>تاريخ البداية</h5>
+                                    <p>24/3/2024</p>
+                                </div>
+                            </div>
+                            <div class="vote-date">
+                                <div class="icon-holder">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                </div>
+                                <div class="date-wrapper">
+                                    <h5>تاريخ النهاية</h5>
+                                    <p>24/3/2024</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <p class="d-flex-align-center">
+                            <span class="icon-wrapper">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                            </span>
+                            موعد الترشح قد انتهي
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="text-center">
+                    <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+                </div>
+            </div>
+        </div>
+    </modal>
+
+
+    <style>
+        ul.candidates-winners-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+            gap: 14px;
+        }
+
+            ul.candidates-winners-list li.list-item {
+                border: 0;
+                padding: 25px;
+                background: #F5F7F7;
+                border-radius: 12px;
+                text-align: center;
+            }
+
+                ul.candidates-winners-list li.list-item .item-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 100%;
+                    justify-content: center;
+                    color: var(--main-color);
+                    position: relative;
+                    z-index: 1;
+                    font-size: 14px;
+                    font-weight: 700;
+                    letter-spacing: -1px;
+                }
+
+                    ul.candidates-winners-list li.list-item .item-icon:before {
+                        content: '';
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        inset: 0;
+                        margin: auto;
+                        background: var(--main-color);
+                        border-radius: 100%;
+                        z-index: -1;
+                        opacity: 0.2;
+                    }
+
+                ul.candidates-winners-list li.list-item .item-title {
+                    font-size: 14px;
+                    font-weight: 700;
+                    line-height: 27px;
+                    margin: 0;
+                }
+
+                ul.candidates-winners-list li.list-item .item-desc {
+                    font-size: 12px;
+                    opacity: 0.7;
+                    margin: 0;
+                }
+
+        .d-flex-align-center {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .d-flex-align-center-justify-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .d-flex-align-center-justify-around {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .text-black {
+            color: black !important;
+        }
+
+        .main-content-item .sp-general-title {
+            font-size: 13px;
+            color: var(--main-color);
+            font-weight: 700;
+            line-height: 23px;
+            margin-bottom: 10px;
+        }
+
+        .sp-committee-view-info {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .sp-committee-view-info .info-logo {
+                margin-bottom: 20px;
+                height: 80px;
+                width: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 15px;
+                border-radius: 100%;
+                border: 6px solid #F5F7F7;
+            }
+
+                .sp-committee-view-info .info-logo > * {
+                    width: 100%;
+                    object-fit: contain;
+                }
+
+            .sp-committee-view-info h3 {
+                color: var(--main-color);
+                font-weight: 700;
+                font-size: 16px;
+                margin-bottom: 10px;
+                line-height: 30px;
+            }
+
+            .sp-committee-view-info p {
+                font-size: 12px;
+                font-weight: 700;
+                line-height: 24px;
+                padding-inline: 23px;
+            }
+
+            .sp-committee-view-info .members-count {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 5px;
+                border-radius: 40vw;
+                background: #F3F8FF;
+                padding-inline-end: 20px;
+                color: #8191A6;
+            }
+
+                .sp-committee-view-info .members-count .icon-holder {
+                    padding: 5px;
+                    border-radius: 100%;
+                    background: var(--main-color);
+                    color: white;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .sp-committee-view-info .members-count span span {
+                    color: var(--main-text-color);
+                }
+
+        .py-30 {
+            padding-block: 30px;
+        }
+
+        ul.sp-comm-activities-list {
+            list-style: none;
+            padding-inline-start: 20px;
+        }
+
+            ul.sp-comm-activities-list li::before {
+                content: '';
+                width: 10px;
+                height: 10px;
+                border-radius: 100%;
+                background: var(--main-color);
+                position: absolute;
+                inset-block: 0;
+                top: 3px;
+                inset-inline-start: -20px;
+            }
+
+            ul.sp-comm-activities-list li {
+                position: relative;
+                padding: 0;
+                border: 0;
+            }
+
+                ul.sp-comm-activities-list li:not(:last-child) {
+                    margin-bottom: 20px;
+                }
+
+                ul.sp-comm-activities-list li h4 {
+                    font-size: 14px;
+                    font-weight: 700;
+                }
+
+                ul.sp-comm-activities-list li p {
+                    font-size: 12px;
+                    color: #8191A6;
+                }
+
+        .vote-date {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+            .vote-date .icon-holder {
+                padding: 8px;
+                border-radius: 100%;
+                background: white;
+                border: 4px solid #F5F7F7;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--main-color);
+            }
+
+            .vote-date .date-wrapper h5 {
+                margin: 0;
+                font-size: 12px;
+                /* margin-bottom: 10px; */
+                line-height: 23px;
+                color: #8191A6;
+            }
+
+            .vote-date .date-wrapper p {
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 0;
+            }
+    </style>
+
+    <!--END: Committee VIEW -->
+    <!--START: Committee LOGIN -->
+    <div class="es-sectral-committees-login">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                تقديم طلب الترشح للجنة {{committee.title}}
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                تسجيل الدخول
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="sp-sectral-committees-list">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>رقم الهوية</label>
+                                            <input class="form-control " type="text" placeholder="ادخل رقم الهوية">
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12">
+                                        <button class="sp-main-button">دخول</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <modal visible="false" title="كود التحقق">
+        <div class="portlet-body">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p>
+                            ادخل كود التحقق الذي تم إرساله على الجوال المرتبط بالهوية بأبشر
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="custom-input w-80-center">
+                        <label class="text-main-color bold">كود التحقق</label>
+                        <input class="form-control " type="text" placeholder="ادخل رقم الهوية">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                    <p class="margin-bottom-20 text-gray">يمكنك إعادة الإرسال بعد 230 ثانية</p>
+                </div>
+                <div class="clearfix"></div>
+                <div class="text-center">
+                    <button type="button" class="sp-main-button">إعادة إرسال</button>
+                    <!--data-dismiss="modal"-->
+                </div>
+            </div>
+        </div>
+    </modal>
+
+    <style>
+        .text-gray {
+            color: #8191A6;
+        }
+
+        .text-main-color {
+            color: var(--main-color);
+        }
+
+        @media screen and (min-width: 550px) {
+            .w-80-center {
+                width: 80%;
+                margin-inline: auto;
+            }
+        }
+    </style>
+    <!--END: Committee LOGIN -->
+    <!--START: Committee MEMBERSHIPS-->
+
+    <div class="es-sectral-committees-voting">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                تقديم طلب الترشح للجنة {{committee.title}}
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                <i class="fa fa-user mc-color-reverse"></i>
+                                العضويات التابعة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <div class="row">
+
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span> الرقم الموحد (700): </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                <i class="fa fa-users mc-color-reverse"></i>
+                                العضويات المفوض عليها
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <div class="row">
+
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm">
+                                    <div class="sp-candidacy-membership-card mc-color" ng-click="c.checked" data-balloon="شركة 1" data-balloon-pos="up">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>شركة 1</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                        <span>رقم العضوية: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                        <span>رقم السجل: </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="membership-info clearfix margin-bottom-0">
+                                                    <div class="mem-num no-padding">
+                                                        <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                        <span>الرقم الموحد (700) : </span>
+                                                    </div>
+                                                    <div class="mem-value no-padding">
+                                                        <span>302000011285</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .sp-candidacy-membership-card {
+            min-height: 1px;
+            padding: 20px 10px;
+            border-radius: 15px;
+            height: 158px;
+            cursor: pointer;
+        }
+
+            .sp-candidacy-membership-card h3 {
+                font-size: 13px;
+                margin-bottom: 10px;
+                font-weight: 700;
+                color: white;
+            }
+
+            .sp-candidacy-membership-card .membership-info span {
+                font-size: 14px;
+                line-height: 25px;
+            }
+
+            .sp-candidacy-membership-card .membership-info {
+                margin-bottom: 5px;
+            }
+    </style>
+
+    <!--END: Committee MEMBERSHIPS-->
+    <!--START: Committee VOTING -->
+    <div class="es-sectral-committees-voting">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                تقديم طلب الترشح للجنة {{committee.title}}
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                بيانات العضوية
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>اسم المنشأة</h3>
+                                        <p>فرع شركة الراجحي المصرفية للاستثمار</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>رقم العضوية</h3>
+                                        <p>60100000112</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>رقم السجل</h3>
+                                        <p>5305538</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>النشاط الرسمي</h3>
+                                        <p>مزاولة الاعمال المصرفية</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>النشاط الفرعي</h3>
+                                        <p>مزاولة الاعمال المصرفية</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                بيانات إضافية
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="sp-sectral-committees-list">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>العلاقة بالمنشأة</label>
+                                            <ui-select ng-model="searchModel.requestStatus" reset-search-input="true" theme="selectize">
+                                                <ui-select-match>
+                                                    <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="c.id as c in RequestStatusList | filter: $select.search">
+                                                    <small ng-bind-html="c.nameAr"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>المؤهل العلمي</label>
+                                            <ui-select ng-model="searchModel.requestStatus" reset-search-input="true" theme="selectize">
+                                                <ui-select-match>
+                                                    <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="c.id as c in RequestStatusList | filter: $select.search">
+                                                    <small ng-bind-html="c.nameAr"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>التخصص العلمي</label>
+                                            <input class="form-control " type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="custom-input custom-cal">
+                                            <label for="date">تاريخ إنتهاء الهوية</label>
+                                            <date-control name="startDate" class="datepickgreg" onkeydown="return false;" autocomplete="off"
+                                                          mydate="searchModel.startDate" title="{{IsHijriTitle}}"></date-control>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="custom-input custom-cal">
+                                            <label for="date">تاريخ الميلاد</label>
+                                            <date-control name="endDate" class="datepickgreg" ng-required="true" onkeydown="return false;"
+                                                          mydate="searchModel.endDate" autocomplete="off"
+                                                          title="{{IsHijriTitle}}"></date-control>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>رقم الجوال</label>
+                                            <input class="form-control " type="number" disabled value="0555555555">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>البريد الالكتروني</label>
+                                            <input class="form-control " type="email" disabled value="info@worldofss.com">
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>نبذة عن المترشح</label>
+                                            <textarea class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                المرفقات المطلوبة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="sp-activities-required">
+                                        <li>السجل التجاري</li>
+                                        <li>الهوية الوطنية</li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-12 text-center">
+                                    <div ng-include="'NgApp/Request/Views/Partials/UploadAttachement.html'"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="sp-form-actions">
+                            <button class="sp-main-button">تقديم الطلب</button>
+                            <button class="sp-main-button sp-transparent-button">إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .sp-inputgroup {
+            position: relative;
+        }
+
+            .sp-inputgroup.input-icon > ion-icon {
+                position: absolute;
+                inset-block: 0;
+                margin-block: auto;
+                inset-inline-start: 10px;
+                color: #8191A6;
+            }
+
+        .sp-view-info h3 {
+            font-size: 12px;
+            color: #8191A6;
+        }
+
+        .sp-view-info p {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .sp-view-info {
+            margin-bottom: 30px;
+        }
+
+        .main-content-item ul.sp-activities-required {
+            list-style: none;
+            padding-inline-start: 10px;
+            margin-bottom: 15px;
+        }
+
+            .main-content-item ul.sp-activities-required li {
+                position: relative;
+                font-size: 12px;
+                padding: 0;
+                line-height: 25px;
+                font-weight: 700;
+                border: 0;
+            }
+
+                .main-content-item ul.sp-activities-required li::before {
+                    content: '';
+                    position: absolute;
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100%;
+                    background: #333;
+                    inset-block: 0;
+                    margin-block: auto;
+                    inset-inline-start: -15px;
+                }
+
+                .main-content-item ul.sp-activities-required li:not(:last-child) {
+                    margin-bottom: 15px;
+                }
+
+        .es-sectral-committees-voting .sp-form-actions {
+            text-align: center;
+            padding: 20px 10px;
+            border-top: 1px solid #eaecec;
+        }
+    </style>
+
+    <!--END: Committee VOTING -->
+    <!--START: Committees Requests LOG  -->
+    <div class="es-sectral-committees-candidate-requests">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                تقديم طلب الترشح للجنة
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="sp-main-box">
+                        <div class="sp-main-title">
+                            <h2>قائمة طلبات الترشيح</h2>
+                        </div>
+
+
+                        <div class="sp-main-table-holder">
+                            <div class="table-responsive custom-table wss-wallet-table white-bg p-bottom-sm">
+                                <table class="table table-hover table-centered">
+                                    <thead>
+                                        <tr class="bg-blue font-white">
+                                            <th ng-click="sort('RequestId')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>اللجنة </strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('RequestTypeName')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>تاريخ التقديم</strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestTypeName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('RequestDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>رقم العضوية المرشح عليها</strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('ApproveRejectDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <strong>الحالة</strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='ApproveRejectDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}">
+                                                </span>
+                                            </th>
+                                            <th style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong> الخيارات </strong>
+                                                </label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--<tr ng-hide="page.thereIsData">
+                                            <td ng-show="page.showLoad" colspan="99" style="text-align:center;" class="text-center" data-loading>
+                                                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                            </td>
+                                            <td colspan="99" style="text-align:center;" ng-show="page.noData">
+                                                <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض </h3>
+                                            </td>
+                                        </tr>-->
+                                        <tr ng-repeat-start="x in objects | orderBy: sortKeyTrans : reverseTrans" class="white-bg">
+                                            <td class="text-center">لجنة الصناعة</td>
+                                            <td class="text-center">2024-01-12</td>
+                                            <td class="text-center">1111111111</td>
+                                            <td class="text-center">
+                                                <span data-balloon="مرفوض" data-balloon-pos="up" class="RequestRefused">
+                                                    مرفوض
+                                                </span>
+                                                <span data-balloon="قيد الاجراء" data-balloon-pos="up" class="RequestPending">
+                                                    قيد الاجراء
+                                                </span>
+                                                <span data-balloon="مقبول" data-balloon-pos="up" class="RequestAccept">
+                                                    مقبول
+                                                </span>
+                                            </td>
+                                            <td title="">
+                                                <div class="btn-group">
+                                                    <button class="dropdown-toggle purple-intense  sp-dropdown-button" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false">
+                                                        <ion-icon name="settings-outline"></ion-icon>
+                                                    </button>
+                                                    <ul class="dropdown-menu pull-right">
+                                                        <li>
+                                                            <a class="customized-btn">سبب الرفض</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="customized-btn">إعادة تقديم الطلب</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-hide="objects.length == 0">
+                                        <tr>
+                                            <td colspan="9">
+                                                <ul class="nav nav-pills center-nav" style="display: inline-block; float: left;">
+                                                    <li>
+                                                        <a href="javascript:;" style="cursor: auto; border:2px solid; margin-right: 10px; padding: 8px 15px">
+                                                            إجمالى السجلات
+                                                            <span class="badge badge-custom"> 50 </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="btn-group pull-left wss-noprint" id="noprint">
+                                                    <a href="" ng-hide="objects[0].rowsCount === objects.length" ng-click="showMore(searchModel.currentPage + 1)" class="custom-btn custom-btn-reverse btn-3">
+                                                        تحميل المزيد ..
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .d-flex-align-center-justify-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+    <modal visible="false" title="سبب الرفض">
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="form-group">
+                        <p class="d-flex-align-center-justify-center">
+                            <span class="icon-wrapper">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                            </span>
+                            عذرًا، يؤسفنا بإبلاغك عن رفض التصويت
+                        </p>
+                        <p class="d-flex-align-center-justify-center">
+                            هنا يتم عرض سبب رفض الطلب المدخل من قبل موظف الغرفة
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="text-center d-flex-align-center-justify-center">
+                    <button type="button" title="إعادة تقديم الطلب" class="sp-main-button" data-dismiss="modal">إعادة تقديم الطلب</button>
+                    <button type="button" title="اغلاق" class="btn sp-main-button red" data-dismiss="modal">اغلاق</button>
+                </div>
+            </div>
+        </div>
+    </modal>
+
+    <!--END: Committees Requests LOG -->
+    <!--START: Committees VOTING LOG  -->
+    <div class="es-sectral-committees-candidate-voting">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2>
+                                تقديم طلب الترشح للجنة
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="sp-main-box">
+                        <div class="sp-main-title">
+                            <h2>قائمة المرشحين</h2>
+                        </div>
+
+
+                        <div class="sp-main-table-holder">
+                            <div class="table-responsive custom-table wss-wallet-table white-bg">
+                                <table class="table table-hover table-centered">
+                                    <thead>
+                                        <tr class="bg-blue font-white">
+                                            <th class="text-center">
+                                                <label>
+                                                    <strong># </strong>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('RequestId')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>اسم المرشج </strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestId'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('RequestTypeName')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>العضوية / اسم المنشأة</strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestTypeName'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('RequestDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>المؤهل</strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th ng-click="sort('ApproveRejectDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <strong>علاقته بالمنشأة</strong>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='ApproveRejectDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}">
+                                                </span>
+                                            </th>
+                                            <th ng-click="sort('RequestDate')" data-balloon="اضغط هنا للترتيب" data-balloon-pos="top" style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong>نبذة عني</strong>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='RequestDate'"
+                                                          ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                </label>
+                                            </th>
+                                            <th style="cursor:pointer;" class="text-center">
+                                                <label>
+                                                    <strong> التصويت </strong>
+                                                </label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--<tr ng-hide="page.thereIsData">
+                                            <td ng-show="page.showLoad" colspan="99" style="text-align:center;" class="text-center" data-loading>
+                                                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                            </td>
+                                            <td colspan="99" style="text-align:center;" ng-show="page.noData">
+                                                <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض </h3>
+                                            </td>
+                                        </tr>-->
+                                        <tr ng-repeat-start="x in objects | orderBy: sortKeyTrans : reverseTrans" class="white-bg">
+                                            <td class="text-center">{{$index+1 | ngArabicNumber: true}} </td>
+                                            <td class="text-center">اسم المرشح</td>
+                                            <td class="text-center">اسم المنشأة</td>
+                                            <td class="text-center">دكتوراه</td>
+                                            <td class="text-center">مالك</td>
+                                            <td class="text-center">
+                                                <a>نبذة عن المرشح</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="switch-control">
+                                                    <div id="SwitchRow">
+                                                        <label>
+                                                            <input type="radio" ng-model="ForgetModel.ForgetWay" value="{{way.key}}">
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="sp-form-actions">
+                            <button class="sp-main-button m-ie-20 px-20">تصويت</button>
+                            <button class="sp-main-button sp-transparent-button px-20">إلغاء</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .d-flex-align-center-justify-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sp-form-actions {
+            text-align: center;
+            padding: 20px 10px;
+            border-top: 1px solid #eaecec;
+        }
+
+        .m-ie-20 {
+            margin-inline-end: 20px;
+        }
+    </style>
+    <modal visible="true" title="نبذة شخصية عن المرشح">
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="form-group">
+                        <p class="">
+                            المترشح يتمتع بخبرة واسعة في مجال الصناعة، حيث عمل في مشاريع صناعية متنوعة وتولى مسؤوليات متعددة تشمل الإدارة والتخطيط والتنفيذ. يتميز بقدرته على فهم التحديات التي تواجه الصناعة وتطوير السياسات التي تعزز التنمية الصناعية وتدعم الصناعات الحديثة والمستدامة.
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="text-center">
+                    <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+                </div>
+            </div>
+        </div>
+    </modal>
+
+    <!--END: Committees VOTING LOG -->
+

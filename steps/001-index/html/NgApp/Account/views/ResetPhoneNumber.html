@@ -1,0 +1,171 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <a href="">
+                        <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                    </a>
+                </div>
+                <div class="sp-outer-logos" ng-cloak>
+                    <img ng-cloak ng-if="chamberSettings.id && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<div class="custom-regi">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="sp-main-box sp-register-box sp-forget-box form-wizard register-pg" id="form_wizard_1">
+                    <div class="sp-main-title">
+                        <h2>
+                            تعديل رقم الجوال
+                        </h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/MemberLogin">
+                            العودة
+                        </a>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 m-top-md p-bottom-md" ng-if="!chamberSettings.useAbshir">
+                        <div class="form-group">
+                            <div class="alert">
+                                <img src="../../../Content/Theme/assets/img/alert.svg" />
+                                يمكنك تغيير رقم الجوال الخاص بك من خلال التواصل مع الغرفة التجارية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="!valideCode && chamberSettings.useAbshir">
+                        <form class="rotate-in" id="CheckForm" name="CheckForm" novalidate="novalidate" ng-hide="showCodeEntryWindow">
+                            <div class="sp-register-form">
+                                <div class="row row-model">
+
+                                    <div ng-cloak class="col-md-12 col-xs-12" ng-if="chamberSettings.isUnified">
+                                        <div class="custom-input">
+                                            <label for="date">الغرفة  </label>
+                                            <!--{{invisible}}-->
+                                            <ui-select ng-model="ResetModel.ChamberId" ng-change="onChamberDomainChange()" reset-search-input="true" theme="selectize" ng-required="true">
+                                                <ui-select-match>
+                                                    <span class="selected-value" ng-bind="$select.selected.chamberName"></span>
+                                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="c.chamberId as c in ChamberList | filter: $select.search">
+                                                    <small ng-bind-html="c.chamberName"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <div ng-messages="CheckForm.ChamberId.$error" ng-if="CheckForm.ChamberId.$dirty">
+                                                <p class="text-danger" ng-message="required">من فضلك أختر الغرفة</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                            <label for="MemberID"> رقم الهوية / الإقامة  </label>
+                                            <div class="input-icon left">
+                                                <input type="text" ng-required="true" maxlength="10" name="IdentityNo" ng-minlength="10"
+                                                       autocomplete="off" ng-model="ResetModel.IdentityNo" autofocus
+                                                       class="form-control IdentityNo"
+                                                       placeholder="رقم الهوية / الإقامة" only-Int ng-pattern="/^(1|2)([0-9]{9})$/">
+                                            </div>
+                                            <div ng-messages="CheckForm.IdentityNo.$error" ng-if=" CheckForm.IdentityNo.$dirty  || isFormSubmitted">
+                                                <p class="errors error-msg" ng-message="required">من فضلك ادخل رقم الهوية / الإقامة</p>
+                                                <p class="errors error-msg" ng-message="minlength"> ادخل رقم الهوية / الإقامة 10 أرقام</p>
+                                                <p class="errors error-msg" ng-message="pattern">من فضلك ادخل رقم الهوية أرقام وتبدأ ب 1 أو 2</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <div class="g-recaptcha" vc-recaptcha size="normal"
+                                                 theme="'light'" key="captcha.captchaKey" lang="ar"
+                                                 ng-model="captcha.captchaKey" name="captchaKey"
+                                                 ng-required="true"
+                                                 on-create="setWidgetId(widgetId)" on-success="setResponse(response)"
+                                                 on-expire="cbExpiration()">
+                                            </div>
+                                            <div ng-messages="CheckForm.captchaKey.$error"
+                                                 ng-if="CheckForm.captchaKey.$dirty || isFormSubmitted">
+                                                <p class="text-danger" ng-message="required">من فضلك قُم بالتحديد</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="sp-register-form">
+                                <div class="form-actions">
+                                    <button type="submit" ng-disabled="CheckForm.IdentityNo.$invalid" ng-click="sendCode(ResetModel,CheckForm,$event);" class="sp-main-button">
+                                        التالى
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="sp-register-form" ng-if="showCodeEntryWindow">
+                            <form name="ResetPhoneForm">
+                                <p class="sp-main-size">
+                                    الرجاء إدخال رقم التحقق الذي تم إرساله
+                                </p>
+                                <div class="form-group ver-code">
+                                    <input ng-repeat="digit in smsInputs  track by $index" type="text"
+                                           data-ng-model="digit.value" restrict-input="{type: 'digitsOnly'}" min="0"
+                                           max="9" move-Previous maxlength="1" ng-change="combineCode(digit,$index)"
+                                           class="form-control" autocomplete="off" />
+
+
+                                    <div ng-messages="ResetPhoneForm.code.$error" ng-if="ResetPhoneForm.code.$dirty">
+                                        <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رمز التحقق</p>
+                                        <p class="text-danger error-msg" ng-message="minlength">من فضلك ادخل رمز يحتوي علي  4 ارقام</p>
+                                    </div>
+                                </div>
+                                <p class="sp-main-size" style="color:#8998AA">
+                                    الوقت المتبقي لانتهاء المدة المسموحه لإدخال رمز التحقق:   {{ResetRecoverTimer}}
+                                </p>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="sp-register-form" ng-if="valideCode && chamberSettings.useAbshir">
+                        <form role="form" name="changePhoneNumber" novalidate="novalidate">
+                            <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                <label for="newPassword"> رقم الجوال السابق</label>
+                                <div class="input-icon left">
+                                    {{ ResetModel.OldPhoneNumber }}
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                <label for="newPassword"> رقم الجوال الجديد</label>
+                                <div class="input-icon left">
+                                    <input name="PhoneNumber" type="text" ng-model="ResetModel.PhoneNumber" maxlength="10" minlength="10"
+                                           ng-pattern="/^(05)([0-9]{8})$/" only-Int ng-required="true"
+                                           class="form-control PhoneNumber" autocomplete="off" />
+                                </div>
+                                <div ng-messages="changePhoneNumber.PhoneNumber.$error" ng-if="changePhoneNumber.PhoneNumber.$dirty || isSubmitted">
+                                    <p class="text-danger" ng-message="required">من فضلك ادخل رقم الجوال</p>
+                                    <p class="text-danger" ng-message="pattern">من فضلك ادخل الجوال بشكل صحيح لا يقل عن 10 أرقام يبدأ ب 05</p>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" ng-click="ResetPhoneNumber(changePhoneNumber,$event);" class="sp-main-button">
+                                    حفظ
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

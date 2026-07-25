@@ -1,0 +1,761 @@
+﻿<style>
+    .WSSCalenderSwitch {
+        background-color: #5c9bd1;
+        color: white;
+        height: 33px;
+        border: none;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 20px;
+        height: 34px;
+        font-family: Tahoma, Times New Roman, Arial, Simplified Arabic;
+        padding-top: 0px;
+        border: 1px solid #aaa;
+        cursor: pointer;
+        right: 0px;
+        text-align: center !important;
+    }
+
+    .customBtn {
+        border: 1px solid #dddddd;
+        background: #adb3b3 url(http://localhost:2183/Content/css/JQueryUI/images/ui-bg_flat_100_adb3b3_40x100.png) 50% 50% repeat-x;
+        font-weight: bold;
+        color: #475d5f;
+    }
+
+    /*@media print {
+        #footerr {*/
+    /*visibility: hidden !important;*/
+    /*display: none !important;
+        }
+    }*/
+</style>
+
+<link href="../../../Scripts/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet" />
+<script src="../../../Scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+
+<!-- content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="sp-main-box margin-bottom-20">
+                <div class="sp-chamber-data-boxes" ng-show="page.showChartData">
+
+                    <div class="sp-chamber-box blue-box">
+                        <div class="icon-holder">
+                            <ion-icon name="cash-outline"></ion-icon>
+                        </div>
+                        <p class="data-title">الرصيد المتوفر</p>
+                        <p class="data-number">{{StatisticsObj.balance | ngArabicNumber: true}} <span>ريال</span></p>
+                    </div>
+
+                    <div class="sp-chamber-box red-box">
+                        <div class="icon-holder">
+                            <ion-icon name="card-outline"></ion-icon>
+                        </div>
+                        <p class="data-title">الرصيد المحجوز</p>
+                        <p class="data-number">{{userInfo.globalSessionValues.ReservedBalance | ngArabicNumber: true}} <span>ريال</span></p>
+                    </div>
+
+                    <div class="sp-chamber-box orange-box">
+                        <div class="icon-holder">
+                            <ion-icon name="list-outline"></ion-icon>
+                        </div>
+                        <p class="data-title"> عدد معاملات اليوم</p>
+                        <p class="data-number" ng-if="StatisticsObj.transCount==0 || StatisticsObj.transCount== null">لا يوجد </p>
+                        <p class="data-number" ng-if="StatisticsObj.transCount !=0 && StatisticsObj.transCount != null"> {{StatisticsObj.transCount | ngArabicNumber: true}} </p>
+                    </div>
+
+                    <div class="sp-chamber-box green-box">
+                        <div class="icon-holder">
+                            <ion-icon name="trending-down-outline"></ion-icon>
+                        </div>
+                        <p class="data-title"> اخر عملية شحن</p>
+                        <p class="data-number">{{StatisticsObj.credit | ngArabicNumber: true}} <span>ريال</span></p>
+                    </div>
+
+                    <div class="sp-chamber-box purple-box">
+                        <div class="icon-holder">
+                            <ion-icon name="trending-up-outline"></ion-icon>
+                        </div>
+                        <p class="data-title">اخر عملية صرف </p>
+                        <p class="data-number">{{StatisticsObj.debit | ngArabicNumber: true }} <span>ريال</span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- wallet search -->
+    <section class="sp-wallet-search-section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box">
+                    <div class="sp-main-title">
+                        <h2>بحث حركات المحفظة</h2>
+                    </div>
+
+                    <div class="sp-main-form sp-main-form-inner">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="custom-input">
+                                    <label>تاريخ الحركة من</label>
+                                    <date-control name="startDate" class="{{IsHijriClass}} " onkeydown="return false;" placeholder="تاريخ الحركة من " mydate="searchModel.startDate" title="{{IsHijriTitle}}"></date-control>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="custom-input">
+                                    <label>تاريخ الحركة الى</label>
+                                    <date-control name="endDate" class="{{IsHijriClass}} " onkeydown="return false;" placeholder="تاريخ الحركة إلى " mydate="searchModel.endDate" title="{{IsHijriTitle}}"></date-control>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" id="searchContent" ng-show="page.showAdvancedFilter" style="display: block;">
+                                <div class="custom-input">
+                                    <label>رقم الطلب</label>
+                                    <input type="text" name="fname" class="form-control" numbers-Only ng-model="searchModel.requestId">
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="searchContent" ng-show="page.showAdvancedFilter" style="display: block;">
+                                <div class="custom-input">
+                                    <label>نوع الحركة  </label>
+                                    <ui-select ng-model="searchModel.transactionType" reset-search-input="true" theme="selectize">
+                                        <ui-select-match>
+                                            <span class="selected-value" ng-bind="$select.selected.transactionTypeAr"></span>
+                                            <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="c.id as c in WalletTransactionTypes | filter: $select.search">
+                                            <small ng-bind-html="c.transactionTypeAr"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-12">
+                                <button class="sp-main-button d-block" ng-click="page.showAdvancedFilter=!page.showAdvancedFilter">
+                                    <span><ion-icon name="options-outline"></ion-icon></span>
+                                    <span ng-show="!page.showAdvancedFilter">بحث متقدم</span>
+                                    <span ng-show="page.showAdvancedFilter">إخفاء البحث المتقدم</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="row justify-content-center text-center">
+                            <button class="sp-main-button mr-1" ng-click="GetWalletsTrans();" ng-disabled="searchForm.$invalid">
+                                <span><ion-icon name="search-outline"></ion-icon></span>
+                                بحث
+                            </button>
+                            <button class="sp-main-button sp-transparent-button mr-1" ng-click="clearSearchModel()">
+                                <span><ion-icon name="reload-outline"></ion-icon></span>
+                                تفريغ
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Wallet search end -->
+
+    <section class="sp-table-section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sp-main-box">
+                    <div class="sp-main-title">
+                        <h2>عمليات المحفظة</h2>
+                    </div>
+
+                    <div class="sp-main-table-holder">
+
+                        <div class="table-responsive custom-table wss-wallet-table"  >
+                            <table class="table table-bordered table-hover wss-table-print">
+                                <thead>
+                                    <tr class="bg-blue font-white">
+                                        <!--<th class="text-center"><label></label></th>-->
+                                        <th class="text-center">
+                                            <label>
+                                                <span># </span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='$index'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>رقم العملية </span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='instrumentNum'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>رقم الطلب</span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='memberPortalRequestId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+
+
+                                        <th class="text-center">
+                                            <label>
+                                                <span>رقم العضوية  </span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='memberId'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>تاريخ الحركة  </span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='instrumentDate'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+
+                                        <th class="text-center">
+                                            <label>
+                                                <span> نوع الحركة </span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='paymentSystemName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>مبلغ الايداع</span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='serviceAr'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>مبلغ الصرف</span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='amount'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>الرصيد </span>
+                                                <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='beneficialName'"
+                                                      ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                            </label>
+                                        </th>
+                                        <th style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong> الخيارات </strong>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="obj in objects| orderBy: sortKeyTrans : reverseTrans">
+                                        <td class="text-center"><span>{{$index+1 | ngArabicNumber: true}} </span></td>
+                                        <td class="text-center"><span>{{obj.transId | ngArabicNumber: true}} </span></td>
+                                        <td class="text-center"><span>{{obj.memberPortalRequestId == null? '--': obj.memberPortalRequestId | ngArabicNumber: true}} </span></td>
+                                        <td class="text-center"><span>{{obj.memberId | ngArabicNumber: true}} </span></td>
+                                        <td class="text-center"><span dir="ltr">{{obj.transactionDate | cmdate:'dd-MM-yyyy'  | ngArabicNumber: true}} </span></td>
+                                        <td class="text-center"><span>{{obj.transactionTypeAr}} </span></td>
+                                        <td class="text-center"><span>{{obj.credit | ngArabicNumber: true}} ريال</span></td>
+                                        <td class="text-center"><span>{{obj.debit | ngArabicNumber: true}} ريال </span></td>
+                                        <td class="text-center"><span>{{obj.balance | ngArabicNumber: true}} ريال </span></td>
+                                        <td class="text-center print-icon">
+                                            <a href="#/InstrumentPrint/{{obj.transId}}/transType/{{obj.transactionType}}" ng-if="obj.transactionType !=5" title="طباعة">
+                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="obj.expanded" dir-paginate-end="">
+                                        <td colspan="10" class="expand-bg">
+                                            <div class="row row-model" style="margin-top:20px; margin-bottom:20px;">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 col-md-offset-3 col-lg-offset-3">
+                                                    <table class="table card-3 table-condensed table-responsive table-bordered">
+                                                        <thead>
+                                                            <tr class="font-white">
+                                                                <td ng-show="obj.memberPortalRequestId" class="text-center"><label><span> رقم الطلب  </span></label></td>
+
+                                                                <td class="text-center"><label><span> نوع الدفع  </span></label></td>
+
+                                                                <td class="text-center"><label><span> نوع الخدمة  </span></label></td>
+                                                                <td ng-if="obj.transactionType==4" class="text-center"><label><span> طريقة الدفع    </span></label></td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td ng-show="obj.memberPortalRequestId" class="text-center"><span>{{obj.memberPortalRequestId | ngArabicNumber: true}} </span></td>
+                                                                <td ng-if="obj.transactionType!=5" class="text-center"><span>{{obj.paymentSystemName}} </span></td>
+                                                                <td ng-if="obj.transactionType==5" class="text-center"><span>مبلغ مسترجع </span></td>
+                                                                <td class="text-center"><span>{{obj.serviceAr}} </span></td>
+                                                                <td ng-if="obj.transactionType==4" class="text-center"><span>{{obj.serviceId==3?'عبر الغرفة':'أونلاين'}} </span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="page.thereIsData">
+                                        <td ng-show="page.showLoad" colspan="10" style="text-align:center;" class="text-center" data-loading>
+                                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                        </td>
+                                        <td colspan="10" style="text-align:center;" ng-show="page.noData">
+                                            <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض </h3>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot ng-hide="objects.length == 0" id="noprint">
+                                    <tr>
+                                        <td colspan="12">
+                                            <ul class="nav nav-pills center-nav" style="display: inline-block; float: left;">
+                                                <li>
+                                                    <a href="javascript:;" class="wss-total-label">
+                                                        إجمالى السجلات
+                                                        <span class="badge badge-custom"> {{ objects[0].rowsCounts | ngArabicNumber: true }} </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group pull-left wss-noprint" id="noprint">
+                                                <a href="" ng-hide="objects[0].rowsCounts === objects.length" ng-click="showMore(searchModel.currentPage + 1)" class="sp-main-button custom-btn custom-btn-reverse btn-3">
+                                                    تحميل المزيد ..
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="sp-main-colored-box">
+                            <div class="text-center">
+                                <div class="btn-group wss-btn-group">
+                                    <a href="/#/WalletCharge" class="sp-main-button sp-white-button">
+                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        شحن المحفظة
+                                    </a>
+                                    <a href="" ng-click="print('printTable')" class="sp-main-button sp-white-button">
+                                        <i class="fa fa-print" aria-hidden="true"></i>
+                                        طباعة
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+</div>
+<!-- content end -->
+
+
+<div class="sp-main-table-holder" ng-hide="true">
+    <div class="table-responsive custom-table wss-wallet-table" id="printTable">
+        <table class="table table-bordered table-hover wss-table-print">
+            <thead>
+                <tr class="bg-blue font-white"> 
+                    <th class="text-center">
+                        <label>
+                            <span># </span> 
+                        </label>
+                    </th>
+                    <th class="text-center">
+                        <label>
+                            <span>رقم العملية </span> 
+                        </label>
+                    </th>
+                    <th class="text-center">
+                        <label>
+                            <span>رقم الطلب</span> 
+                        </label>
+                    </th>
+
+                    <th class="text-center">
+                        <label>
+                            <span>رقم العضوية  </span> 
+                        </label>
+                    </th>
+                    <th class="text-center">
+                        <label>
+                            <span>تاريخ الحركة  </span> 
+                        </label>
+                    </th>
+
+                    <th class="text-center">
+                        <label>
+                            <span> نوع الحركة </span> 
+                        </label>
+                    </th>
+                    <th class="text-center" ng-hide="searchModel.transactionType == 4">
+                        <label>
+                            <span>مبلغ الايداع</span> 
+                        </label>
+                    </th>
+                    <th class="text-center" ng-hide="searchModel.transactionType == 1 || searchModel.transactionType == 3 || searchModel.transactionType == 7">
+                        <label>
+                            <span>مبلغ الصرف</span> 
+                        </label>
+                    </th>
+                    <th class="text-center">
+                        <label>
+                            <span>الرصيد </span> 
+                        </label>
+                    </th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in printData| orderBy: sortKeyTrans : reverseTrans">
+                    <td class="text-center"><span>{{$index+1 | ngArabicNumber: true}} </span></td>
+                    <td class="text-center"><span>{{obj.transId | ngArabicNumber: true}} </span></td>
+                    <td class="text-center"><span>{{obj.memberPortalRequestId == null? '--': obj.memberPortalRequestId | ngArabicNumber: true}} </span></td>
+                    <td class="text-center"><span>{{obj.memberId | ngArabicNumber: true}} </span></td>
+                    <td class="text-center"><span dir="ltr">{{obj.transactionDate | cmdate:'dd-MM-yyyy'  | ngArabicNumber: true}} </span></td>
+                    <td class="text-center"><span>{{obj.transactionTypeAr}} </span></td>
+                    <td class="text-center" ng-hide="searchModel.transactionType == 4"><span>{{obj.credit | ngArabicNumber: true}} ريال</span></td>
+                    <td class="text-center" ng-hide="searchModel.transactionType == 1 || searchModel.transactionType == 3 || searchModel.transactionType == 7"><span>{{obj.debit | ngArabicNumber: true}} ريال </span></td>
+                    <td class="text-center"><span>{{obj.balance | ngArabicNumber: true}} ريال </span></td>
+                </tr>
+            </tbody> 
+        </table>
+    </div>
+</div>
+
+<div class="wallet-trans grey-color p-bottom-lg p-top-lg" style="display:none">
+    <div class="wallet-trans-info">
+        <div class="container">
+            <div class="row">
+                <div ng-show="page.showChartData">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="wallet-trans-box wtb-4 clearfix w3-animate-bottom">
+                                <div class="trans-box-content">
+                                    <i class="fa fa-credit-card"></i>
+                                    <p>الرصيد المتوفر</p>
+                                    <ul>
+                                        <li class="pp-price">{{StatisticsObj.balance | ngArabicNumber: true}}</li>
+                                        <li class="pp-currency">ريال</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="wallet-trans-box wtb-3 clearfix w3-animate-bottom">
+                                <div class="trans-box-content">
+                                    <i class="fa fa-money"></i>
+                                    <p>الرصيد المحجوز</p>
+                                    <ul>
+                                        <li class="pp-price">{{userInfo.globalSessionValues.ReservedBalance | ngArabicNumber: true}}</li>
+                                        <li class="pp-currency">ريال</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="wallet-trans-box wtb-1 clearfix w3-animate-bottom">
+                                <div class="trans-box-content">
+                                    <i class="fa fa-list-ol"></i>
+                                    <p>
+                                        عدد معاملات اليوم
+                                    </p>
+                                    <ul>
+                                        <li class="pp-currency" ng-if="StatisticsObj.transCount==0 || StatisticsObj.transCount== null">لا يوجد</li>
+                                        <li class="pp-price" ng-if="StatisticsObj.transCount !=0 && StatisticsObj.transCount != null">{{StatisticsObj.transCount | ngArabicNumber: true}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="wallet-trans-box wtb-2 clearfix w3-animate-bottom">
+                                <div class="trans-box-content">
+                                    <i class="fa fa-arrow-down"></i>
+                                    <p>اخر عملية شحن</p>
+                                    <ul>
+                                        <li class="pp-price">{{StatisticsObj.credit | ngArabicNumber: true}}</li>
+                                        <li class="pp-currency">ريال</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="wallet-trans-box wtb-3 clearfix w3-animate-bottom">
+                                <div class="trans-box-content">
+                                    <i class="fa fa-arrow-up"></i>
+                                    <p>اخر عملية صرف</p>
+                                    <ul>
+                                        <li class="pp-price">{{StatisticsObj.debit | ngArabicNumber: true }}</li>
+                                        <li class="pp-currency">ريال</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--<fusioncharts width="100%"
+                                  height="400"
+                                  type="line"
+                                  dataFormat="json"
+                                  dataSource="{{LastDaysDataSource}}">
+                    </fusioncharts>-->
+                </div>
+                <!--<div ng-hide="page.showChartData">
+                    <div ng-show="page.showChartLoad" class="text-center" data-loading>
+                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                    </div>
+                    <div class="col-md-12" ng-show="page.noChartData">
+                        <div class="note note-danger" style="text-align:center !important">
+                           .عفواً , لا يوجد حركة على المحفظة فى أخر 30 يوم
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="users-content wallet-box white-bg p-top-md p-bottom-sm">
+                    <div class="col-md-6 col-xs-12">
+                        <div class="custom-input custom-cal">
+                            <label for="date">تاريخ الحركة من</label>
+                            <date-control name="startDate" class="{{IsHijriClass}} " onkeydown="return false;" placeholder="تاريخ الحركة من " mydate="searchModel.startDate" title="{{IsHijriTitle}}"></date-control>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="custom-input custom-cal">
+                            <label for="date">تاريخ الحركة إلي</label>
+                            <date-control name="endDate" class="{{IsHijriClass}} " onkeydown="return false;" placeholder="تاريخ الحركة إلى " mydate="searchModel.endDate" title="{{IsHijriTitle}}"></date-control>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div id="searchContent" class="row list-unstyled" ng-show="page.showAdvancedFilter" style="display: block;">
+                        <div class="col-md-6 col-xs-12">
+                            <div class="custom-input custom-cal">
+                                <label for="date">رقم الطلب </label>
+                                <input type="text" name="fname" class="form-control" numbers-Only ng-model="searchModel.requestId">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="submit small-submit text-center">
+                    <div class="btn-group">
+                        <a class="custom-btn btn-3" ng-click="page.showAdvancedFilter=!page.showAdvancedFilter">
+                            <span ng-show="!page.showAdvancedFilter">بحث متقدم</span>
+                            <span ng-show="page.showAdvancedFilter">إخفاء البحث المتقدم</span>
+                        </a>
+                        <a ng-click="GetWalletsTrans();" class="custom-btn btn-3" ng-disabled="searchForm.$invalid">
+                            <i class="fa fa-search"></i>
+                            بحث
+                        </a>
+                        <a ng-click="clearSearchModel()" class="custom-btn btn-3">
+                            <i class="fa fa-indent	Try it"></i>
+                            تفريغ
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="form-data white-bg moveto p-bottom-md">
+                    <div class="row">
+                        <div class="" name="searchForm" role="form">
+                            <div class="row list-unstyled">
+                                <div class="filter-table p-top-sm white-bg clearfix">
+                                    <!--<div class="col-md-6 col-sm-12">
+                                        <a href="/#/WalletCharge" class="custom-btn custom-btn-reverse btn-3"><i class="fa fa-money" aria-hidden="true"></i> شحن المحفظة</a>
+                                    </div>-->
+                                    <!--<div class="col-md-6 col-sm-12" ng-hide="page.noData || page.showLoad">
+                                        <div class="table-filter-input">
+                                            <label for="table-rows">عدد السجلات </label>
+                                            <input ng-model="searchModel.itemsPerPage" class="form-control edited " ng-model-options="{debounce: 1000}" name="recordNumber" type="number" max="100" min="1" style="">
+                                        </div>
+                                    </div>-->
+                                </div>
+
+                                <div class="table-responsive custom-table wss-wallet-table">
+                                    <table class="table table-bordered table-hover wss-table-print">
+                                        <thead>
+                                            <tr class="bg-blue font-white">
+                                                <!--<th class="text-center"><label></label></th>-->
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span># </span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='$index'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>رقم العملية </span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='instrumentNum'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>رقم الطلب</span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='memberPortalRequestId'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+
+
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>رقم العضوية  </span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='memberId'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>تاريخ الحركة  </span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='instrumentDate'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span> نوع الحركة </span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='paymentSystemName'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>مبلغ الايداع</span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='serviceAr'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>مبلغ الصرف</span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='amount'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <span>الرصيد </span>
+                                                        <span class="glyphicon sort-icon" ng-show="sortKeyTrans=='beneficialName'"
+                                                              ng-class="{'glyphicon-chevron-up':reverseTrans,'glyphicon-chevron-down':!reverseTrans}"></span>
+                                                    </label>
+                                                </th>
+                                                <th style="cursor:pointer;" class="text-center">
+                                                    <label>
+                                                        <strong> الخيارات </strong>
+                                                    </label>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="obj in objects| orderBy: sortKeyTrans : reverseTrans">
+                                                <td class="text-center"><span>{{$index+1 | ngArabicNumber: true}} </span></td>
+                                                <td class="text-center"><span>{{obj.transId | ngArabicNumber: true}} </span></td>
+                                                <td class="text-center"><span>{{obj.memberPortalRequestId == null? '--': obj.memberPortalRequestId | ngArabicNumber: true}} </span></td>
+                                                <td class="text-center"><span>{{obj.memberId | ngArabicNumber: true}} </span></td>
+                                                <td class="text-center"><span dir="ltr">{{obj.transactionDate | cmdate:'dd-MM-yyyy'  | ngArabicNumber: true}} </span></td>
+                                                <td class="text-center"><span>{{obj.transactionTypeAr}} </span></td>
+                                                <td class="text-center"><span>{{obj.credit | ngArabicNumber: true}} ريال</span></td>
+                                                <td class="text-center"><span>{{obj.debit | ngArabicNumber: true}} ريال </span></td>
+                                                <td class="text-center"><span>{{obj.balance | ngArabicNumber: true}} ريال </span></td>
+                                                <td class="text-center print-icon">
+                                                    <a href="#/InstrumentPrint/{{obj.transId}}/transType/{{obj.transactionType}}" ng-if="obj.transactionType !=5" title="طباعة">
+                                                        <i class="fa fa-print" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="obj.expanded" dir-paginate-end="">
+                                                <td colspan="10" class="expand-bg">
+                                                    <div class="row row-model" style="margin-top:20px; margin-bottom:20px;">
+                                                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 col-md-offset-3 col-lg-offset-3">
+                                                            <table class="table card-3 table-condensed table-responsive table-bordered">
+                                                                <thead>
+                                                                    <tr class="font-white">
+                                                                        <td ng-show="obj.memberPortalRequestId" class="text-center"><label><span> رقم الطلب  </span></label></td>
+
+                                                                        <td class="text-center"><label><span> نوع الدفع  </span></label></td>
+
+                                                                        <td class="text-center"><label><span> نوع الخدمة  </span></label></td>
+                                                                        <td ng-if="obj.transactionType==4" class="text-center"><label><span> طريقة الدفع    </span></label></td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td ng-show="obj.memberPortalRequestId" class="text-center"><span>{{obj.memberPortalRequestId | ngArabicNumber: true}} </span></td>
+                                                                        <td ng-if="obj.transactionType!=5" class="text-center"><span>{{obj.paymentSystemName}} </span></td>
+                                                                        <td ng-if="obj.transactionType==5" class="text-center"><span>مبلغ مسترجع </span></td>
+                                                                        <td class="text-center"><span>{{obj.serviceAr}} </span></td>
+                                                                        <td ng-if="obj.transactionType==4" class="text-center"><span>{{obj.serviceId==3?'عبر الغرفة':'أونلاين'}} </span></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-hide="page.thereIsData">
+                                                <td ng-show="page.showLoad" colspan="10" style="text-align:center;" class="text-center" data-loading>
+                                                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                                </td>
+                                                <td colspan="10" style="text-align:center;" ng-show="page.noData">
+                                                    <h3 class="font-red">عفواً , لا توجد بيانات للعرض </h3>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot ng-hide="objects.length == 0" id="noprint">
+                                            <tr id="footerr">
+                                                <td colspan="12">
+                                                    <ul class="nav nav-pills center-nav" style="display: inline-block; float: left;">
+                                                        <li>
+                                                            <a href="javascript:;" class="wss-total-label">
+                                                                إجمالى السجلات
+                                                                <span class="badge badge-custom"> {{ objects[0].rowsCounts | ngArabicNumber: true }} </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="btn-group pull-left wss-noprint" id="noprint">
+                                                        <a href="" ng-hide="objects[0].rowsCounts === objects.length" ng-click="showMore(searchModel.currentPage + 1)" class="custom-btn custom-btn-reverse btn-3">
+                                                            تحميل المزيد ..
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="submit small-submit text-center margin-top-20">
+                                    <div class="btn-group wss-btn-group">
+                                        <a href="/#/WalletCharge" class="custom-btn btn-3">
+                                            <i class="fa fa-money" aria-hidden="true"></i>
+                                            شحن المحفظة
+                                        </a>
+                                        <a href="" ng-click="print('printTable')" class="custom-btn btn-3">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                            طباعة
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

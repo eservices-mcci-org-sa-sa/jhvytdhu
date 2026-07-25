@@ -1,0 +1,295 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+<div class="custom-regi formverify"> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="sp-main-box sp-forget-box sp-register-box">
+                    <div class="sp-main-title">
+                        <h2>
+                            التحقق من الوثائق
+                        </h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/">
+                            العودة
+                        </a>
+                    </div> 
+                    <div class="sp-main-form"> 
+                        <p class="sp-main-size">
+                            خدمة  تتيح التحقق من الوثائق التي تم تصديقها إلكترونيا عبر بوابة خدمات المشتركين.
+                            وللتحقق من شهادة الاشتراك الرجاء ادخال الرقم المرجعى الخاص بالوثيقة.
+                        </p>
+                        <form ng-if="!page.Checking" id="documents-validate " name="verifyForm">
+                            <div ng-if="!checkRequestDone"> 
+                                <div ng-if="!page.IsViewing" class="form-group">
+                                    <input type="text" class="form-control" name="requestId" ng-required="true"  max="999999999" prevent-typing-greater
+                                          only-Int placeholder="الرقم المرجعى" ng-model="VerifyModel.requestId" autocomplete="off">
+                                    <div ng-messages="verifyForm.requestId.$error" ng-if="verifyForm.requestId.$dirty || isFormSubmitted">
+                                        <p class="text-danger error-msg" ng-message="required">أدخل الرقم المرجعى</p>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="!page.IsViewing">
+                                    <div vc-recaptcha
+                                         theme="'light'"
+                                         key="captcha.captchaKey"
+                                         lang="ar"
+                                         ng-model="captcha.captchaKey"
+                                         name="captchaKey"
+                                         ng-required="true"
+                                         on-create="setWidgetId(widgetId)"
+                                         on-success="setResponse(response)"
+                                         on-expire="cbExpiration()">
+                                    </div>
+                                    <div ng-messages="verifyForm.captchaKey.$error" ng-if="verifyForm.captchaKey.$dirty || isFormSubmitted">
+                                        <p class="text-danger error-msg" ng-message="required">من فضلك قُم بالتحديد</p>
+                                    </div>
+                                </div>
+                                <button ng-click="CheckRequest(verifyForm,$event)" ng-if="!page.IsViewing" type="submit" class="sp-main-button">
+                                    التالى
+                                </button>
+                            </div>
+
+                            <div ng-if="checkRequestDone">
+                                <div ng-if="VerifyModel.IsNonMember && !page.IsViewing">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-no-borders" name="requestId" max="999999999" prevent-typing-greater ng-required="true" only-Int
+                                               placeholder="الرقم المرجعى" ng-model="VerifyModel.requestId" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="identityNo" ng-required="true" only-Int maxlength="10"
+                                               ng-pattern="identityPattern" placeholder="رقم الهوية / الإقامة" ng-model="VerifyModel.identityNo" autocomplete="off">
+                                        <div ng-messages="verifyForm.identityNo.$error" ng-if="verifyForm.identityNo.$dirty || isFormSubmitted">
+                                            <p class="errors" ng-message="required">من فضلك ادخل رقم الهوية / الإقامة</p>
+                                            <p class="errors" ng-message="pattern">من فضلك ادخل رقم الهوية أرقام وتبدأ ب 1 أو 2</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="!VerifyModel.IsNonMember">
+                                    <div class="sp-main-title" ng-if="!page.IsViewing">
+                                        <h2>
+                                            أختــر طريقة التحقق
+                                        </h2>
+                                    </div>
+                                    <div class="form-group switch-control" ng-if="!page.IsViewing">
+                                        <div class="sp-forget-way" id="SwitchRow" ng-repeat="way in VerifyWays">
+                                            <label>
+                                                <input type="radio" ng-required="true" id="id_{{$index}}" name="id_{{$index}}" ng-model="VerifyModel.VerifyWay" value="{{way.key}}">
+                                                {{way.name}}
+                                            </label>
+                                        </div>
+                                        <div ng-if="!VerifyModel.VerifyWay  && isFormSubmitted">
+                                            <p class="errors error-msg">من فضلك أختر طريقة التحقق</p>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div ng-if="VerifyModel.VerifyWay">
+                                        <div ng-if="!page.IsViewing" class="form-group">
+                                            <input type="text" class="form-control input-no-borders" name="requestId" max="999999999" prevent-typing-greater
+                                                   ng-required="true" restrict-input="{type: 'digitsOnly'}" placeholder="الرقم المرجعى" ng-model="VerifyModel.requestId" autocomplete="off">
+                                            <div ng-messages="verifyForm.requestId.$error" ng-if="verifyForm.requestId.$dirty || isFormSubmitted">
+                                                <p class="text-danger error-msg" ng-message="required">من فضلك أدخل الرقم المرجعى</p>
+                                            </div>
+                                        </div>
+                                        <div ng-if="!page.IsViewing && VerifyModel.VerifyWay == 1" class="form-group">
+                                            <input type="text" class="form-control" restrict-input="{type: 'digitsOnly'}" maxlength="12" name="MemberId" ng-required="true" placeholder="رقم العضوية" ng-model="VerifyModel.MemberId">
+                                            <div ng-messages="verifyForm.MemberId.$error" ng-if="verifyForm.MemberId.$dirty || isFormSubmitted">
+                                                <p class="text-danger error-msg" ng-message="required">من فضلك أدخل رقم العضوية</p>
+                                            </div>
+                                        </div>
+                                        <div ng-if="!page.IsViewing && VerifyModel.VerifyWay == 2" class="form-group">
+                                            <input type="text" class="form-control" restrict-input="{type: 'digitsOnly'}" maxlength="12" name="UnifiedNumber"
+                                                   ng-required="true" placeholder="الرقم الموحد (700)" ng-model="VerifyModel.UnifiedNumber">
+                                            <div ng-messages="verifyForm.UnifiedNumber.$error" ng-if="verifyForm.UnifiedNumber.$dirty || isFormSubmitted">
+                                                <p class="text-danger error-msg" ng-message="required">من فضلك أدخل الرقم الموحد (700))</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group" ng-if="!page.IsViewing">
+        <div vc-recaptcha
+             theme="'light'"
+             key="captcha.captchaKey"
+             lang="ar"
+             ng-model="captcha.captchaKey"
+             name="captchaKey"
+             ng-required="true"
+             on-create="setWidgetId(widgetId)"
+             on-success="setResponse(response)"
+             on-expire="cbExpiration()">
+        </div>
+        <div ng-messages="verifyForm.captchaKey.$error" ng-if="verifyForm.captchaKey.$dirty || isFormSubmitted">
+            <p class="text-danger error-msg" ng-message="required">من فضلك قُم بالتحديد</p>
+        </div>
+    </div>-->
+                                <div class="clearfix"></div>
+                                <style>
+                                    .cfr .WSSCalenderSwitch {
+                                        top: 0 !important;
+                                    }
+                                </style>
+                                <button ng-click="Verify(verifyForm,$event)" ng-if="!page.IsViewing" type="submit" class="sp-main-button">
+                                    استعلام
+                                </button>
+
+                                <button ng-click="ReloadPage()" ng-if="!page.IsViewing && page.NoData"  class="sp-main-button">
+                                    التحقق مرة أخري
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="v-certificate">
+                        <div class="v-certificate-box">
+                            <div ng-show="page.thereIsData">
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <label>إسم الغرفة</label>
+                                            <span>{{verifyResult.chamberAr}}</span>
+                                        </div>
+                                        <div class="col-md-6" ng-if="!VerifyModel.IsNonMember">
+                                            <label>إسم المنشأة</label>
+                                            <span>{{verifyResult.estName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-if="!VerifyModel.IsNonMember">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" ng-if="verifyResult.unifiedNumber">
+                                            <label> الرقم الموحد (700)</label>
+                                            <span>{{verifyResult.unifiedNumber}}</span>
+                                        </div>
+                                        <div class="col-md-6" ng-if="!verifyResult.unifiedNumber">
+                                            <label>  رقم العضوية</label>
+                                            <span>{{verifyResult.memberId}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <label>رقم الطلب  </label>
+                                            <span>{{verifyResult.requestId}}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>نوع الطلب</label>
+                                            <span>{{VerifyModel.IsNonMember ? verifyResult.model.requestTypeName : verifyResult.requestTypeName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" ng-if="verifyResult.userFullName !== null && verifyResult.userFullName !== ''">
+                                            <label>إسم مقدم الطلب</label>
+                                            <span>{{verifyResult.userFullName}}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>تاريخ ووقت إنشاء الطلب</label>
+                                            <span>{{verifyResult.requestDate | date:"MM/dd/yyyy '-' h:mma"}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <label> مبلغ الطلب</label>
+                                            <span>{{VerifyModel.IsNonMember ? verifyResult.model.serviceAmount :verifyResult.serviceAmount}} ريال</span>
+                                        </div>
+                                        <div class="col-md-6" ng-if="verifyResult.expireDate && verifyResult.requestStatus == 4" >
+                                            <label>تاريخ صلاحية الطلب</label>
+                                            <!--<span ng-if="!VerifyModel.IsNonMember">{{verifyResult.fullExpireDate | date:"MM/dd/yyyy '-' h:mma"}}</span>
+                                            <span ng-if="VerifyModel.IsNonMember">{{verifyResult.expireDate | date:"MM/dd/yyyy '-' h:mma"}}</span>-->
+                                            <span>{{verifyResult.expireDate | date:"MM/dd/yyyy '-' h:mma"}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" ng-if="!VerifyModel.IsNonMember">
+                                            <label>رقم السجل التجاري</label>
+                                            <span>{{verifyResult.crNumber}}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label> حالة الطلب</label>
+                                            <span ng-if="verifyResult.requestStatus != 5 && verifyResult.requestStatus != 6
+                                                  && verifyResult.requestStatus !== 1 && verifyResult.requestStatus !== 13 && verifyResult.requestStatus !== 9 && verifyResult.requestStatus !== 8 && verifyResult.requestStatus !== 14 && verifyResult.requestStatus !== 12 && verifyResult.requestStatus !== 15"
+                                                  ng-class="{'notExpired':!verifyResult.isExpiredRequest ,'expired':verifyResult.isExpiredRequest}">
+                                                {{verifyResult.isExpiredRequest ==true?'مُنتهي':'تم قبول الطلب وساري'}}
+                                            </span>
+                                            <span ng-if="verifyResult.requestStatus === 1 || verifyResult.requestStatus === 13">
+                                                الطلب تحت الإجراء
+                                            </span>
+                                            <span  ng-class="{'expired':verifyResult.requestStatus === 15}" ng-if="verifyResult.requestStatus === 15">
+                                                الطلب غير ساري و حالته موقوف
+                                            </span>
+                                            <span ng-if="verifyResult.requestStatus == 5 || verifyResult.requestStatus == 6" class="expired">
+                                                {{verifyResult.requestStatus == 5?'الطلب مرفوض':'الطلب ملغي'}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center margin-bottom-30 m-top-md" ng-if="verifyResult.requestStatus != 5">
+                                    <button type="button" ng-if="!verifyResult.disableVerification  
+                                            && verifyResult.requestStatus !== 1 && verifyResult.requestStatus !== 13 && verifyResult.requestStatus !== 8 && verifyResult.requestStatus !== 14 && verifyResult.requestStatus !== 9 &&
+                                            verifyResult.requestStatus !== 12 && verifyResult.requestStatus !== 6 && !verifyResult.isExpiredRequest && verifyResult.requestStatus !== 15"
+                                            id="ddownload" ng-click="download(true)" class="custom-btn custom-btn-reverse btn-3">
+                                        تحميل
+                                    </button>
+                                    <a ng-if="page.IsViewing" class="custom-btn custom-btn-reverse btn-3 check-again-btn" ng-click="ReloadPage()"> التحقق مرة أخري </a>
+                                </div>
+                            </div>
+
+                            <div class="m-top-md" ng-hide="page.thereIsData">
+                                <div ng-show="page.showLoad" class="text-center" data-loading>
+                                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;margin-top:50px;">
+                                </div>
+                                <div ng-show="page.NoData">
+                                    <div class="note note-danger" style="text-align:center !important">
+                                        عفواً . لا توجـد بيانات.
+                                    </div>
+                                </div>
+                                <div ng-show="page.NotifyMsg != ''">
+                                    <div class="note note-danger" style="text-align:center !important">
+                                        {{page.NotifyMsg}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .notExpired {
+        color: lightseagreen;
+    }
+
+    .expired {
+        color: red;
+    }
+</style>

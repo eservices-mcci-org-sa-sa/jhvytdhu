@@ -1,0 +1,208 @@
+﻿<div class="users-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div ng-if="page.formType == 1 || (page.formType==2 && page.childFormType==2)">
+                    <div class="sp-main-box margin-bottom-30" ng-if="page.formType==1">
+                        <div class="sp-main-title">
+                            <h2>بيانات المفوض</h2>
+                        </div>
+                        <div class="sp-main-form sp-main-form-inner">
+                                <form ng-submit="changePassword();" name="changePass" role="form">
+                                    <div class="form-body row-model">
+                                            <div class="form-group  form-md-line-input form-md-floating-label has-success">
+                                                <div class="input-icon left">
+                                                    <label for="currentPassword">كلمة المرور الحالية</label>
+                                                    <input class="form-control" ng-required="true"  
+                                                                name="currentPassword" type="password" ng-model="user.currentPassword" value="">
+                                                </div>
+                                                <div ng-messages="changePass.currentPassword.$error" ng-if="changePass.currentPassword.$dirty">
+                                                    <p class="text-danger" ng-message="required">ادخل كلمة المرور الحالية</p>
+                                                    <p class="text-danger" ng-message="pattern"> ادخل (at least 6 characters, 1 number, 1 uppercase and 1 lowercase ) </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group   form-md-line-input form-md-floating-label has-success">
+                                                <div class="input-icon left">
+                                                    <label for="newPassword">كلمة المرور الجديدة</label>
+                                                    <input class="form-control" ng-required="true" minlength="8" maxlength="30" ng-pattern="/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,30})$/"
+                                                           name="newPassword" type="password" ng-model="user.newPassword" value="">
+                                                </div>
+                                                <div ng-messages="changePass.newPassword.$error" ng-if="changePass.newPassword.$dirty">
+                                                    <p class="text-danger" ng-message="required">ادخل كلمة المرور الجديدة</p> 
+                                                    <p class="text-danger" ng-message="pattern">
+                                                        يجب
+                                                        ألا تقل كلمة المرور عن 8 خانات تحتوى على الاقل على رقم وحرف
+                                                    </p>
+                                                    <p class="text-danger" ng-message="minlength">
+                                                        يجب ألا تقل كلمة
+                                                        المرور عن 8 خانات تحتوى على الاقل على رقم وحرف
+                                                    </p>
+                                                    <p class="text-danger" ng-message="maxlength">
+                                                        يجب ألا تزيد كلمة
+                                                        المرور عن 30 خانات تحتوى على الاقل على رقم وحرف
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group   form-md-line-input form-md-floating-label has-success">
+                                                <div class="input-icon left">
+                                                    <label for="confirmNewPassword">تأكيد كلمة المرور الجديدة</label>
+                                                        <input class="form-control" ng-required="true"  minlength="8" maxlength="30"
+                                                               ng-pattern="/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,30})$/"  compare-to="user.newPassword"
+                                                                name="confirmNewPassword" type="password" ng-model="user.confirmNewPassword" value="">
+                                                </div>
+                                                <div ng-messages="changePass.confirmNewPassword.$error" ng-if="changePass.confirmNewPassword.$dirty">
+                                                    <p class="text-danger" ng-message="required"> ادخل كلمة المرور الجديدة</p>
+                                                    <p class="text-danger" ng-show="changePass.confirmNewPassword.$error.compareTo"> كلمات المرور غير متشابه</p>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="col-xs-12 text-center">
+                                            <button type="submit" class="sp-main-button" ng-disabled="changePass.$invalid">
+                                                حفظ
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+
+                    <div class="sp-main-box margin-bottom-30" ng-if="page.formType==2 && page.childFormType==2">
+                        <div class="sp-main-title">
+                            <h2>بيانات المستخدم</h2>
+                        </div>
+                        <div class="sp-main-form sp-main-form-inner">
+                            <form name="changeData" role="form">
+                                <div class="form-body row-model">
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <label for="email">  رقم الهوية</label>
+                                        <input ng-required="true" ng-model="userData.IdentityNo" autocomplete="off" readonly
+                                               class="form-control input-no-borders" name="IdentityNo" type="text">
+                                        <div ng-messages="changeData.IdentityNo.$error" ng-if="changeData.IdentityNo.$dirty||isFormSubmitted">
+                                            <p class="text-danger error" ng-message="required">رقم الهوية مطلوب</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <label for="email">  الإسم باللغة العربية</label>
+                                        <input only-arabic-letters-input ng-required="true" ng-model="userData.userFullName" autocomplete="off"
+                                               prevent-Typing-Greater maxlength="50" ng-maxlength="50" class="form-control" name="userFullName" type="text">
+                                        <div ng-messages="changeData.userFullName.$error" ng-if="changeData.userFullName.$dirty||isFormSubmitted">
+                                            <p class="text-danger error" ng-message="required">الإسم باللغة العربية مطلوب</p>
+                                            <p class="text-danger error" ng-message="maxlength">الحد المسموح 50 حرف</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <label for="email">  الإسم باللغة الانجليزية</label>
+                                        <input ng-required="true" ng-model="userData.userFullNameEn" autocomplete="off" only-English-Letters-Input
+                                               prevent-Typing-Greater maxlength="50" ng-maxlength="50" class="form-control" name="userFullNameEn" type="text">
+                                        <div ng-messages="changeData.userFullNameEn.$error" ng-if="changeData.userFullNameEn.$dirty||isFormSubmitted">
+                                            <p class="text-danger error" ng-message="required">  الإسم باللغة الانجليزية مطلوب</p>
+                                            <p class="text-danger error" ng-message="maxlength">الحد المسموح 50 حرف</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <label for="email">البريد الإلكترونى</label>
+                                        <input ng-required="true" ng-model="userData.email" autocomplete="off"
+                                               prevent-Typing-Greater maxlength="40" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                                               ng-maxlength="40" class="form-control" name="email" type="email">
+                                        <div ng-messages="changeData.email.$error" ng-if="changeData.email.$dirty||isFormSubmitted">
+                                            <p class="text-danger error" ng-message="required"> البريد الإلكتروني مطلوب</p>
+                                            <p class="text-danger error" ng-message="email">  ادخل بريد الكترونى صحيح</p>
+                                            <p class="text-danger error" ng-message="pattern">  ادخل بريد الكترونى صحيح</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <label for="phoneNumber">رقم الجوال</label>
+                                        <input ng-required="true" ng-model="userData.phoneNumber" autocomplete="off" 
+                                               ng-pattern="/^(05)([0-9]{8})$/"  only-Int 
+                                               maxlength="10" minlength="10" class="form-control" name="phoneNumber" type="text">
+
+                                        <div ng-messages="changeData.phoneNumber.$error" ng-if="changeData.phoneNumber.$dirty||isFormSubmitted">
+                                            <p class="text-danger error" ng-message="required"> رقم الجوال مطلوب</p>
+                                            <p class="text-danger error" ng-message="maxlength || minlength"> أدخل الجوال مكون من 10 أرقام</p>
+                                            <p class="text-danger error" ng-message="pattern">
+                                                 ادخل مالايقل
+                                                عن 10 ارقام يبدأ ب (05)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                        <label for="additionalMobileNumber">رقم الجوال الإضافي</label>
+                                        <input ng-model="userData.additionalMobileNumber" autocomplete="off" 
+                                                ng-pattern="/^(05)([0-9]{8})$/"  only-Int 
+                                               maxlength="10" minlength="10" class="form-control" name="additionalMobileNumber" type="text">
+
+                                        <div ng-messages="changeData.additionalMobileNumber.$error" ng-if="changeData.additionalMobileNumber.$dirty||isFormSubmitted">
+                                            <p class="text-danger error" ng-message="maxlength || minlength"> أدخل الجوال الإضافي مكون من 10 أرقام</p>
+                                            <p class="text-danger error" ng-message="pattern">
+                                                ادخل مالايقل
+                                                عن 10 ارقام يبدأ ب (05)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr />
+
+                                <div class="form-actions">
+                                    <div class="col-xs-12 text-center">
+                                        <button type="submit"   class="sp-main-button" ng-click="updateUserData(userData,changeData,$event);">
+                                            حفظ
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error {
+        color: #F3565D !important;
+    }
+</style>
+
+<modal class="send-code" title="كود التحقق لتغيير رقم الجوال" visible="sms.codeSent">
+    <form class="form-horizontal  text-right" id="verifyForm" name="verifyForm" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-sm-12">
+                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="input-icon left">
+                        أدخل كود التحقق لتغيير رقم الجوال
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="!sms.codeSent" class="text-center" data-loading>
+                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+            </div>
+
+            <div class="col-xs-12" ng-show="sms.codeSent">
+                <div class="col-xs-12">
+                    <div class="form-group has-success">
+                        <div class="custom-input">
+                            <label for="codeToMatch">  كود التحقق</label>
+                            <input ng-required="true" ng-disabled="showSpin" restrict-input="{type: 'digitsOnly'}" ng-pattern="/^\d{4,6}$/" class="form-control"
+                                   autocomplete="off" maxlength="6"
+                                   ng-model="sms.codeToMatch" name="codeToMatch" type="text">
+                        </div>
+                        <div ng-messages="verifyForm.codeToMatch.$error" ng-if="verifyForm.$submitted || verifyForm.codeToMatch.$touched">
+                            <p class="text-danger" ng-message="required">من فضلك ادخل رقم الكود</p>
+                            <p class="text-danger" ng-message="pattern"> فضلا ادخل رقم صحيح</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" title="اغلاق" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </form>
+</modal>
+
+

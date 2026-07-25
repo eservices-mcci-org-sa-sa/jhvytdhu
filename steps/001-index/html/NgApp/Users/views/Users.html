@@ -1,0 +1,302 @@
+﻿<script>
+    $('.datepickhijri').calendarsPicker({ calendar: $.calendars.instance('ummalqura'), dateFormat: 'yyyy-mm-dd', onSelect: function (date) { $(this).change(); } });
+    $('.datepick').calendarsPicker({ calendar: $.calendars.instance('gregorian'), dateFormat: 'yyyy-mm-dd', onSelect: function (date) { $(this).change(); } });
+
+</script>
+<style> 
+    body {
+        background: #f2f4f9;
+    }
+     
+    .portlet-body .table tbody > tr > td {
+        padding: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    .margin-top-minus {
+        margin-top: 23px !important;
+    }
+
+    .card-3 {
+        box-shadow: none !important;
+    }
+    .deletedUser{
+        background-color: #f3aaaa;
+    }
+</style>
+
+<div class="users-content">
+    <div class="container"> 
+        <div class="col-md-12">
+
+            <div class="sp-main-box margin-bottom-30">
+                <div class="sp-main-title">
+                    <h2>بحث المفوضين</h2>
+                </div>
+
+                <div class="sp-main-form sp-main-form-inner">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>البحث</label>
+                                <div class="custom-input search-control">
+                                    <input type="text" class="form-control" placeholder="بحـث" ng-model="searchWord">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+ 
+          
+            <a ng-href="/#/Users/AddEditUser" title="إضافة جديد" class="sp-main-button margin-bottom-30" style="display:inline-block">
+                <i class="fa fa-plus"></i> إضافة جديد
+            </a>
+       
+
+
+            <div class="sp-main-box margin-bottom-30">
+                <div class="sp-main-title">
+                    <h2>المفوضين</h2>
+                </div>
+
+
+                <div class="sp-main-table-holder">
+                    <div class="table-responsive custom-table input-table">
+                        <form name="updateForm" novalidate>
+                            <table class="table table-centered ">
+                                <thead>
+                                    <tr>
+                                        <th> # </th>
+                                        <th>
+                                            <span>
+                                                الإسم بالكامل
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span ng-click="sortType = 'username'; sortReverse = !sortReverse">
+                                                إسم مستخدم المفوض
+                                                <span ng-show="sortType == 'username' && !sortReverse" class="fa fa-caret-down"></span>
+                                                <span ng-show="sortType == 'username' && sortReverse" class="fa fa-caret-up"></span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span ng-click="sortType = 'email'; sortReverse = !sortReverse">
+                                                البريد الالكتروني
+                                                <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+                                                <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span ng-click="sortType = 'mobile'; sortReverse = !sortReverse">
+                                                الجوال
+                                                <span ng-show="sortType == 'mobile' && !sortReverse" class="fa fa-caret-down"></span>
+                                                <span ng-show="sortType == 'mobile' && sortReverse" class="fa fa-caret-up"></span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span ng-click="sortType = 'isActive'; sortReverse = !sortReverse">
+                                                حالة الحساب
+                                                <span ng-show="sortType == 'isActive' && !sortReverse" class="fa fa-caret-down"></span>
+                                                <span ng-show="sortType == 'isActive' && sortReverse" class="fa fa-caret-up"></span>
+                                            </span>
+                                        </th>
+                                        <th ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin">خيارات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-hide="page.thereIsData">
+                                        <td ng-show="page.showLoad" colspan="7" style="text-align:center;" class="text-center" data-loading>
+                                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                        </td>
+                                        <td colspan="7" style="text-align:center;" ng-show="page.NoData">
+                                            <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض </h3>
+                                        </td>
+                                    </tr>
+                                    <tr class="white-bg" ng-repeat="y in Users | orderBy:sortType:sortReverse | filter:searchWord" ng-class="{'deletedUser': y.isDeleted === true}">
+                                        <td data-balloon="{{y.isDeleted === true ? 'هذا المفوض تم حذفه مسبقاً':''}}" data-balloon-pos="up"> {{$index+1}} </td>
+                                        <td>
+                                            <p>{{ y.userFullName}}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ y.userName}}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ y.email}}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ y.phoneNumber | ngArabicNumber: true}}</p>
+                                        </td>
+                                        <td>
+                                            <p>
+                                                <i style="color:#00962e;" ng-if="y.isActive" class="fa fa-circle" aria-hidden="true"></i><i style="color:#f36a5a;" ng-if="!y.isActive" class="fa fa-circle" aria-hidden="true"></i>
+                                                {{y.isActive==true? 'مفعل':'غير مفعل'}}
+                                            </p>
+                                        </td>
+                                        <td class="table-controls" ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin" style="min-width:100px;">
+                                            <div ng-if="!y.isDeleted">
+                                                <a ng-href="/#/Users/AddEditUser/{{y.id}}" title="تعديل" data-ng-show="!y.editMode">
+                                                    <ion-icon name="create-outline"></ion-icon>
+                                                </a>
+                                                <a ng-click="RemoveDelegate(y);" title="إلغاء التفويض" data-ng-show="!y.editMode">
+                                                    <ion-icon name="close-circle-outline"></ion-icon>
+                                                </a>
+                                            </div> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+        <div class="user-container no-padding" style="display:none">
+            <form class="clearfix add-user-panel">
+                <div class="col-md-4 col-xs-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="بحـث" ng-model="searchWord">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12" ng-show="userInfo.globalSessionValues.CurrentMember.IsAdmin">
+                    <div class="input-group">
+                        <a ng-href="/#/Users/AddEditUser" title="إضافة جديد" class="custom-btn custom-btn-reverse btn-3">
+                            <i class="fa fa-plus"></i> إضافة جديد
+                        </a>
+                    </div>
+                </div> 
+            </form>
+            <div class="table-responsive custom-table input-table">
+                <form name="updateForm" novalidate>
+                    <table class="table table-bordered table-centered ">
+                        <thead>
+                            <tr class="bg-blue font-white text-center">
+                                <th> # </th>
+                                <th>
+                                    <span>
+                                        الإسم بالكامل
+                                    </span>
+                                </th>
+                                <th>
+                                    <span ng-click="sortType = 'username'; sortReverse = !sortReverse">
+                                        اسم المفوض
+                                        <span ng-show="sortType == 'username' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType == 'username' && sortReverse" class="fa fa-caret-up"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span ng-click="sortType = 'email'; sortReverse = !sortReverse">
+                                        البريد الالكتروني
+                                        <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span ng-click="sortType = 'mobile'; sortReverse = !sortReverse">
+                                        الجوال
+                                        <span ng-show="sortType == 'mobile' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType == 'mobile' && sortReverse" class="fa fa-caret-up"></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span ng-click="sortType = 'isActive'; sortReverse = !sortReverse">
+                                        حالة الحساب
+                                        <span ng-show="sortType == 'isActive' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType == 'isActive' && sortReverse" class="fa fa-caret-up"></span>
+                                    </span>
+                                </th>
+
+                                <th ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin">خيارات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-hide="page.thereIsData">
+                                <td ng-show="page.showLoad" colspan="7" style="text-align:center;" class="text-center" data-loading>
+                                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                </td>
+                                <td colspan="7" style="text-align:center;" ng-show="page.NoData">
+                                    <h3 class="font-red">عفواً , لا توجد بيانات للعرض </h3>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="y in Users | orderBy:sortType:sortReverse | filter:searchWord" ng-class="{'deletedUser': y.isDeleted === true}">
+                                <td data-balloon="{{y.isDeleted === true ? 'هذا المفوض تم حذفه مسبقاً':''}}" data-balloon-pos="up"> {{$index+1}} </td>
+                                <td>
+                                    <p>{{ y.userFullName}}</p>
+                                </td>
+                                <td>
+                                    <p>{{ y.userName}}</p>
+                                </td>
+                                <td>
+                                    <p>{{ y.email}}</p>
+                                </td>
+                                <td>
+                                    <p>{{ y.phoneNumber | ngArabicNumber: true}}</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <i style="color:#00962e;" ng-if="y.isActive" class="fa fa-circle" aria-hidden="true"></i><i style="color:#f36a5a;" ng-if="!y.isActive" class="fa fa-circle" aria-hidden="true"></i>
+                                        {{y.isActive==true? 'مفعل':'غير مفعل'}}
+                                    </p>
+                                </td>
+                                <td class="table-controls" ng-if="userInfo.globalSessionValues.CurrentMember.IsAdmin" style="min-width:100px;">
+                                    <div ng-if="!y.isDeleted">
+                                        <a ng-href="/#/Users/AddEditUser/{{y.id}}" title="تعديل" data-ng-show="!y.editMode">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a ng-click="RemoveDelegate(y);" title="إلغاء التفويض" data-ng-show="!y.editMode">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </div>
+                                    <!--<div ng-if="y.isDeleted" data-balloon="{{y.isDeleted === true ? '  إستعادة المفوض مرة أخرى ':''}}" data-balloon-pos="up">
+                                        <a ng-href="/#/Users/AddEditUser/{{y.id}}" title="إعادة الحذف" data-ng-show="!y.editMode">
+                                            <i class="fa fa-repeat"></i>
+                                        </a>
+                                    </div>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    .CustomLabel {
+        color: cornflowerblue;
+        font-weight: bolder;
+    }
+
+    .sslider {
+        overflow-y: hidden;
+        max-height: 500px; /* approximate max height */
+        transition-property: all;
+        transition-duration: .5s;
+        transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    }
+
+        .sslider.closed {
+            max-height: 0;
+        }
+</style>
+
+
+
+

@@ -1,0 +1,433 @@
+﻿<script>
+
+    $('.datepick').calendarsPicker({ calendar: $.calendars.instance('gregorian'), dateFormat: 'yyyy-mm-dd', onSelect: function (date) { $(this).change(); } });
+</script>
+<div class="grey-color p-top-md">
+</div>
+
+<div class="new-req dashboard-content p-bottom-lg grey-color">
+    <div class="embed-responsive">
+        <div class="container">
+            <div class="new-req-content">
+                <form class="form-horizontal text-right" id="requestForm" name="requestForm" autocomplete="off">
+                    <div class="form-body row  row-model">
+                        <fieldset>
+                            <div class="row">
+                                <h1></h1>
+                                <div id="wizard-container">
+                                    <div id="wizard-content-container" class="w3-animate-bottom" ng-cloak ng-show="page.thereIsData">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="form-box clearfix">
+                                                    <div class="col-xs-12">
+                                                        <div class="custom-title">
+                                                            <h4>
+                                                                <i class="icon-menu font-blue"></i>
+                                                                بيانات المنشأة
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="CompanyName"> إسم الشركة</label>
+                                                            <input type="text" ng-model="RequestModel.CompanyName" autocomplete="off" ng-required="true" readonly="readonly"
+                                                                   class="form-control  input-no-borders" name="CompanyName">
+                                                            <div ng-messages="requestForm.CompanyName.$error" ng-if="requestForm.CompanyName.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم الشركة</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="CrNumber"> رقم السجل التجاري  </label>
+                                                            <input type="text" ng-model="RequestModel.CrNumber" autocomplete="off" ng-required="true" readonly="readonly"
+                                                                   class="form-control  input-no-borders" name="CrNumber">
+                                                            <div ng-messages="requestForm.CrNumber.$error" ng-if="requestForm.CrNumber.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل رقم السجل</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="col-xs-12">
+                                                        <div class="custom-title">
+                                                            <h4>
+                                                                <i class="icon-menu font-blue"></i>
+                                                                سبب التعليق
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label> {{RequestModel.RejectReason}} </label>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="Title">  اللقب </label>
+                                                            <select ng-model="RequestModel.Title" title="اللقب" name="Title" ng-required="true" class="form-control">
+                                                                <option value="السيد">السيد</option>
+                                                                <option value="السيدة">السيدة</option>
+                                                            </select>
+                                                            <div ng-messages="requestForm.Title.$error" ng-if="requestForm.Title.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">اللقب مطلوب </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="FirstName">  الاسم الأول </label>
+                                                            <input type="text"  title="الاسم الأول" ng-model="RequestModel.FirstName" ng-required="true" autocomplete="off"
+                                                                   class="form-control" name="FirstName" />
+                                                            <div ng-messages="requestForm.FirstName.$error" ng-if="requestForm.FirstName.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل الاسم الأول </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="LastName">  إسم الأب </label>
+                                                            <input type="text"  title="إسم الأب" ng-model="RequestModel.FatherName" ng-required="true" autocomplete="off"
+                                                                   class="form-control" name="FatherName" />
+                                                            <div ng-messages="requestForm.FatherName.$error" ng-if="requestForm.FatherName.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم الأب </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="FirstName">  إسم الجد </label>
+                                                            <input type="text"  title="إسم الجد" ng-model="RequestModel.GrandFatherName" ng-required="true" autocomplete="off"
+                                                                   class="form-control" name="GrandFatherName" />
+                                                            <div ng-messages="requestForm.GrandFatherName.$error" ng-if="requestForm.GrandFatherName.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم الجد </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="LastName"> إسم العائلة </label>
+                                                            <input type="text"  title="إسم العائلة" ng-model="RequestModel.FamilyName" ng-required="true" autocomplete="off"
+                                                                   class="form-control" name="FamilyName" />
+                                                            <div ng-messages="requestForm.FamilyName.$error" ng-if="requestForm.FamilyName.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم العائلة </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="Date"> تاريخ الميلاد    </label>
+                                                            <input type="text" class="datepick form-control WSSCalender" title="تاريخ الميلاد" name="BirthDate" ng-required="true" autocomplete="off"
+                                                                   placeholder="اضغط لتحديد التاريخ" ng-model="RequestModel.BirthDate" />
+                                                             <div ng-if="(RequestModel.BirthDate =='' || RequestModel.BirthDate =='undefined' || RequestModel.BirthDate == null )&& isFormSubmitted">
+                                                                <p class="text-danger">تاريخ الميلاد مطلوب</p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label>علاقتك بالمنشأة</label>
+                                                            <ui-select ng-model="RequestModel.MemberRelationTypeId" title="علاقتك بالمنشأة" reset-search-input="true" theme="selectize" name="MemberRelationTypeId" ng-required="true">
+                                                                <ui-select-match>
+                                                                    <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                                </ui-select-match>
+                                                                <ui-select-choices repeat="c.id as c in MemberRelationType | filter: $select.search">
+                                                                    <small ng-bind-html="c.nameAr"></small>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                            <div ng-messages="requestForm.MemberRelationTypeId.$error" ng-if="requestForm.MemberRelationTypeId.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل نوع العلاقة</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label> <span></span> المؤهلات العلمية</label>
+                                                            <ui-select ng-model="RequestModel.QualificationTypeId" title="المؤهلات العلمية" reset-search-input="true" theme="selectize" name="QualificationTypeId" ng-required="true">
+                                                                <ui-select-match>
+                                                                    <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                                </ui-select-match>
+                                                                <ui-select-choices repeat="c.id as c in Qualifications | filter: $select.search">
+                                                                    <small ng-bind-html="c.nameAr"></small>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                            <span class="notify-note" ng-if="RequestModel.QualificationTypeId === 4 || RequestModel.QualificationTypeId === 5 || RequestModel.QualificationTypeId === 6">
+                                                                <i class="fa fa-info-circle"></i>
+                                                                من شروط الترشح ان تحمل شهادة جامعية
+                                                            </span>
+                                                            <div ng-messages="requestForm.QualificationTypeId.$error" ng-if="requestForm.QualificationTypeId.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل المؤهل العلمي</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="LastName"> تخصص المؤهل العلمي </label>
+                                                            <input type="text" ng-model="RequestModel.SpecializedEducationalQualification" title="تخصص المؤهل العلمي" ng-required="true" autocomplete="off"
+                                                                   class="form-control" name="SpecializedEducationalQualification">
+                                                            <div ng-messages="requestForm.SpecializedEducationalQualification.$error" ng-if="requestForm.SpecializedEducationalQualification.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل تخصص المؤهل العلمي </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="Mobile"> رقم الجوال </label>
+                                                            <input title="رقم الجوال" only-Int ng-model="RequestModel.MobileNumber" ng-pattern="/^(05)([0-9]{8})$/"
+                                                                   maxlength="10" autocomplete="off"
+                                                                   class="form-control" name="MobileNumber" type="text" ng-required="true">
+                                                            <div ng-messages="requestForm.MobileNumber.$error" ng-if="requestForm.MobileNumber.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">رقم الجوال مطلوب</p>
+                                                                <p class="text-danger" ng-message="pattern">من فضلك ادخل الجوال بشكل صحيح</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="IdNumber" class="aut-label"> رقم الهوية </label>
+                                                        <input ng-model="RequestModel.IdNumber" only-Int maxlength="10" title="رقم الهوية"
+                                                               ng-required="true" autocomplete="off" ng-pattern="/^(1|2)([0-9]{9})$/"
+                                                               class="form-control" name="IdNumber" type="text">
+                                                        <div class="validation-alert" ng-messages="requestForm.IdNumber.$error" ng-if="requestForm.IdNumber.$dirty || isFormSubmitted">
+                                                            <p class="text-danger" ng-message="required">من فضلك ادخل رقم بطاقة الهوية </p>
+                                                            <p class="text-danger" ng-message="pattern"> فضلا ادخل رقم الهوية بشكل صحيح</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="Date"> تاريخ انتهاء الهوية    </label>
+                                                            <input type="text" class="datepick form-control WSSCalender" title="تاريخ انتهاء الهوية" name="IdNumberExpireDate" ng-required="true" autocomplete="off"
+                                                                   placeholder="اضغط لتحديد التاريخ" ng-model="RequestModel.IdNumberExpireDate" />
+                                                             <div ng-if="(RequestModel.IdNumberExpireDate =='' || RequestModel.IdNumberExpireDate =='undefined'  || RequestModel.IdNumberExpireDate == null )&& isFormSubmitted">
+                                                                <p class="text-danger">تاريخ انتهاء الهوية مطلوب</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label for="Email"> البريد الإلكترونى</label>
+                                                            <input title=" البريد الإلكترونى" type="email" ng-required="true" ng-model="RequestModel.Email" autocomplete="off"
+                                                                   class="form-control" name="Email" id="phone-one">
+                                                            <div ng-messages="requestForm.Email.$error" ng-if="requestForm.Email.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل البريد الإلكترونى</p>
+                                                                <p class="text-danger" ng-message="email"> فضلا ادخل بريد الكترونى صحيح</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-xs-12">
+                                                        <div class="custom-title">
+                                                            <h4>
+                                                                <i class="icon-menu font-blue"></i>
+                                                                المجلس
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="custom-input">
+                                                            <label> إختر المجلس القطاعى </label>
+                                                            <ui-select ng-model="RequestModel.SectoralCouncilId" title="المجلس القطاعى" reset-search-input="true" theme="selectize" name="SectoralCouncilId" ng-required="true">
+                                                                <ui-select-match>
+                                                                    <span class="selected-value" ng-bind="$select.selected.nameAr"></span>
+                                                                    <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                                                </ui-select-match>
+                                                                <ui-select-choices repeat="c.id as c in SectoralCouncils | filter: { isActive: true , nameAr : $select.search}">
+                                                                    <small ng-bind-html="c.nameAr"></small>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                            <div ng-messages="requestForm.SectoralCouncilId.$error" ng-if="requestForm.SectoralCouncilId.$dirty || isFormSubmitted">
+                                                                <p class="text-danger" ng-message="required">من فضلك إختر المجلس القطاعى الأول</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-xs-12">
+                                                        <div class="custom-title">
+                                                            <h4>
+                                                                <i class="icon-menu font-blue"></i>
+                                                                البرنامج
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <label for="notes" class="aut-label">ما هو برنامجك الذي ترغب في تحقيقه عند انضمامك للمجلس القطاعى :</label>
+                                                        <table class="table table-bordered table-hover table-centered">
+                                                            <thead>
+                                                                <tr class="bg-blue font-white">
+                                                                    <th>م</th>
+                                                                    <th>البرامج المتاحة</th>
+                                                                    <th>إختر</th>
+                                                                    <th>أكتب نبذه عن الخطة المتبعه لتحقيق البرنامج</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <!--<tr ng-repeat="type in LKUP_RequestsFormsReasons | filter: {requestType : 52 }:true">
+                                                                    <td>
+                                                                        {{$index+1}}
+                                                                    </td>
+                                                                    <td>{{type.name}}</td>
+                                                                    <td><input type="checkbox" ng-disabled="checkDisable(type)" ng-checked="type.isPinned ? true : type.isChecked" data-ng-model="type.isChecked" id="chex{{$index+1}}" value="{{type.name}}"></td>
+                                                                    <td>
+                                                                        <input ng-model="type.Note" ng-required="type.isChecked"
+                                                                               autocomplete="off" title="'نبذه عن '{{type.name}}" rows="3" class="input-large" name="programs{{type.id}}" type="text" ng-disabled="!type.isChecked">
+                                                                        <span class="jed-file-required" ng-show="!requestForm['programs'+type.id].$valid || (isFormSubmitted && type.isChecked && requestForm['programs'+type.id].$invalid)"><i class="fa fa-asterisk"></i></span>
+                                                                    </td>
+                                                                </tr>-->
+                                                                <tr ng-repeat="type in LKUP_RequestsFormsReasons  | filter: {requestType : 52 }:true track by $index">
+                                                                    <td>
+                                                                        {{$index+1}}
+                                                                    </td>
+                                                                    <td>{{type.name}}</td>
+                                                                    <td><input type="checkbox" ng-disabled="checkDisable(type)" ng-checked="type.isPinned ? true : type.isChecked" data-ng-model="type.isChecked" id="chex{{$index+1}}" value="{{type.name}}"></td>
+                                                                    <td>
+                                                                        <input ng-model="type.Note" ng-required="type.isChecked"
+                                                                               autocomplete="off" title="'نبذه عن '{{type.name}}" rows="3" class="input-large" name="programs{{type.id}}" type="text" ng-disabled="!type.isChecked">
+                                                                        <span class="jed-file-required" ng-show="!requestForm['programs'+type.id].$valid || (isFormSubmitted && type.isChecked && requestForm['programs'+type.id].$invalid)"><i class="fa fa-asterisk"></i></span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="custom-title">
+                                                            <h4>
+                                                                <i class="icon-menu font-blue"></i>
+                                                                المرفقات
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <ul class="jed-file-attatchment">
+                                                            <li ng-repeat="attachment in AttachmentTypes track by $index" ng-if="!attachment.Uploaded && !attachment.Hide">
+                                                                <h2>
+                                                                    {{attachment.Name}}
+                                                                    <span class="jed-file-required" ng-show="!requestForm['files'+attachment.Id].$valid || (isFormSubmitted && attachment.IsRequired) "><i class="fa fa-asterisk"></i></span>
+                                                                </h2>
+                                                                <input valid-file ng-model="attachment.File" title="{{attachment.Name}}" ng-required="attachment.IsRequired" type="file" id="files{{attachment.Id}}" name="files{{attachment.Id}}"
+                                                                       onchange="angular.element(this).scope().selectFile(this.files, angular.element(this).scope().attachment.Id , angular.element(this).scope().attachment.Name)" />
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div>
+                                                        <table class="table table-bordered table-hover table-centered files-table" ng-show="imagesList.length">
+                                                            <thead>
+                                                                <tr class="bg-blue font-white">
+                                                                    <th>#</th>
+                                                                    <th>الإســم</th>
+                                                                    <th>النوع</th>
+                                                                    <th>المـلف</th>
+                                                                    <th>خيارات</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="fl in imagesList">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{fl.AttachmentTypeName | cut:true:20:' ...'}}</td>
+                                                                    <td>{{fl.AttachmentType ==null?fl.AttachmentTypeName:fl.AttachmentType}}</td>
+                                                                    <td>
+                                                                        <span ng-if="fl.AttachmentType==='application/pdf'"><img width="30" src="../../../img/pdflogo.png" /></span>
+                                                                        <img class="imageThumb" ng-if="fl.AttachmentType!=='application/pdf' && fl.IsOld !=true" ng-src="{{fl.Type=='application/pdf'?'../../../Content/Theme/dist/img/pdflogo.png': fl.Src}}" title={{fl.Name}}>
+                                                                        <span ng-if="fl.AttachmentType!=='application/pdf' && fl.IsOld==true"><img width="30" data-ng-src="data:image/png;base64,{{fl.Src}}" /> </span>
+                                                                    </td>
+                                                                    <td><button ng-click="removeImg(fl);" type='button' class="remove">حذف</button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <hr />
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="PendingNotes" class="aut-label"> أضف ملحوظة   </label>
+                                                        <input ng-model="RequestModel.PendingNotes" class="form-control" name="PendingNotes" type="text">
+                                                        <div class="validation-alert" ng-messages="requestForm.PendingNotes.$error" ng-if="requestForm.PendingNotes.$dirty || isFormSubmitted">
+                                                            <p class="text-danger" ng-message="required">من فضلك ادخل ملحوظة </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <hr />
+                                                    <div class="col-md-12 col-sm-12" ng-if="isFormSubmitted">
+                                                        <ul>
+                                                            <li style="color: red;" ng-repeat="(key, errors) in requestForm.$error track by $index">
+                                                                <span ng-if="$first"> تحقق من التالى </span>
+                                                                <ul>
+                                                                    <li ng-repeat="e in errors">
+                                                                        <span ng-if="key==='required'"> {{ requestForm.$error.required[$index].$$attr.title}} <strong>{{ key ==='required'?'مطلوب':'' }}</strong>.</span>
+                                                                        <span ng-if="key==='email' "> {{ requestForm.$error.email[$index].$$attr.title}} <strong>{{ key ==='email'?'بشكل صحيح':'' }}</strong>.</span>
+                                                                        <span ng-if="key==='pattern' "> {{ requestForm.$error.pattern[$index].$$attr.title}} <strong>{{key==='pattern'?'بشكل صحيح':'' }}</strong>.</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-hide="page.thereIsData" style="margin-right:80px;margin-left:80px;">
+                                        <div ng-show="page.showLoad" class="text-center" data-loading>
+                                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                        </div>
+                                        <div class="col-md-12" ng-show="page.thereIsData">
+                                            <div class="note note-danger" style="text-align:center !important">
+                                                عفواً . لا توجـد بيانات.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div ng-if="page.thereIsData" id="wizard-navigation-container" class="p-bottom-md">
+                                        <div class="col-xs-12 text-center">
+                                            <button class="custom-btn custom-btn-reverse btn-3"
+                                                    name="next" style="margin-top:10px;" type="submit" ng-click="save(requestForm,$event)">
+                                                <i class="fa fa-floppy-o"></i> حفظ الطلب
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<style>
+    #wizard-container .nav {
+        z-index: 100;
+        opacity: 1;
+        transition: all ease-out 0.2s 0.1s;
+    }
+</style>
+
+<script type="text/javascript">
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+    $(document).ready(function () {
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>
+
+
+

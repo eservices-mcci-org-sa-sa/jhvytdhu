@@ -1,0 +1,703 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id"
+                         ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified"
+                         ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif"
+                         alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<br />
+<!-- header end-->
+<form id="requestForm" name="requestForm" role="form" novalidate="novalidate" ng-submit="save(requestForm)">
+    <div class="es-sectral-committees-voting">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title d-flex-align-center-justify-between">
+                            <h2 ng-if="IsGrievanceRequest==false">
+                                تقديم طلب الترشح للجنة {{committee.title}}
+                            </h2>
+                            <h2 ng-if="IsGrievanceRequest==true">
+                                تقديم طلب معاد تقديمه للجنة
+                                {{
+RelatedNominationCommitteeName==null||RelatedNominationCommitteeName==undefined?
+                                '--':RelatedNominationCommitteeName
+                                }}
+                            </h2>
+                            <div class="sp-main-toolbar">
+                                <a type="button" ng-if="IsGrievanceRequest==false"
+                                   href="/#/NominationCommittees"
+                                   class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </a>
+                                <a type="button" ng-if="IsGrievanceRequest==true"
+                                   href="/#/NominationCandidate/CandidacyApplication/List"
+                                   class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                    العودة
+                                    <ion-icon name="arrow-back-outline"></ion-icon>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                بيانات العضوية
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>اسم المنشأة</h3>
+                                        <p>{{RequestModel.estName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>رقم العضوية</h3>
+                                        <p>{{RequestModel.memberId}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3> الرقم الموحد 700</h3>
+                                        <p>{{RequestModel.unifiedNumber}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>رقم السجل</h3>
+                                        <p>{{RequestModel.crNumber}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>النشاط</h3>
+                                        <div class="sp-scroll scroll-h-100">
+                                            <p>-{{ RequestModel.mainActivity }}</p>
+                                            <p ng-repeat="subActivity in RequestModel.subActivity track by $index">
+                                                -
+                                                {{subActivity.name}}
+                                            </p>
+                                            <p ng-if="!RequestModel.mainActivity && (!RequestModel.subActivity || !RequestModel.subActivity.length)">
+                                                لا يوجد
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12" ng-if="RequestModel.responsibleName">
+                                    <div class="sp-view-info">
+                                        <h3>المسؤول عن المنشأة</h3>
+                                        <p>{{RequestModel.responsibleName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="sp-view-info">
+                                        <h3>  رأس مال العضوية </h3>
+                                        <p>{{RequestModel.membershipCapital}}</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                بيانات إضافية
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+
+                            <div class="sp-sectral-committees-list">
+                                <div class="row">
+                                    <div class="col-md-12" >
+                                        <div class="custom-input">
+                                            <label>صورة المرشح</label>
+                                            <div class="sp-candidate-upload-img-wrapper">
+                                                <label class="sp-candidate-upload-img">
+                                                    <input class="form-control " type="file" ng-model="RequestModel.candidateImage"
+                                                           accept="image/*" ng-file-select  name="candidateImage"
+                                                           ng-required="chamberSettings.candidateImageRequired"
+                                                           id="candidateImage" onchange="angular.element(this).scope().UploadCandidateImage(this)">
+                                                    <div class="upload-content">
+                                                        <ion-icon name="cloud-upload-outline"></ion-icon>
+                                                        <span>رفع صورة</span>
+                                                    </div>
+                                                    <div class="uploaded-image" ng-if="RequestModel.candidateImage">
+                                                        <img src="{{RequestModel.candidateImage}}" width="100%" height="100" />
+                                                        <button class="btn-upload-img-cancel" ng-click="removeCandidateImage();">
+                                                            <ion-icon name="close-outline"></ion-icon>
+                                                        </button>
+                                                    </div>
+                                                </label>
+                                                <div class="upload-notes" ng-if="!RequestModel.candidateImage">
+                                                    <p>الحجم الاقصي للشعار 2 ميجا بايت</p>
+                                                </div>
+                                            </div>
+                                            <div ng-messages="requestForm.candidateImage.$error"
+                                                 ng-if="requestForm.candidateImage.$touched && requestForm.candidateImage.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    صورة المرشح مطلوبة
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                العلاقة بالمنشأة
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <ui-select ng-model="RequestModel.relationId" ng-required="true"
+                                                       name="relationId" reset-search-input="true" theme="selectize">
+                                                <ui-select-match>
+                                                    <span class="selected-value"
+                                                          ng-bind="$select.selected.nameAr"></span>
+                                                    <a class="fa fa-times clear-button"
+                                                       ng-click="$select.clear($event);"></a>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="c.id as c in relations | filter: $select.search">
+                                                    <small ng-bind-html="c.nameAr"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <div ng-messages="requestForm.relationId.$error"
+                                                 ng-if="requestForm.relationId.$touched && requestForm.relationId.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك اختر العلاقة
+                                                    بالمنشأة
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                عدد العاملين
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input class="form-control" maxlength="9" only-Int ng-model="RequestModel.membershipWorkerCount"
+                                                   name="membershipWorkerCount" ng-required="true" type="text" numbersOnly>
+                                            <div ng-messages="requestForm.membershipWorkerCount.$error"
+                                                 ng-if="requestForm.membershipWorkerCount.$touched && requestForm.membershipWorkerCount.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك ادخل  عدد العاملين
+                                                </p>
+                                                <p class="text-danger" ng-message="maxlength">
+                                                    أقصى عدد متاح للأرقام 999999999
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                المؤهل العلمي
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <ui-select ng-model="RequestModel.specializationId" ng-required="true"
+                                                       name="specializationId" reset-search-input="true" theme="selectize">
+                                                <ui-select-match>
+                                                    <span class="selected-value"
+                                                          ng-bind="$select.selected.nameAr"></span>
+                                                    <a class="fa fa-times clear-button"
+                                                       ng-click="$select.clear($event);"></a>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="c.id as c in specializations | filter: $select.search">
+                                                    <small ng-bind-html="c.nameAr"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <div ng-messages="requestForm.specializationId.$error"
+                                                 ng-if="requestForm.specializationId.$touched && requestForm.specializationId.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك اختر المؤهل العلمي
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                التخصص العلمي
+                                            </label>
+                                            <input class="form-control" maxlength="50" ng-model="RequestModel.education"
+                                                   name="education" ng-required="false" type="text">
+                                            <div ng-messages="requestForm.education.$error"
+                                                 ng-if="requestForm.education.$touched && requestForm.education.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك ادخل التخصص العلمي
+                                                </p>
+                                                <p class="text-danger" ng-message="maxlength">
+                                                    أقصى عدد متاح للحروف 50
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="custom-input custom-cal">
+                                            <label for="identityExpireDate">
+                                                تاريخ إنتهاء الهوية
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group w-100">
+                                                <input type="date" id="identityExpireDate" name="identityExpireDate"
+                                                       class="form-control" ng-model="RequestModel.identityExpireDate"
+                                                       ng-required="true" autocomplete="off">
+
+                                            </div>
+                                            <div ng-messages="requestForm.identityExpireDate.$error"
+                                                 ng-if="requestForm.identityExpireDate.$touched && requestForm.identityExpireDate.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك ادخل تاريخ الهوية
+                                                </p>
+                                            </div>
+                                            <!-- <date-control ng-required="true" name="identityExpireDate"
+                ng-model="RequestModel.identityExpireDate" class="datepickgreg"
+                onkeydown="return false;" autocomplete="off"
+                mydate="RequestModel.identityExpireDate"
+                title="{{IsHijriTitle}}"></date-control>
+            <div ng-messages="requestForm.identityExpireDate.$error"
+                ng-if="requestForm.identityExpireDate.$touched && requestForm.identityExpireDate.$error">
+                <p class="text-danger" ng-message="required">من فضلك ادخل تاريخ إنتهاء
+                    الهوية</p>
+            </div> -->
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="custom-input custom-cal">
+                                            <!-- <label for="date">تاريخ الميلاد</label>
+            <date-control ng-required="true" name="dateOfBirth" ng-model="RequestModel.dateOfBirth" class="datepick" onkeydown="return false;" autocomplete="off"
+                          mydate="RequestModel.dateOfBirth" title="{{IsHijriTitle}}"></date-control>
+            <div ng-messages="requestForm.dateOfBirth.$error" ng-if="requestForm.dateOfBirth.$touched && requestForm.dateOfBirth.$error">
+                <p class="text-danger" ng-message="required">من فضلك ادخل تاريخ الميلاد</p>
+            </div> -->
+                                            <label for="dateOfBirth" class="control-label">
+                                                تاريخ الميلاد
+                                            </label>
+                                            <div class="input-group w-100">
+                                                <input type="date" id="dateOfBirth" name="dateOfBirth"
+                                                       class="form-control" ng-model="RequestModel.dateOfBirth"
+                                                       ng-required="false" autocomplete="off">
+                                            </div>
+                                            <div ng-messages="requestForm.dateOfBirth.$error"
+                                                 ng-if="requestForm.dateOfBirth.$touched && requestForm.dateOfBirth.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك ادخل تاريخ الميلاد
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                رقم الجوال
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input class="form-control " type="number"
+                                                   ng-disabled="IsGrievanceRequest==false"
+                                                   value="{{RequestModel.phoneNumber}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                البريد الالكتروني
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input class="form-control " type="email"
+                                                   ng-disabled="IsGrievanceRequest==false" value="{{RequestModel.email}}">
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="custom-input">
+                                            <label>
+                                                نبذة عن المترشح
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <textarea class="form-control" rows="4" name="candidateInfo"
+                                                      ng-model="RequestModel.candidateInfo" ng-required="true"
+                                                      maxlength="500"></textarea>
+                                            <div ng-messages="requestForm.candidateInfo.$error"
+                                                 ng-if="requestForm.candidateInfo.$touched && requestForm.candidateInfo.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك ادخل نبذة عن
+                                                    المترشح
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix" ng-if="IsGrievanceRequest==true"></div>
+                                    <div class="col-md-6 col-sm-12" ng-if="IsGrievanceRequest==true">
+                                        <div class="custom-input">
+                                            <label>
+                                                سبب إعادة التقديم
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <textarea class="form-control" rows="4" name="grievanceText"
+                                                      ng-model="RequestModel.grievanceText" ng-required="true"
+                                                      maxlength="500"></textarea>
+                                            <div ng-messages="requestForm.grievanceText.$error"
+                                                 ng-if="requestForm.grievanceText.$touched && requestForm.grievanceText.$error">
+                                                <p class="text-danger" ng-message="required">
+                                                    من فضلك ادخل سبب إعادة التقديم
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="main-content-item sp-main-box margin-bottom-30">
+                        <div class="sp-main-title">
+                            <h2>
+                                المرفقات المطلوبة
+                            </h2>
+                        </div>
+                        <div class="sp-main-container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="sp-activities-required">
+                                        <li ng-repeat="attachment in attachmentsInput.attachmentList">
+                                            {{attachment.Name}} -
+                                            <span class=" text-danger">
+                                                {{attachment.IsRequired ? ' (إجباري)' : ''}}
+                                            </span>
+                                            <span ng-show="!attachment.uploaded" class="spm-upload-wrapper">
+                                                <input title="{{attachment.Name}}" type="file" id="files{{attachment.Id}}" name="files{{attachment.Id}}"
+                                                       onchange="angular.element(this).scope().selectFile(this.files, angular.element(this).scope().attachment)" />
+                                                <i class="fa fa-cloud-upload"></i>
+                                            </span>
+                                            <span ng-show="attachment.uploaded" class="d-flex-align-center">
+                                                - تم إضافته بنجاح
+                                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="table table-bordered table-hover table-centered files-table" ng-show="imagesList.length">
+                                <thead>
+                                    <tr class="bg-blue font-white">
+                                        <th>#</th>
+                                        <th>الإســم</th>
+                                        <th>النوع</th>
+                                        <th>المـلف</th>
+                                        <th>خيارات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="fl in imagesList">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{fl.Name | cut:true:20:' ...'}}</td>
+                                        <td>{{fl.attachmentTypeName}}</td>
+                                        <td><img class="imageThumb" ng-src="{{fl.Type=='application/pdf'?'../../../Content/Theme/dist/img/pdflogo.png': fl.Src}}" title={{fl.Name}}></td>
+                                        <td><button ng-click="removeImg(fl);" type='button' class="remove">حذف</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="sp-form-actions">
+                            <button class="sp-main-button" type="submit">تقديم الطلب</button>
+                            <a href="/#/NominationCommittees/{{CommitteeId}}/Candidate/Organizations">
+                                <button class="sp-main-button sp-transparent-button" type="button">
+                                    إلغاء
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<style>
+    .w-100 {
+        width: 100%;
+    }
+
+    .sp-inputgroup {
+        position: relative;
+    }
+
+        .sp-inputgroup.input-icon > ion-icon {
+            position: absolute;
+            inset-block: 0;
+            margin-block: auto;
+            inset-inline-start: 10px;
+            color: #8191A6;
+        }
+
+    .sp-view-info h3 {
+        font-size: 12px;
+        color: #8191A6;
+    }
+
+    .sp-view-info p {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .sp-view-info {
+        margin-bottom: 30px;
+    }
+
+    .main-content-item ul.sp-activities-required {
+        list-style: none;
+        padding-inline-start: 10px;
+        margin-bottom: 15px;
+    }
+
+        .main-content-item ul.sp-activities-required li {
+            position: relative;
+            font-size: 12px;
+            padding: 0;
+            line-height: 25px;
+            font-weight: 700;
+            border: 0;
+        }
+
+            .main-content-item ul.sp-activities-required li::before {
+                content: '';
+                position: absolute;
+                width: 5px;
+                height: 5px;
+                border-radius: 100%;
+                background: #333;
+                inset-block: 0;
+                margin-block: auto;
+                inset-inline-start: -15px;
+            }
+
+            .main-content-item ul.sp-activities-required li:not(:last-child) {
+                margin-bottom: 15px;
+            }
+
+    .es-sectral-committees-voting .sp-form-actions {
+        text-align: center;
+        padding: 20px 10px;
+        border-top: 1px solid #eaecec;
+    }
+
+    .sp-sectral-committees-list .selectize-input > input {
+        height: auto !important;
+    }
+
+    .sp-activities-required > li {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .spm-upload-wrapper {
+        padding: 0;
+        text-align: center;
+        border: 0px;
+        position: relative;
+        isolation: isolate;
+    }
+
+        .spm-upload-wrapper > input {
+            text-indent: -99999rem;
+            display: flex;
+            padding: 0;
+            min-height: auto !important;
+            text-align: center;
+            background: transparent;
+            height: auto;
+            width: 30px;
+            cursor: pointer;
+            border: 0px !important;
+        }
+
+        .spm-upload-wrapper > i {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            font-size: 22px;
+            line-height: 27px;
+            color: var(--main-color);
+            cursor: pointer;
+            z-index: -1;
+        }
+
+        .spm-upload-wrapper > input:focus {
+            outline: 0;
+        }
+
+
+    /*scroll*/
+    .sp-scroll {
+        --scroll-min-height: 220px;
+        --scroll-padding-iend: 10px;
+        --scroll-bg: rgba(23, 105, 204, 0.17);
+        --scroll-clr: var(--main-color);
+        --scroll-width: 6px;
+        --scroll-border-width: 0px;
+        --scroll-border-style: solid;
+        --scroll-border-clr: var(--main-color);
+        --scroll-track-border-radius: 8px;
+        --scroll-thumb-border-radius: 8px;
+    }
+
+        .sp-scroll.scroll-h-100 {
+            --scroll-min-height: 100px;
+        }
+
+        .sp-scroll.scroll-h-300 {
+            --scroll-min-height: 300px;
+        }
+
+        .sp-scroll.scroll-h-500 {
+            --scroll-min-height: 500px;
+        }
+
+    .sp-scroll {
+        padding-inline-end: var(--scroll-padding-iend);
+        max-height: var(--scroll-min-height);
+        object-fit: contain;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .sp-scroll {
+        scrollbar-width: auto;
+        scrollbar-color: var(--scroll-clr);
+    }
+
+        .sp-scroll::-webkit-scrollbar {
+            width: var(--scroll-width);
+        }
+
+        .sp-scroll::-webkit-scrollbar-track {
+            background: var(--scroll-bg);
+            border-radius: var(--scroll-border-radius);
+        }
+
+        .sp-scroll::-webkit-scrollbar-thumb {
+            background-clip: content-box;
+            background-color: var(--scroll-clr);
+            border: var(--scroll-border-width) var(--scroll-border-style) var(--scroll-border-clr);
+            border-radius: var(--scroll-thumb-border-radius);
+        }
+
+    .sp-candidate-upload-img-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .sp-candidate-upload-img-wrapper .sp-candidate-upload-img {
+        width: 100px;
+        height: 100px;
+        margin: 0;
+        border: 2px dashed #d6dee0;
+        border-radius: 100%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*overflow: hidden;*/
+        position: relative;
+        cursor: pointer;
+    }
+
+        .sp-candidate-upload-img-wrapper .sp-candidate-upload-img > input[type="file"] {
+            position: absolute;
+            padding: 0;
+            opacity: 0;
+            max-height: 100%;
+            width: 0;
+        }
+
+        .sp-candidate-upload-img-wrapper .sp-candidate-upload-img .upload-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+    .sp-candidate-upload-img-wrapper .uploaded-image {
+        position: absolute;
+        z-index: 2;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        top: -2px;
+        inset-inline-start: -2px;
+        border-radius: 100%;
+    }
+
+    .sp-candidate-upload-img-wrapper .sp-candidate-upload-img .upload-content > ion-icon {
+        color: #b9bfc4;
+    }
+
+    .sp-candidate-upload-img-wrapper .uploaded-image img {
+        border-radius: 100%;
+        object-fit: cover;
+        cursor: default;
+    }
+
+    .sp-candidate-upload-img-wrapper .uploaded-image > .btn-upload-img-cancel {
+        position: absolute;
+        z-index: 3;
+        background: #ffd9d9;
+        border: 0;
+        border-radius: 100%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px;
+        color: red;
+        top: 0;
+        inset-inline-end: 0;
+    }
+</style>

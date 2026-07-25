@@ -1,0 +1,103 @@
+﻿<div class="container">
+    <div class="card card-3">
+        <div class="tabbable-custom nav-justified">
+            <ul class="nav nav-tabs nav-tabs-justified">
+                <li class="active">
+                    <a>
+                        <i class="fa fa-cog"></i>  تأكيد رقم الجوال الخاص بالحساب
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="flip-in">
+                    <div class="row row-model">
+                        <div class="col-xs-12">
+                            <div class="portlet  card-3 light">
+                                <div class="portlet-body form">
+                                    <form class="form-horizontal" name="confirmPhone" role="form" novalidate>
+                                        <div class="form-body clearfix padding-tb-20">
+                                            <div class="col-xs-12" ng-show="!phone.noPhone">
+                                                <div class="user-meta  text-center">
+                                                    <label>هل هذا رقم الجوال الحالى للحساب الخاص بك ؟</label>
+                                                    <p class="form-control-static text-success"><strong>{{phone.old}}</strong> </p>
+                                                </div>
+                                                <div ng-hide="sms.codeSent">
+                                                    <button class="btn btn-success" ng-click="checked=true;phone.new=''">نعم</button>
+                                                    <button class="btn btn-danger" ng-click="checked=false">لا</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                            <div class="col-xs-12" ng-if="checked == false || phone.noPhone">
+                                                <div class="input-icon left">
+                                                    <label>أدخل رقم الجوال الخاص بك : </label>
+                                                    <input type="text" restrict-input="{type: 'digitsOnly'}" class="form-control" autocomplete="off" name="PhoneNumber"
+                                                           minlength="10" maxlength="10" ng-model="phone.new" ng-required="true">
+
+                                                </div>
+                                                <div ng-messages="confirmPhone.PhoneNumber.$error" ng-if="confirmPhone.PhoneNumber.$dirty || isFormSubmitted">
+                                                    <p class="text-danger" ng-message="required">من فضلك ادخل رقم الجوال</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="col-xs-12" ng-if="sms.codeSent">
+                                                <div class="col-xs-12 text-center custon-centered-content">
+                                                    <label class="text-center text-success">
+                                                        تم إرسال الكود من فضلك ادخل الكود
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-12 ">
+                                                    <div class="col-xs-12 text-center">
+                                                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                                            <label>كود التحقق</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-sm-4 col-sm-offset-4  text-center">
+                                                        <input ng-required="true" ng-pattern="/^\d{4,4}$/" class="form-control" autocomplete="off" maxlength="4"
+                                                               restrict-input="{type: 'digitsOnly'}"
+                                                               ng-model="sms.codeToMatch" name="codeToMatch" type="text">
+                                                        <p style="color: #8998AA;" ng-show="page.showSmsTime || page.smsTimer != 0">
+                                                            يمكنك إعادة الإرسال بعد:   {{page.smsTimer}} ثانية
+                                                        </p>
+                                                        <button type="button" ng-disabled="page.showSmsTime" ng-click="sendSMS(phone,checked,confirmPhone,$event,true);" class="custom-btn custom-btn-reverse btn-3">
+                                                            إعادة إرسال
+                                                        </button>
+                                                    </div>
+                                                    <div ng-messages="confirmPhone.codeToMatch.$error" class="text-center" ng-if="confirmPhone.codeToMatch.$dirty && isFormSubmitted ">
+                                                        <p class="text-danger" ng-message="required"> من فضلك أدخل كود التحقق بشكل صحيح .</p>
+                                                        <p class="text-danger" ng-message="pattern"> فضلا ادخل مالايقل عن اربعة ارقام</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions" ng-if="!sms.codeSent && (checked == false || checked || phone.noPhone)">
+                                            <div class="col-xs-12 text-center">
+                                                <button type="submit" ng-click="sendSMS(phone,checked,confirmPhone,$event,false);" class="custom-btn custom-btn-reverse btn-3">
+                                                    تأكيـد
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions" ng-if="sms.codeSent && (checked == false || checked || phone.noPhone)">
+                                            <div class="col-xs-12 text-center">
+                                                <button type="submit" ng-click="verifyConfirmPhoneNumber(phone,checked);" class="custom-btn custom-btn-reverse btn-3">
+                                                     حفـظ 
+                                                </button>
+                                                <button type="reset" ng-click="phone.new='';checked=true;sms.codeSent=false " class="custom-btn custom-btn-reverse btn-3">
+                                                    عـودة
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,247 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+<!--صفحة عضويات المترشح-->
+
+
+<div class="es-sectral-committees-voting">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            {{header}}
+                        </h2>
+                        <div class="sp-main-toolbar">
+                            <button class="sp-main-button sp-transparent-button sp-inlineflex-align-center" ng-click="GoBack()">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" id="search" ng-if="RelatedMembershipsList.length >= page.itemsPerPage_R || DelegatedMembershipsList.length >= page.itemsPerPage_D">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="row">
+                        <div class="col-md-6 px-0">
+                            <div class="sp-main-title d-flex-align-center-justify-between">
+                                <input class="form-control" ng-model="searchModel.searchValue" name="searchValue" type="text" placeholder="بحث" />
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="col-md-12" id="search" ng-if="numberOfVoteByMemberships > 1">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="row">
+                    مسموح بالتصويت على {{numberOfVoteByMemberships}} عضويات للهوية
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="clearfix">
+            </div>
+            <div class="col-md-12" id="related">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            <i class="fa fa-user mc-color-reverse"></i>
+                            العضويات التابعة
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <div class="row flex-row">
+                            <div id="delegatedCard" class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm"
+                                 dir-paginate-start=" related in RelatedMembershipsList | filter:searchModel.searchValue | itemsPerPage : page.itemsPerPage_R"
+                                 current-page="page.currentPage_R" pagination-id="paginateId_R">
+
+                                <div class="sp-candidacy-membership-card mc-color" ng-click="ValidateCrActivity(related)" data-balloon="{{related.estName}}" data-balloon-pos="up">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3>{{related.estName | cutWords:4:' ...'}}</h3>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="membership-info clearfix">
+                                                <div class="mem-num no-padding">
+                                                    <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                    <span>رقم العضوية: </span>
+                                                </div>
+                                                <div class="mem-value no-padding">
+                                                    <span>{{related.memberId}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="membership-info clearfix">
+                                                <div class="mem-num no-padding">
+                                                    <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                    <span>رقم السجل: </span>
+                                                </div>
+                                                <div class="mem-value no-padding">
+                                                    <span>{{related.crNumber}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="membership-info clearfix margin-bottom-0">
+                                                <div class="mem-num no-padding">
+                                                    <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                    <span>الرقم الموحد (700) : </span>
+                                                </div>
+                                                <div class="mem-value no-padding">
+                                                    <span>{{related.unifiedNumber}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div dir-paginate-end="">
+                            </div>
+                            <div ng-show="RelatedMembershipsList.length == 0" class="col-sm-12 col-md-12 col-lg-12">
+                                <div colspan="3" class="note note-danger">لا توجد عضويات تابعة</div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <dir-pagination-controls max-size="5" pagination-id="paginateId_R"
+                                                         direction-links="true"
+                                                         boundary-links="true">
+                                </dir-pagination-controls>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" id="delegated">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            <i class="fa fa-users mc-color-reverse"></i>
+                            العضويات المفوض عليها
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+
+                        <div class="row flex-row">
+                            <div id="delegatedCard" class="col-xs-12 col-md-6 col-lg-3 m-bottom-sm"
+                                 dir-paginate-start=" delegated in DelegatedMembershipsList | filter:searchModel.searchValue | itemsPerPage : page.itemsPerPage_D"
+                                 current-page="page.currentPage_D" pagination-id="paginateId_D">
+
+                                <div class="sp-candidacy-membership-card mc-color" ng-click="ValidateCrActivity(delegated)" data-balloon="{{delegated.estName}}" data-balloon-pos="up">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3>{{delegated.estName | cutWords:4:' ...'}}</h3>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="membership-info clearfix">
+                                                <div class="mem-num no-padding">
+                                                    <img src="../../../Content/Theme/assets/img/member-id.svg" alt="رقم العضوية" />
+                                                    <span>رقم العضوية: </span>
+                                                </div>
+                                                <div class="mem-value no-padding">
+                                                    <span>{{delegated.memberId}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="membership-info clearfix">
+                                                <div class="mem-num no-padding">
+                                                    <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم السجل" />
+                                                    <span>رقم السجل: </span>
+                                                </div>
+                                                <div class="mem-value no-padding">
+                                                    <span>{{delegated.crNumber}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-if="delegated.unifiedNumber">
+                                            <div class="membership-info clearfix margin-bottom-0">
+                                                <div class="mem-num no-padding">
+                                                    <img src="../../../Content/Theme/assets/img/member-log.svg" alt="رقم المنشأة" />
+                                                    <span>الرقم الموحد (700) : </span>
+                                                </div>
+                                                <div class="mem-value no-padding">
+                                                    <span>{{delegated.unifiedNumber}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div dir-paginate-end="">
+                            </div>
+                            <div ng-show="DelegatedMembershipsList.length == 0" class="col-sm-12 col-md-12 col-lg-12">
+                                <div colspan="3" class="note note-danger">لا توجد عضويات مُفوضة</div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <dir-pagination-controls max-size="5" pagination-id="paginateId_D"
+                                                         direction-links="true"
+                                                         boundary-links="true">
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+<style>
+    .sp-candidacy-membership-card {
+        min-height: 1px;
+        padding: 20px 10px;
+        border-radius: 15px;
+        height: 158px;
+        cursor: pointer;
+    }
+
+        .sp-candidacy-membership-card h3 {
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .sp-candidacy-membership-card .membership-info span {
+            font-size: 14px;
+            line-height: 25px;
+        }
+
+        .sp-candidacy-membership-card .membership-info {
+            margin-bottom: 5px;
+        }
+        .px-0{
+            padding-inline:0;
+        }
+</style>
+
+<!--END: Committee MEMBERSHIPS-->

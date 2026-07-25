@@ -1,0 +1,149 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<br />
+
+<div class="custom-regi commercialmanual">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="sp-main-box">
+
+                    <div class="sp-main-title">
+                        <h2>
+                            {{title}}
+                        </h2>
+                        <a ng-show="LoggerUser" class="sp-main-button sp-main-sm-button pull-left" href="/#/Home">
+                            عودة
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </a>
+                        <a ng-show="!LoggerUser" class="sp-main-button sp-main-sm-button pull-left" href="/#/Login">
+                            عودة
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <div class="sp-main-form">
+
+                        <div class="container v-certificate-box">
+                            <div class="row" ng-show="page.thereIsData">
+
+                                <div class="table-responsive custom-table" ng-show="page.thereIsData">
+                                    <table class="table table-bordered table-hover table-centered">
+                                        <thead>
+                                            <tr class="sb-table-heading-color">
+                                                <th class="text-center">
+                                                    <label>
+                                                        <strong># </strong>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <strong>مرفقات القرار الخاصة بالتصويت </strong>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <strong>استعراض المرفقات  </strong>
+                                                    </label>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="white-bg">
+                                            <tr ng-repeat="x in meeting.meetingAttachments">
+                                                <td> {{$index+1}} </td>
+                                                <td> {{x.attachmentDesc}} </td>
+                                                <td>
+                                                    <a ng-click="showAttachmentHttp(x)" class="custom-btn btn-3 custom-btn-reverse"> استعراض المرفق </a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="table-responsive custom-table" ng-show="page.thereIsData">
+                                    <table class="table table-bordered table-hover table-centered">
+                                        <thead>
+                                            <tr class="sb-table-heading-color">
+                                                <th class="text-center">
+                                                    <label>
+                                                        <strong># </strong>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <strong>بنود الجمعية العمومية </strong>
+                                                    </label>
+                                                </th>
+                                                <th class="text-center">
+                                                    <label>
+                                                        <strong>استعراض المرفقات الخاصة بالبنود  </strong>
+                                                    </label>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="white-bg" ng-repeat="x in meetingTerms">
+                                            <tr>
+                                                <td> {{$index+1}} </td>
+                                                <td> {{x.meetingTerm.description}} </td>
+                                                <td>
+                                                    <a ng-click="showAttachment(x.meetingTermAttachments[0])" class="custom-btn btn-3 custom-btn-reverse"> استعراض المرفق </a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="text-center" ng-if="CodeVerified">
+                                    <button type="submit" class="custom-btn custom-btn-reverse btn-3 agremment-btn">
+                                        الإنتقال إلي الإجتماع
+                                        <i class="icon-arrow-left"></i>
+                                    </button>
+                                </div>
+
+                                <div ng-hide="page.thereIsData">
+                                    <div ng-show="page.showLoad" class="text-center" data-loading>
+                                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                    </div>
+                                    <div class="col-md-12" ng-show="page.NoData" style="top: 10px;">
+                                        <div class="note note-danger" style="text-align:center !important">
+                                            عفواً . لا توجـد بيانات .
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

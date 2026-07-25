@@ -1,0 +1,225 @@
+﻿<div class="change-pass grey-color">
+    <div class="container">
+        <div class="card card-3 p-top-lg p-bottom-lg">
+            <div class="tabbable-custom nav-justified">
+                <div class="col-md-12 col-xs-12" ng-if="chamberSettings.allowMembersPortalMerge">
+                    <div class="tab-content white-bg" ng-init="initForm();">
+                        <div class="flip-in">
+                            <div class="row row-model">
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                            <input type="text" class="form-control" placeholder="بحـث" ng-model="searchWord"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive custom-table input-table">
+                                    <table class="table table-bordered table-centered ">
+                                        <thead>
+                                            <tr class="bg-blue font-white text-center">
+                                                <th> # </th>
+                                                <th>
+                                                    إسم المنشأة
+                                                </th>
+                                                <th>
+                                                    رقم العضوية
+                                                </th>
+                                                <th>
+                                                    رقم السجل التجارى
+                                                </th>
+                                                <th>
+                                                    الحساب
+                                                </th>
+                                                <th>
+                                                    الجوال
+                                                </th>
+                                                <th>
+                                                    الحالة
+                                                </th>
+                                                <th>
+                                                    مرتبط بعضوية أخري
+                                                </th>
+                                                <th>خيارات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-hide="page.thereIsData">
+                                                <td ng-show="page.showLoad" colspan="9" style="text-align:center;" class="text-center" data-loading>
+                                                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                                </td>
+                                                <td colspan="9" style="text-align:center;" ng-show="page.NoData">
+                                                    <h3 class="font-red">عفواً , لا توجد بيانات للعرض </h3>
+                                                </td>
+                                            </tr>
+
+                                            <tr ng-repeat="obj in objects | filter:searchWord">
+                                                <td> {{$index+1}} </td>
+                                                <td>{{obj.mM_EstNameAr}}</td>
+                                                <td>{{obj.mM_MemberId}}</td>
+                                                <td>{{obj.mM_CRNumber}}</td>
+                                                <td>{{obj.userName}}</td>
+                                                <td>{{obj.phoneNumber}}</td>
+                                                <td>
+                                                    <i style="color:#ff2f00;" ng-if="obj.status=='مرفوض'" class="fa fa-circle" aria-hidden="true"></i>
+                                                    <i style="color:#00962e;" ng-if="obj.status=='مرتبط'" class="fa fa-circle" aria-hidden="true"></i>
+                                                    <i style="color:#615b5b;" ng-if="obj.status=='غير مرتبط'" class="fa fa-circle" aria-hidden="true"></i>
+                                                    <i style="color:#F1C40F;" ng-if="obj.status=='تحت الإجراء'" class="fa fa-circle" aria-hidden="true"></i>
+                                                    <i style="color:#f36a5a;" ng-if="obj.status=='إنتظار التأكيد'" class="fa fa-circle" aria-hidden="true"></i>
+
+                                                    <span ng-class="{rejected: obj.status=='مرفوض', related:obj.status=='مرتبط',
+                                                          underprocessing:obj.status=='تحت الإجراء',notRelated:obj.status=='غير مرتبط'}">{{obj.status}}</span>
+                                                </td>
+                                                <td>{{obj.isRelatedWithOtherMember == true? 'نعم' : ''}}</td>
+                                                <td class="table-controls" style="min-width:100px;">
+                                                    <div ng-if="!obj.isRelatedWithOtherMember"> 
+                                                        <a ng-if="obj.status ==='غير مرتبط'" ng-click="requestMerge(obj);" title="طلب ربط عضوية">
+                                                            <i class="fa fa-link"></i>
+                                                        </a>
+                                                        <a ng-if="obj.status=='إنتظار التأكيد' && obj.statusId != 3 && obj.directedTo != 1" ng-click="confirmChangeMergeStatus(obj,1);" title="الموافقة على الطلب">
+                                                            <i class="fa fa-check"></i>
+                                                        </a>
+                                                        <a ng-if="(obj.status=='تحت الإجراء' || obj.status=='إنتظار التأكيد')  && obj.statusId != 3 && obj.directedTo != 1" ng-click="confirmChangeMergeStatus(obj,6);" title="إلغاء الطلب">
+                                                            <i class="fa fa-close"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<modal visible="page.showMergeWays" title="خيارات ربط العضوية">
+    <div class="light bordered users-modal">
+        يرجى إختيار طريقة ربط العضوية
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
+                        <tbody>
+                            <tr ng-repeat="x in mergeWays  track by $index">
+
+                                <td class="text-center"> {{$index+1}} </td>
+                                <td class="text-center">
+                                    {{x.name}}
+                                    <span style="float:left !important">
+                                        <i class="fa fa-info-circle" title="" aria-hidden="true"></i>
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <input type="radio" ng-click="sendConfirmMergeSMS(x.id);" name="types" ng-model="x.type" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" title="الغاء" ng-click="page.showMergeWays = !page.showMergeWays" class="btn btn-default red" data-dismiss="modal">الغاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal>
+<modal class="send-code" title="لاعتماد ربط العضوية أدخل كود التحقق المرسل على جوال العضوية المحددة" visible="page.showConfirmMergeCodeMoal">
+    <form class="form-horizontal  text-right" id="confirmMergeSMS" name="confirmMergeSMS" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-sm-12">
+                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="input-icon left">
+                        أدخل كود التحقق المرسل على جوال العضوية المحددة
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <div class="form-group has-success">
+                        <div class="custom-input">
+                            <label for="codeToMatch">  كود التحقق</label>
+                            <input ng-required="true" ng-disabled="page.showSpin" restrict-input="{type: 'digitsOnly'}" class="form-control"
+                                   autocomplete="off" maxlength="4" ng-pattern="/^\d{4,4}$/"
+                                   ng-class="{'edited':confirmMergeSMS.mergeConfirmCode.$dirty}" 
+                                   ng-model="sms.smsCode" name="mergeConfirmCode" type="text">
+                        </div>
+                        <div ng-messages="confirmMergeSMS.mergeConfirmCode.$error" ng-if="confirmMergeSMS.mergeConfirmCode.$dirty">
+                            <p class="text-danger" ng-message="required">من فضلك ادخل كود التحقق</p>
+                            <p class="text-danger" ng-message="pattern"> فضلا ادخل ما لا يقل عن أربعة ارقام</p>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" title="اغلاق" ng-click="cancelMerge(false)" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </form>
+</modal>
+<modal class="send-code" title="لاعتماد ربط العضوية أدخل كود التحقق المرسل على جوال العضوية المحددة" visible="page.showConfirmStatusCodeMoal">
+    <form class="form-horizontal  text-right" id="formConfirmMergeSMS" name="formConfirmMergeSMS" novalidate="novalidate">
+        <div class="form-body row text-center">
+            <div class="col-sm-12">
+                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="input-icon left">
+                        أدخل كود التحقق المرسل على جوال العضوية المحددة
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <div class="form-group has-success">
+                        <div class="custom-input">
+                            <label for="codeToMatch">  كود التحقق</label>
+                            <input ng-required="true" ng-disabled="page.showSpin" restrict-input="{type: 'digitsOnly'}" class="form-control" autocomplete="off" maxlength="4"
+                                    ng-model="sms.smsCode" name="mergeConfirmCode" type="text">
+                        </div>
+                        <div ng-messages="formConfirmMergeSMS.mergeConfirmCode.$error" ng-if="formConfirmMergeSMS.mergeConfirmCode.$dirty">
+                            <p class="text-danger" ng-message="required">من فضلك ادخل كود التحقق</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <button ng-click="changeMergeStatus();" ng-disabled="sms.smsCode === '' || formConfirmMergeSMS.$invalid || page.showSpin" class="custom-btn custom-btn-reverse btn-3">
+                        <span ng-show="page.showSpin">
+                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                        </span>
+                        إستمرار
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" title="اغلاق" ng-click="cancelMerge(false)" class="btn btn-default red" data-dismiss="modal">اغلاق</button>
+            </div>
+        </div>
+    </form>
+</modal>
+
+
+<style>
+    .rejected {
+        color: #ff2f00;
+    }
+
+    .related {
+        color: #00962e;
+    }
+
+    .underprocessing {
+        color: #F1C40F;
+    }
+
+    .notRelated {
+        color: #615b5b;
+    }
+</style>

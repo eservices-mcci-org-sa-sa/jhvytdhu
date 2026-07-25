@@ -1,0 +1,133 @@
+﻿
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+
+<div class="container p-top-sm" id='divToSend' ng-class="{'fileDownloading':IsDownloading==true}">
+    <div class="row" ng-show="page.thereIsData">
+        <div class="sp-main-box">
+            <div class="sp-main-title">
+                <h2>تفاصيل السند</h2>
+            </div>
+            <div class="sp-main-form sp-main-form-inner" name="contentDiv" id="contentDiv">
+                <div class="sp-details-page">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="featureinfo">
+                                <h3 class="text-center">تفاصيل السند</h3>
+                                <ul class="text-center list-unstyled custom-center-ul">
+                                    <li>
+                                        <h4>رقم الطلب</h4>
+                                        <p>{{RequestModel.RequestId}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>رقم العضوية</h4>
+                                        <p>{{RequestModel.MemberId}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>إسم المنشأة    </h4>
+                                        <p>{{memberData.estName}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>الدرجة    </h4>
+                                        <p>{{memberData.degreeName}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>نهاية الاشتراك الميلادي</h4>
+                                        <p>{{memberData.expiryDate  | date:'dd-MM-yyyy' | ngArabicNumber: true}}</p>
+                                    </li>
+                                    <!--<li>
+                                        <h4>نهاية الاشتراك الهجري</h4>
+                                        <p>{{memberData.expiryDate  | date:'dd-MM-yyyy' | ngArabicNumber: true}}</p>
+                                    </li>-->
+                                    <li>
+                                        <h4>المدينة    </h4>
+                                        <p>{{memberData.cityName}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>السجل /  الرخصة    </h4>
+                                        <p>{{memberData.crNumber}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>نهاية السجل /  الرخصة    </h4>
+                                        <p>{{memberData.crExpiryDate  | date:'dd-MM-yyyy' | ngArabicNumber: true}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>نظام الدفع    </h4>
+                                        <p>{{RequestModel.PaymentSystem}}</p>
+                                    </li>
+                                </ul>
+
+                                <ul class="text-center list-unstyled custom-center-ul">
+                                    <!--<li>
+                                        <h4>عدد السنوات /   عمليات / الوثائق  </h4>
+                                        <p>{{RequestModel.RequiredPagesToAttestation}}</p>
+                                    </li>-->
+                                    <li>
+                                        <h4>عدد السنوات /   عمليات / الوثائق التي تم تصديقها  </h4>
+                                        <p>{{RequestModel.ActualPagesAttestated}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>المبلغ المدفوع  </h4>
+                                        <p>{{RequestModel.ServiceAmount}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>نوع الوثيقة/  التصديق      </h4>
+                                        <p>{{RequestModel.RatificationType}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>رقم السند    </h4>
+                                        <p>{{RequestModel.InstrumentNum}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>التاريخ و الوقت    </h4>
+                                        <p>{{RequestModel.RequestDate | date:'dd-MM-yyyy' | ngArabicNumber: true}}</p>
+                                    </li>
+                                    <li>
+                                        <h4>رقم الهوية    </h4>
+                                        <p>{{RequestModel.IdentityNo}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center margin-bottom-30 m-top-md">
+                <button type="button" ng-if="RequestModel.RequestStatus === 4" 
+                         ng-click="InstrumentDownload()" class="sp-main-button">  تحميل  <i class="fa fa-download"></i></button>
+                <site-footer back="عوده"></site-footer>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="page.thereIsData" class="p-top-lg">
+        <div ng-show="page.showLoad" class="text-center" data-loading>
+            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;margin-top:50px;">
+        </div>
+        <div class="col-md-12" ng-show="page.noData && !page.showDownloadAlert">
+            <div class="note note-danger" style="text-align:center !important">
+                عفواً . لا توجـد بيانات.
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12" ng-show="page.noData && page.showDownloadAlert">
+            <div class="alert alert-danger text-center"><h2>  عذراً / تم طباعة الشهادة سابقاً يمكنك تقديم طلب جديد.</h2></div>
+        </div>
+        <div ng-show="!page.showLoad" class="text-center margin-bottom-30">
+            <site-footer back="عوده"></site-footer>
+        </div>
+    </div>
+</div>
+
+<iframe id="pdf-frame" name="pdf-frame" width="0" height="0" tabindex="-1" title="empty" class="hidden"></iframe>
+<style>
+    contentDiv {
+        margin-top: 8px !important;
+        min-height: 267px !important;
+    }
+
+    #contentDiv .footer-note {
+        padding-top: 15px !important;
+    }
+
+    iframe.hidden {
+        display: none
+    }
+</style>

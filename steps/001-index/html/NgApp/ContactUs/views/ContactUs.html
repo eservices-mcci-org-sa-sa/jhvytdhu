@@ -1,0 +1,200 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos" ng-cloak>
+                    <img ng-cloak ng-if="chamberSettings.id && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<div class="custom-regi formverify">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <!-- Chamber Selection Section - Show when ChamberId = 204 -->
+                <div ng-cloak ng-if="chamberSettings.id === 204" class="sp-main-box sp-forget-box sp-register-box">
+                    <div class="sp-main-title">
+                        <h2>إختيار الغرفة</h2>
+                    </div>
+                    <div class="sp-main-form">
+                        <form id="documents-validate" name="chamberForm">
+                            <div class="custom-input">
+                                <ui-select ng-model="model.ChamberId" ng-change="onChamberDomainChange()" reset-search-input="true" theme="selectize" ng-required="true" ng-init="model.ChamberId = 204">
+                                    <ui-select-match>
+                                        <span class="selected-value" ng-bind="$select.selected.chamberName"></span>
+                                        <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="c.chamberId as c in ChamberList | filter: $select.search">
+                                        <small ng-bind-html="c.chamberName"></small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <div ng-messages="chamberForm.ChamberId.$error" ng-if="chamberForm.ChamberId.$dirty">
+                                    <p class="text-danger" ng-message="required">من فضلك أختر الغرفة</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Form Section - Show when ChamberId = 204 -->
+                <div class="sp-main-box sp-forget-box sp-register-box" ng-cloak ng-if="chamberSettings.id === 204">
+                    <div class="sp-main-title">
+                        <h2>تحديث بيانات مالك/مدير</h2>
+                    </div>
+
+                    <div class="sp-main-form">
+                        <p class="sp-main-size">
+                            تحديث بيانات مالك/مدير
+                        </p>
+                        <form ng-cloak ng-if="showcontactus" id="documents-validate" name="verifyForm">
+
+                            <div class="custom-input">
+                                <input type="text" class="form-control" restrict-input="{type: 'digitsOnly'}" maxlength="12" name="CrNo" ng-required="true" placeholder=" السجل التجارى" ng-model="model.CrNo">
+                                <div ng-messages="verifyForm.CrNo.$error" ng-if="verifyForm.CrNo.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك أدخل رقم السجل التجارى ) </p>
+                                </div>
+                            </div>
+                            <div class="custom-input" style="display: flex; align-items: flex-start; gap: 10px;">
+                                <input type="text" class="form-control" restrict-input="{type: 'digitsOnly'}" maxlength="12" name="MemberId" placeholder="رقم العضوية" ng-model="model.MemberId">
+                                <a class="sp-main-button" href="/#/MemberIdQuery/false" target="_blank" style="min-width:120px">الحصول علي الرقم</a>
+                            </div>
+                            <div class="custom-input">
+                                <input ng-model="model.IdNumber" placeholder="رقم الهوية" maxlength="10" minlength="10" restrict-input="{type: 'identity'}" ng-model-options="{'updateOn': 'blur'}"
+                                        ng-pattern="/^(1|2)([0-9]{9})$/" autocomplete="off" ng-required="true" rows="3" class="form-control" name="IdNumber" type="text">
+                                <div ng-messages="verifyForm.IdNumber.$error" ng-if="verifyForm.IdNumber.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم الهوية</p>
+                                    <p class="text-danger error-msg" ng-message="maxlength || minlength"> فضلا ادخل مالايقل عن 10 ارقام</p>
+                                    <p ng-message="pattern" class='text-danger error-msg'>يرجى ادخال يبدأ ب 1 أو 2  </p>
+                                </div>
+                            </div>
+                            <div class="custom-input">
+                                <input type="text" class="form-control" restrict-input="{type: 'digitsOnly'}" numbers-only maxlength="10" name="MobileNumber" ng-required="true" placeholder="رقم الجوال" ng-model="model.MobileNumber">
+                                <div ng-messages="verifyForm.MobileNumber.$error" ng-if="verifyForm.MobileNumber.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك أدخل رقم الجوال ) </p>
+                                </div>
+                            </div>
+
+                            <div class="custom-input">
+                                <div class="input-icon left">
+                                    <input ng-required="true" placeholder="البريد الإلكترونى" ng-model="model.Email" autocomplete="off"
+                                            class="form-control" validate-email name="Email" type="email">
+                                </div>
+                                <div ng-messages="verifyForm.Email.$error" ng-if="verifyForm.Email.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك ادخل البريد الإلكترونى</p>
+                                    <p class="text-danger error-msg" ng-message="email"> فضلا ادخل بريد الكترونى صحيح</p>
+                                </div>
+                            </div>
+                            <div class="custom-input" ng-hide="true">
+                                <select required class="form-control" ng-model="model.Type" ng-disabled="true" name="Type" ng-required="true"
+                                        ng-options="item.name as item.name for item in Categories | filter:shouldShow">
+                                    <option value="" label="-- حدد التصنيف  --" disabled selected="selected"></option>
+                                </select>
+                                <div ng-messages="verifyForm.Type.$error" ng-if="verifyForm.Type.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك اختر تصنيف المشكلة  </p>
+                                </div>
+                            </div>
+                            <div class="custom-input">
+                                <textarea placeholder="الوصف" class="form-control" ng-model="model.Description" ng-required="true" required name="Description"></textarea>
+                                <div ng-messages="verifyForm.Description.$error" ng-if="verifyForm.Description.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك وصف للمشكلة  </p>
+                                </div>
+                            </div>
+                            <div class="custom-input">
+                                <div vc-recaptcha
+                                        theme="'light'"
+                                        key="'6LfZPY8UAAAAAPId2zEnccJ4PSbTVXTEey9VxGRo'"
+                                        lang="ar"
+                                        ng-model="captcha.captchaKey"
+                                        name="captchaKeycr"
+                                        ng-required="true"
+                                        on-create="setWidgetId(widgetId)"
+                                        on-success="setResponse(response)"
+                                        on-expire="cbExpiration()">
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 text-center" ng-show="model.defaultType === 1">
+                                <div class="field req-file-upload">
+                                    <div class="text-center">
+                                        <span class="upload-btn-cs sp-main-button">اضافة ملف</span>
+                                    </div>
+
+                                    <input ng-required="model.Type === 'تحديث بيانات'" type="file" id="files" name="files" multiple onchange="angular.element(this).scope().selectFile(this.files)" />
+
+                                    <div class="req-validation-msg">
+                                        <table style="width:100%" class="files-table" ng-if="imagesList.length">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>الإســم</th>
+                                                    <th>المـلف</th>
+                                                    <th>خيارات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="fl in imagesList">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{fl.Name | cut:true:20:' ...'}}</td>
+                                                    <td><img class="imageThumb" ng-src="{{fl.Type=='application/pdf'?'../../../Content/Theme/dist/img/pdflogo.png': fl.Src}}" title={{fl.Name}}></td>
+                                                    <td><button ng-click="removeImg(fl);" type='button' class="remove">حذف</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <p>يرجى ارفاق صورة من الهوية الوطنية <span class="text-danger">*</span></p>
+                                        <p>يرجى ارفاق نسخة من السجل التجاري <span class="text-danger">*</span></p>
+                                        <p ng-if="chamberSettings.id == 202">يرجى ارفاق شهادة من التأمينات الاجتماعية بعدد العاملين</p>
+                                        <p ng-if="chamberSettings.id == 202">(الشركات) يرجى إرفاق عقد التأسيس</p>
+                                        <h6 ng-if="chamberSettings.id != 202" style="color: #333;">صيغة الملفات : pdf,jpg,png,jpeg</h6>
+                                        <h6 ng-if="chamberSettings.id == 202" style="color: #333;">صيغة الملفات : pdf</h6>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <button ng-click="ContactUs(verifyForm,$event)" type="submit" class="sp-main-button margin-top-20">
+                                ارسال
+                            </button>
+                        </form>
+                        <div ng-if="!showcontactus">
+                            <div class="alert alert-info">
+                                {{message}}
+                            </div>
+                            <button ng-click="RestForm();" type="button" class="sp-main-button">
+                                ارسال مرة أخري
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- e2.business.sa Section - Show when ChamberId != 204 -->
+                <div class="sp-main-box sp-forget-box sp-register-box" ng-cloak ng-if="chamberSettings.id !== 204">
+                    <div class="sp-main-title">
+                        <h2>تحديث بيانات المنشأة</h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/Login">
+                            العودة
+                        </a>
+                    </div>
+
+                    <div class="sp-main-form">
+                        <div class="sp-main-size" style="font-size: 14px;">
+                            <p>
+                                لتحديث البيانات برجاء زيارة موقع المركز السعودي للأعمال وتحديث البيانات من خلال الدخول على الرابط التالي 
+                                <a href="https://e2.business.sa/" target="_blank">https://e2.business.sa/</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

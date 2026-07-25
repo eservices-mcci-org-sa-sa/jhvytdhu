@@ -1,0 +1,443 @@
+﻿<div style="margin-bottom:20px;" class="page-content ">
+    <!-- BEGIN PAGE BASE CONTENT -->
+    <div class="card card-3">
+        <div class="row row-model">            
+            <div class="col-md-7 col-lg-8 col-sm-12 col-xs-12">
+                <div class="tabbable-custom nav-justified">
+                    <ul class="nav nav-tabs nav-tabs-justified">
+                        <!--<li  ng-class="{active:isSet(1)}">
+                            <a ng-click="setTab(1)">
+                                <i class="fa fa-lg fa-user"></i>
+                                عرض الطلبات
+                            </a>
+                        </li>-->
+                        <li class="active" ng-class="{active:isSet(2)}">
+                            <a ng-click="setTab(2)">
+                                <i class="fa fa-lg fa-certificate"></i>
+                                طلب جديد
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                     
+
+                        <div class="slide-right" ng-show="isSet(2)">
+                           
+
+                            <div class="portlet row-model card-1 light">
+                                <div class="portlet-body form">
+                                    <form class="form-horizontal  text-right" id="ContactForm" name="ContactForm" novalidate="novalidate">
+                                        <div class="form-body row  row-model">
+                                            <fieldset>
+                                                <div class="mt-element-ribbon margin-top-minus">
+                                                    <div class="ribbon ribbon-right ribbon-shadow ribbon-color-danger uppercase"> بيانات الإتصال</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <label for="mM_AdrLocation">إسم المنطقة</label> <span class="text-danger">*</span>
+
+                                                            <div class="input-icon left">
+                                                                <input ng-model="dataForMemberContact.mM_AdrStreet" ng-required="true" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrStreet.$dirty || dataForMemberContact.mM_AdrStreet}"
+                                                                       class="form-control" name="mM_AdrStreet" type="text">
+                                                                <!--<i class="icon-user"></i>-->
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrStreet.$error" ng-if="ContactForm.mM_AdrStreet.$dirty">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم المنطقة</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label style="padding-left: inherit;" for="mM_Address">إسم الحى</label> <span class="text-danger">*</span>
+
+                                                                <input ng-model="dataForMemberContact.mM_Address" ng-required="true" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_Address.$dirty || dataForMemberContact.mM_Address}"
+                                                                       class="form-control" name="mM_Address" type="text">
+                                          
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_Address.$error" ng-if="ContactForm.mM_Address.$dirty">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم الحى</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left"> 
+                                                                <label  style="padding-left: inherit;" for="mM_AdrCity">إسم المدينة</label> <span class="text-danger">*</span>
+                                                                <ui-select  ng-model="dataForMemberContact.mM_AdrCity" theme="selectize"  ng-required="true">
+                                                                    <ui-select-match name="mM_AdrCity">
+                                                                        <span class="selected-value" ng-bind="$select.selected.name"></span>
+                                                                        <a uib-tooltip="Clear" class="fa fa-times clear-button"  ng-click="$select.clear($event);"></a>
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="c.id as c in Cities | filter: $select.search">
+                                                                        <small ng-bind-html="c.name"></small>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrCity.$error" ng-if="ContactForm.mM_AdrCity.$dirty">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل إسم المدينة</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label style="padding-left: inherit;" for="mM_AdrMobile">رقم الموبايل</label> <span class="text-danger">*</span> 
+                                                                <input ng-required="true" ng-model="dataForMemberContact.mM_AdrMobile" numbers-only maxlength="10" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrMobile.$dirty || dataForMemberContact.mM_AdrMobile}" 
+                                                                       ng-pattern="/^\d{10,}$/"
+                                                                       class="form-control" name="mM_AdrMobile" type="tel">
+                                                           
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrMobile.$error" ng-if="ContactForm.mM_AdrMobile.$dirty">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل رقم الموبايل</p>
+                                                                <p class="text-danger" ng-message="pattern"> فضلا ادخل مالايقل عن 10 ارقام</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label for="mM_AdrPhone1">رقم الهاتف الاول</label>
+
+                                                                <input ng-model="dataForMemberContact.mM_AdrPhone1"   maxlength="10" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrPhone1.$dirty || dataForMemberContact.mM_AdrPhone1}" 
+                                                                       ng-pattern="/^\d{7,}$/"
+                                                                       class="form-control" name="mM_AdrPhone1" type="tel">
+                                                                <!--<i class="icon-phone"></i>-->
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrPhone1.$error" ng-if="ContactForm.mM_AdrPhone1.$dirty">
+                                                                <p class="text-danger" ng-message="pattern"> فضلا ادخل مالايقل عن 7 ارقام</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label for="mM_AdrPhone2">رقم الهاتف الثانى</label>
+                                                                <input ng-model="dataForMemberContact.mM_AdrPhone2"   maxlength="10" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrPhone2.$dirty || dataForMemberContact.mM_AdrPhone2}"
+                                                                        ng-pattern="/^\d{7,}$/"
+                                                                       class="form-control" name="mM_AdrPhone2" type="tel">
+                                                             
+                                                                <!--<i class="icon-phone"></i>-->
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrPhone2.$error" ng-if="ContactForm.mM_AdrPhone2.$dirty">
+                                                                <p class="text-danger" ng-message="pattern"> فضلا ادخل مالايقل عن 7 ارقام</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row"> 
+                                                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label for="mM_AdrPhone4">رقم الهاتف الرابع</label>
+                                                                <input ng-model="dataForMemberContact.mM_AdrOtherMobile"   maxlength="10" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrOtherMobile.$dirty || dataForMemberContact.mM_AdrOtherMobile}" ng-pattern="/^\d{7,}$/"
+                                                                       class="form-control" name="mM_AdrOtherMobile" type="tel">
+                                                                
+                                                               <!-- <i class="icon-phone"></i>-->
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrOtherMobile.$error" ng-if="ContactForm.mM_AdrOtherMobile.$dirty">
+                                                                <p class="text-danger" ng-message="pattern"> فضلا ادخل مالايقل عن 7 ارقام</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label  style="padding-left: inherit;" for="mM_AdrFax">رقم الفاكس</label> <span class="text-danger">*</span>
+
+                                                                <input ng-model="dataForMemberContact.mM_AdrFax"  maxlength="10" ng-required="true" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrFax.$dirty || dataForMemberContact.mM_AdrFax}" 
+                                                                       class="form-control" name="mM_AdrFax">
+                                                               <!-- <i class="icon-phone"></i>-->
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label for="mM_AdrPOBox">رقم صندوق البريد</label>
+                                                                <input ng-model="dataForMemberContact.mM_AdrPOBox"   maxlength="10" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrPOBox.$dirty ||dataForMemberContact.mM_AdrPOBox}" 
+                                                                       class="form-control" name="mM_AdrPOBox">
+                                                              
+                                                                <!--<i class="icon-phone"></i>-->
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                               
+                                                                <label style="padding-left: inherit;" for="mM_AdrCode">رقم الكود</label> <span class="text-danger">*</span>
+                                                                <input ng-model="dataForMemberContact.mM_AdrCode"  maxlength="10" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrCode.$dirty || dataForMemberContact.mM_AdrCode}" 
+                                                                       class="form-control" name="mM_AdrCode">
+                                                              
+                                                               <!-- <i class="icon-phone"></i>-->
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                                                        <div class="form-group   form-md-line-input  has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                               
+                                                                <label  style="padding-left: inherit;" for="mM_AdrEmail">البريد الإلكترونى</label> <span class="text-danger">*</span> 
+                                                                <input ng-required="true" ng-model="dataForMemberContact.mM_AdrEmail" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrEmail.$dirty || dataForMemberContact.mM_AdrEmail}" class="form-control" validate-email name="mM_AdrEmail" type="email">
+                                                   
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrEmail.$error" ng-if="ContactForm.mM_AdrEmail.$dirty">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل البريد الإلكترونى</p>
+                                                                <p class="text-danger" ng-message="email"> فضلا ادخل بريد الكترونى صحيح</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-12">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label for="mM_AdrWeb">الموقع الإلكترونى</label>
+                                                                <input ng-model="dataForMemberContact.mM_AdrWeb" autocomplete="off"
+                                                                       ng-class="{'edited':ContactForm.mM_AdrWeb.$dirty || dataForMemberContact.mM_AdrWeb}" 
+                                                                       class="form-control" name="mM_AdrWeb" type="url">
+                                                               
+                                                                <!--<i class="icon-envelope"></i>-->
+                                                            </div>
+                                                            <div ng-messages="ContactForm.mM_AdrWeb.$error" ng-if="ContactForm.mM_AdrWeb.$dirty">
+                                                                <p class="text-danger" ng-message="url"> فضلا ادخل موقع الكترونى صحيح</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="mt-element-ribbon">
+                                                    <div class="ribbon ribbon-right ribbon-shadow ribbon-color-danger uppercase">بيانات الطلب</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-11 col-xs-11">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <label  style="padding-left: inherit;" for="requestReason">السبب</label> <span class="text-danger">*</span>
+                                                                <textarea ng-model="dataForMemberContact.requestReason" ng-required="true" autocomplete="off"
+                                                                          ng-class="{'edited':ContactForm.requestReason.$dirty}"
+                                                                          rows="3" class="form-control" name="requestReason" type="text"></textarea>
+                                                               
+                                                            </div>
+                                                            <div ng-messages="ContactForm.requestReason.$error" ng-if="ContactForm.requestReason.$dirty">
+                                                                <p class="text-danger" ng-message="required">من فضلك ادخل سبب الطلب</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-11 col-xs-11">
+                                                        <div class="form-group   form-md-line-input has-success form-md-floating-label">
+                                                            <div class="input-icon left">
+                                                                <textarea ng-model="dataForMemberContact.requestNotes" autocomplete="off"
+                                                                          ng-class="{'edited':ContactForm.requestNotes.$dirty}"
+                                                                          rows="3" class="form-control" name="requestNotes" type="text"></textarea>
+                                                                <label for="requestNotes">ملاحظات </label>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                    
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div ng-include="'NgApp/Request/Views/Partials/UploadAttachement.html'">
+                                        </div>
+                                        <div class="form-actions ">
+                                            <div class="pull-left">
+                                                <button ng-disabled="ContactForm.$invalid" class="btn blue-hoki btn-outline sbold btn-block btn-lg hvr-ripple-out" 
+                                                        ng-click="addNewRequest();">
+                                                    إرسال الطلب
+                                                    <i class="icon-arrow-left"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-5 col-lg-4 col-sm-12 col-xs-12">
+                <div class="col-sm-12">
+                    <table class="table card-1 table-striped table-condensed table-responsive table-bordered table-hover margin-top-40">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="text-center bg-info">
+                                    <h4> البيانات المسموح تعديلها</h4>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        إسم المنطقة :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrStreet">{{OlddataForMemberContact.mM_AdrStreet}} </label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrStreet">لا يوجد بيان مسجل </label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        إسم الحى :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_Address">{{OlddataForMemberContact.mM_Address}} </label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_Address">لا يوجد بيان مسجل </label>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        إسم المدينة :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrCity">{{OlddataForMemberContact.mM_AdrCity}} </label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrCity">لا يوجد بيان مسجل </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم الموبايل :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrMobile">{{OlddataForMemberContact.mM_AdrMobile}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrMobile">لا يوجد بيان مسجل</label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم الهاتف الاول :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrPhone1">{{OlddataForMemberContact.mM_AdrPhone1}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrPhone1">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم الهاتف الثانى :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrPhone2">{{OlddataForMemberContact.mM_AdrPhone2}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrPhone2">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                             
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم الهاتف الرابع :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrOtherMobile">{{OlddataForMemberContact.mM_AdrOtherMobile}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrOtherMobile">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم الفاكس :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrFax">{{OlddataForMemberContact.mM_AdrFax}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrFax">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم صندوق البريد :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrAdrPOBox">{{OlddataForMemberContact.mM_AdrAdrPOBox}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrAdrPOBox">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        رقم الكود :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrAdrCode">{{OlddataForMemberContact.mM_AdrAdrCode}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrAdrCode">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        البريد الإلكترونى :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrEmail">{{OlddataForMemberContact.mM_AdrEmail}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrEmail">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:40%;">
+                                    <label class="control-label text-info">
+                                        الموقع الإلكترونى :
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="control-label" ng-show="OlddataForMemberContact.mM_AdrWeb">{{OlddataForMemberContact.mM_AdrWeb}}</label>
+                                    <label class="control-label font-red" ng-show="!OlddataForMemberContact.mM_AdrWeb">لا يوجد بيان مسجل</label>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE BASE CONTENT -->
+    <span us-spinner="{radius:30, width:8, length: 16}" id="Spinner" ng-show="showSpinner" spinner-key="spin-Req"></span>
+</div>

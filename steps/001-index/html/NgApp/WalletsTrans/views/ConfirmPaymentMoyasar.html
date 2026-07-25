@@ -1,0 +1,89 @@
+﻿<div class="checkout grey-color p-top-lg p-bottom-lg">
+    <div class="container" ng-show="loadingResult">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="checkout-body">
+                    <div class="checkout-methods text-center">
+                        <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style=" width: 80px;margin-top: 30px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-show="showResult">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="checkout-body sp-main-box">
+                    <div class="checkout-methods sp-main-container" ng-init="isSet==1;">
+                        <div class="credit-content clearfix front">
+                            <div class="col-md-12 successIcon">
+                                <div class="form-group">
+                                    <div class="example-content success show  text-center">
+                                        <div class="swal-icon swal-icon--success">
+                                            <div class="swal-icon--success__line swal-icon--success__line--long"></div>
+                                            <div class="swal-icon--success__line swal-icon--success__line--tip"></div>
+                                            <div class="swal-icon--success__ring"></div>
+                                            <div class="swal-icon--success__hide-corners"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-success text-center" style="margin-top: 30px;">
+                                        <strong>تم شحن المحفظة بنجاح   </strong>
+                                        <strong><!--تم شحن المحفظة بنجاح بفاتورة رقم  {{Refernce_no}}--> </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <div class="col-md-12  col-lg-6">
+                                <button class="sp-main-button" type="button" ng-click="goToWalletCharge(1)">عملية جديدة</button>
+                            </div>
+                            <div class="col-md-12  col-lg-6">
+                                <button class="sp-main-button" type="button" ng-click="goToWalletTransactions(1)">عرض حركات المحفظة </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-show="!showResult && !loadingResult">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="checkout-body">
+                    <div class="checkout-methods">
+                        <div class="credit-content clearfix front">
+                            <div class="col-md-12 successIcon">
+                                <div class="form-group">
+                                    <div class="example-content danger show  text-center">
+                                        <div class="swal-icon swal-icon--error">
+                                            <div class="swal-icon--error__line swal-icon--error__line--left"></div>
+                                            <div class="swal-icon--error__line swal-icon--error__line--right"></div>
+                                            <div class="swal-icon--error__x-mark"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-danger text-center" style="margin-top: 30px;">
+                                        <strong>  {{Message}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <div class="col-md-12  col-lg-6">
+                                <button class="payment-button" type="button" ng-click="goToWalletCharge(1)">عملية جديدة</button>
+                            </div>
+                            <div class="col-md-12  col-lg-6">
+                                <button class="payment-button" type="button" ng-click="goToWalletTransactions(1)">عرض حركات المحفظة </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿<div class="container">
+    <div class="card card-3">
+        <div class="tabbable-custom nav-justified">
+            <ul class="nav nav-tabs nav-tabs-justified">
+                <li class="active">
+                    <a>
+                        <i class="fa fa-cog"></i>  تغيير كلمة السرالمؤقتة
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="flip-in">
+                    <div class="row row-model">
+                        <div class="col-xs-12">
+                            <div class="portlet  card-3 light">
+                                <div class="portlet-body form">
+                                    <form class="form-horizontal" name="changePass" role="form">
+                                        <div class="form-body row-model">
+                                            <div class="col-xs-12">
+                                                <div class="form-group   form-md-line-input form-md-floating-label has-success">
+                                                    <div class="input-icon left">
+                                                        <label for="newPassword">كلمة المرور الجديدة</label>
+                                                        <div class="input-icon">
+                                                            <i class="icon-lock"></i>
+                                                            <input class="form-control" ng-required="true" autocomplete="off" maxlength="30" 
+                                                                   minlength="8" ng-pattern="PasswordPattern"
+                                                                   name="newPassword" type="password" ng-model="user.newPassword" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div ng-messages="changePass.newPassword.$error" ng-if="changePass.newPassword.$dirty || isFormSubmitted">
+                                                        <p class="text-danger" ng-message="required">من فضلك ادخل كلمة المرور الجديدة</p>
+                                                        <p class="text-danger" ng-message="pattern">يجب ألا تقل كلمة المرور عن 8 خانات تحتوى على الاقل على رقم وحرف </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="form-group   form-md-line-input form-md-floating-label has-success">
+                                                    <div class="input-icon left">
+                                                        <label for="confirmNewPassword">تأكيد كلمة المرور الجديدة</label>
+                                                        <div class="input-icon">
+                                                            <i class="icon-lock"></i>
+                                                            <input class="form-control" ng-required="true" maxlength="30" minlength="8" compare-to="user.newPassword" autocomplete="off"
+                                                                   name="confirmNewPassword" type="password" ng-model="user.confirmNewPassword" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div ng-messages="changePass.confirmNewPassword.$error" ng-if="changePass.confirmNewPassword.$dirty && changePass.confirmNewPassword.$touched || isFormSubmitted">
+                                                        <p class="text-danger" ng-message="required">من فضلك ادخل كلمة المرور الجديدة</p>
+                                                        <p class="text-danger" ng-message="compareTo"> كلمات المرور غير متشابه</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="col-xs-12 text-center">
+                                                <button type="submit" ng-click="setPassword(changePass,$event);" class="custom-btn custom-btn-reverse btn-3">
+                                                    حفظ
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

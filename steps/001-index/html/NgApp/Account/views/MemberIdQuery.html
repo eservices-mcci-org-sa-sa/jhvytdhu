@@ -1,0 +1,153 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos" ng-cloak>
+                    <!--<img src="assets/img/302.svg" alt="" />-->
+                    <img ng-cloak ng-if="chamberSettings.id && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<div class="custom-regi formverify">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="sp-main-box sp-forget-box">
+                    <div class="sp-main-title">
+                        <h2 ng-if="!registerData.QueryByIdentity">خدمة مُقدمة للمنتسبين لمعرفة رقم الاشتراك في الغرفه التجارية</h2>
+                        <h2 ng-if="registerData.QueryByIdentity">خدمة مُقدمة للإستعلام عن المنتسب </h2>
+                        <a class="sp-main-button sp-main-sm-button pull-left" href="/#/">
+                            العودة
+                        </a>
+                    </div>
+
+                    <div class="sp-main-form">
+                        <form ng-cloak ng-if="!showresult" id="documents-validate " name="verifyForm">
+                            <div ng-cloak ng-if="chamberSettings.isUnified">
+                                <div class="custom-input ">
+                                    <label for="date">الغرفة </label>
+                                    <ui-select ng-model="registerData.ChamberId" ng-change="onChamberDomainChange()" reset-search-input="true" theme="selectize" ng-required="true">
+                                        <ui-select-match>
+                                            <span class="selected-value" ng-bind="$select.selected.chamberName"></span>
+                                            <a class="fa fa-times clear-button" ng-click="$select.clear($event);"></a>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="c.chamberId as c in ChamberList | filter: $select.search">
+                                            <small ng-bind-html="c.chamberName"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div ng-messages="verifyForm.ChamberId.$error" ng-if="verifyForm.ChamberId.$dirty">
+                                        <p class="text-danger" ng-message="required">من فضلك أختر الغرفة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="!registerData.QueryByIdentity">
+                                <div class="sp-main-title">
+                                    <h2>
+                                        أختــر طريقة الإستعلام
+                                    </h2>
+                                </div>
+                                <div class="form-group switch-control">
+                                    <div class="sp-forget-way" id="SwitchRow" ng-repeat="way in VerifyWays">
+                                        <label>
+                                            <input type="radio" ng-required="true" id="id_{{$index}}" name="id_{{$index}}"
+                                                   ng-model="registerData.VerifyWay" value="{{way.key}}">
+                                            {{way.name}}
+                                        </label>
+                                    </div>
+                                    <div ng-if="!registerData.VerifyWay  && isFormSubmitted">
+                                        <p class="errors error-msg">من فضلك أختر طريقة الإستعلام</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div ng-if="registerData.VerifyWay">
+                                    <div class="form-group" ng-if="registerData.VerifyWay == 1">
+                                        <input type="text" class="form-control" numbers-Only minlength="10"
+                                               maxlength="10" name="CR_No" ng-required="true" restrict-input="{type: 'digitsOnly'}"
+                                               placeholder="رقم السجل التجاري" ng-model="registerData.CR_No" autocomplete="off">
+                                        <div ng-messages="verifyForm.CR_No.$error" ng-if="verifyForm.CR_No.$dirty || isFormSubmitted">
+                                            <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم السجل التجاري</p>
+                                            <p class="text-danger error-msg" ng-message="minlength">من فضلك ادخل 10 ارقام</p>
+                                            <p class="text-danger error-msg" ng-message="maxlength">من فضلك ادخل 12 أرقام</p>
+                                        </div>
+                                    </div>
+                                    <div ng-if="registerData.VerifyWay == 2" class="form-group">
+                                        <input type="text" class="form-control" ng-required="true" restrict-input="{type: 'digitsOnly'}" maxlength="12" name="UnifiedNumber"
+                                               placeholder="الرقم الموحد (700)" ng-model="registerData.MM_UnifiedNumber">
+                                        <div ng-messages="verifyForm.UnifiedNumber.$error" ng-if="verifyForm.UnifiedNumber.$dirty || isFormSubmitted">
+                                            <p class="text-danger error-msg" ng-message="required">من فضلك أدخل الرقم الموحد (700))</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="registerData.QueryByIdentity">
+                                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                    <div class="input-icon left">
+                                        <label for="IdentityNo">رقم الهوية</label>
+                                        <div class="input-icon">
+                                            <input name="IdentityNo" type="text" class="form-control" restrict-input="{type: 'digitsOnly'}"
+                                                   autocomplete="off"
+                                                   ng-trim="false" ng-change="resetRecaptcha()" numbers-Only minlength="10"
+                                                   maxlength="10" ng-pattern="/^(1|2)([0-9]{9})$/" ng-model-options="{'updateOn': 'blur'}"
+                                                   ng-model="registerData.IdentityNo" ng-required="true" />
+                                        </div>
+                                    </div>
+                                    <div ng-messages="verifyForm.IdentityNo.$error" ng-if="verifyForm.IdentityNo.$dirty || isFormSubmitted">
+                                        <p class="text-danger error-msg" ng-message="required">من فضلك ادخل رقم الهوية</p>
+                                        <p class="text-danger error-msg" ng-message="pattern">من فضلك ادخل رقم الهوية بشكل صحيح</p>
+                                        <p class="text-danger error-msg" ng-message="minlength">من فضلك ادخل 10 ارقام</p>
+                                        <p class="text-danger error-msg" ng-message="maxlength">من فضلك ادخل 12 أرقام</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-success form-md-floating-label cr_no"
+                                 ng-if="registerData.VerifyWay == 1 || registerData.VerifyWay == 2 || registerData.QueryByIdentity">
+                                <div vc-recaptcha
+                                     theme="'light'"
+                                     key="captcha.captchaKey"
+                                     lang="ar"
+                                     ng-model="captcha.captchaKey"
+                                     name="captchaKey"
+                                     ng-required="true"
+                                     on-create="setWidgetId(widgetId)"
+                                     on-success="setResponse(response)"
+                                     on-expire="cbExpiration()">
+                                </div>
+                                <div ng-messages="verifyForm.captchaKey.$error" ng-if="verifyForm.captchaKey.$dirty || isFormSubmitted">
+                                    <p class="text-danger error-msg" ng-message="required">من فضلك قُم بالتحديد</p>
+                                </div>
+                            </div>
+
+                            <button ng-click="checkMember(verifyForm,$event)" ng-if="registerData.VerifyWay == 1 || registerData.VerifyWay == 2 || registerData.QueryByIdentity"
+                                    type="submit" class="sp-main-button">
+                                ارسال
+                            </button>
+                        </form>
+                        <div ng-if="showresult">
+                            <div class="alert alert-info">
+                                {{message}}
+                            </div>
+                            <button ng-click="RestForm();" type="button" class="sp-main-button">
+                                <span ng-if="registerData.QueryByIdentity">التحقق من هوية أخري</span>
+                                <span ng-if="!registerData.QueryByIdentity && registerData.VerifyWay == 1"> التحقق عن سجل أخر</span>
+                                <span ng-if="!registerData.QueryByIdentity && registerData.VerifyWay == 2"> التحقق عن سجل أخر</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

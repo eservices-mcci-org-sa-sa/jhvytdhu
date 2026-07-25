@@ -1,0 +1,403 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+
+<br />
+<div class="sp-manual-details">
+    <div class="container">
+        <form class="form-inline add-users" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate" ng-show="thereIsData">
+            <div class="row col-md-12" ng-if="!takamolFound">
+                <div class="portlet light bordered">
+                    <div class="portlet-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>إسم المنشأة	 </td>
+                                        <td>{{MemberDetails.estName}} </td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td>رقم السجل التجاري   	 </td>
+                                        <td>{{MemberDetails.crNumber}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>رقم العضوية	 </td>
+                                        <td>{{MemberDetails.memberId}} </td>
+                                    </tr>-->
+                                    <tr>
+                                        <td>النشاط </td>
+                                        <td>{{MemberDetails.mainActivity}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>العنوان  	 </td>
+                                        <td>{{MemberDetails.address}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>صندوق البريد	 </td>
+                                        <td>{{MemberDetails.mM_AdrPOBox}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>الرمز البريدي	 </td>
+                                        <td>{{MemberDetails.mM_AdrCode}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>الهاتف  	 </td>
+                                        <td>{{MemberDetails.phone}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>فاكس  	 </td>
+                                        <td>{{MemberDetails.fax}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="takamolFound">
+                <div class="col-md-4 col-lg-3">
+                    <div class="sp-main-box">
+                        <div>
+                            <div class="user-input img-upload-custom">
+                                <div class="img-frame">
+                                    <a target="_blank" ng-href="{{AddModel.Header.Website}}">
+                                        <img ng-if="AddModel.Header.LogoUrl == null" src="../../../img/default-user-image.svg" alt="user image" width="100" height="100" />
+                                        <img ng-if="AddModel.Header.LogoUrl != null" ng-src="{{AddModel.Header.LogoUrl}}" />
+                                    </a>
+                                </div>
+                                <h2>{{AddModel.Header.EstName}}</h2>
+                                <p>{{AddModel.Header.Activity}}  </p>
+
+                                <ul>
+                                    <li ng-if="AddModel.Header.Website">
+                                        <a href="{{AddModel.Header.Website}}" target="_blank">
+                                            <img src="../../../../Content/Theme/dist/img/website-dark.svg" alt="website icon" />
+                                        </a>
+                                    </li>
+                                    <li ng-if="AddModel.Header.Whatsapp">
+                                        <a ng-href="{{AddModel.Header.Whatsapp}}" target="_blank">
+                                            <img src="../../../../Content/Theme/dist/img/whatsapp-dark.svg" alt="whatsapp icon" />
+                                        </a>
+                                    </li>
+                                    <li ng-if="AddModel.Header.Twitter">
+                                        <a href="{{AddModel.Header.Twitter}}" target="_blank">
+                                            <img src="../../../../Content/Theme/dist/img/twitter-dark.svg" alt="twitter icon" />
+                                        </a>
+                                    </li>
+                                    <li ng-if="AddModel.Header.Instagram">
+                                        <a href="{{AddModel.Header.Instagram}}" target="_blank">
+                                            <img src="../../../../Content/Theme/dist/img/instagram-dark.svg" alt="facebook icon" />
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="sp-main-box margin-bottom-30">
+                                <div>
+                                    <div class="sp-main-title">
+                                        <h2>
+                                            بيانات التواصل
+                                        </h2>
+                                    </div>
+                                    <div class="sp-contact-info">
+                                        <div class="row flex-row">
+                                            <div class="col-md-4">
+                                                <div class="box-item">
+                                                    <div class="box-icon">
+                                                        <img src="../../../../Content/Theme/dist/img/phone-green.svg" alt="phone icon" width="24" height="24" />
+                                                    </div>
+                                                    <h3 class="box-title">الهاتف</h3>
+                                                    <p class="box-info" ng-repeat="obj in AddModel.Branches[0].BranchDetails.PhoneNumberList track by $index">{{obj}}</p>
+                                                    <p class="box-info" ng-if="AddModel.Branches[0].BranchDetails.PhoneNumberList.length == 0">لا يوجد</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="box-item">
+                                                    <div class="box-icon">
+                                                        <img src="../../../../Content/Theme/dist/img/mobile-green.svg" alt="mobile icon" width="24" height="24" />
+                                                    </div>
+                                                    <h3 class="box-title">الجوال</h3>
+                                                    <p class="box-info" ng-repeat="obj in AddModel.Branches[0].BranchDetails.MobileList track by $index">{{obj}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="box-item">
+                                                    <div class="box-icon">
+                                                        <img src="../../../../Content/Theme/dist/img/email-green.svg" alt="email icon" width="24" height="24" />
+                                                    </div>
+                                                    <h3 class="box-title">البريد الإلكتروني</h3>
+                                                    <p class="box-info" ng-repeat="obj in AddModel.Branches[0].BranchDetails.EmailList track by $index">{{obj}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 col-lg-12">
+                            <div class="sp-main-box margin-bottom-30">
+                                <div>
+                                    <div class="sp-main-title">
+                                        <h2>
+                                            الفروع
+                                        </h2>
+                                    </div>
+
+                                    <div class="sp-manual-branches">
+                                        <div class="row">
+                                            <!--Main Branch-->
+                                            <div class="col-md-12">
+                                                <div class="branch-block">
+                                                    <div class="branch-icon">
+                                                        <img src="../../../../Content/Theme/dist/img/map-marker.svg" alt="map marker" width="24" height="24" />
+                                                    </div>
+                                                    <div class="branch-details">
+                                                        <h2>الفرع الرئيسي</h2>
+                                                        <a target="_blank" data-balloon="إضغط للذهاب للموقع" data-balloon-pos="top" href="{{AddModel.Header.LocationUrl}}">{{AddModel.Branches[0].BranchDetails.Address}}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <!--<input type="text" id="pac-input" placeholder="بحث ...">-->
+
+                                                <ng-map zoom="5" default-style="true" center="[{{clat}}, {{clng}}]" on-click="addMarker()">
+                                                    <marker ng-repeat="p in positions"
+                                                            position="{{p.pos}}"
+                                                            icon="{{p.icon}}"
+                                                            on-click="logData(event,p)"
+                                                            title="pos: {{p.pos}}"></marker>
+                                                </ng-map>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <a href="/#/CommericalManual" class="sp-main-button sp-transparent-button margin-left-10">
+                    عودة
+                </a>
+            </div>
+        </form>
+
+        <div ng-hide="thereIsData">
+            <div ng-show="showLoad" class="text-center" data-loading>
+                <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+            </div>
+            <div class="col-md-12" ng-show="noData" style="top: 10px;">
+                <div class="note note-danger" style="text-align:center !important">
+                    عفواً . لا توجـد بيانات.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--الدليل التجاري-->
+<!--<div class="sp-manual-search">
+    <div class="container">-->
+<!--<form class="form-inline add-users" autocomplete="off" role="form" id="AddForm" name="AddForm" novalidate="novalidate">-->
+<!--<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="sp-main-box">
+            <div>
+                <div class="sp-main-title">
+                    <h2>
+                        البحث
+                    </h2>
+                </div>
+                <div class="search-filters">
+                    <div class="row">-->
+<!--الغرفة-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>الغرفة</label>
+        <div class="sp-input-group sp-input-solid">
+            <ui-select reset-search-input="true" theme="selectize">
+                <ui-select-match>
+                    <span class="selected-value"></span>
+                    <a class="fa fa-times clear-button"></a>
+                </ui-select-match>-->
+<!--<ui-select-choices repeat="c.id as c in RequestTypes | filter: $select.search">
+    <small ng-bind-html="c.name"></small>
+</ui-select-choices>-->
+<!--</ui-select>
+        </div>
+    </div>
+</div>-->
+<!--رقم المنشأة-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>رقم المنشأة</label>
+        <div class="sp-input-group sp-input-solid">
+            <input type="text" minlength="10" maxlength="50" class="form-control" ng-required="true">
+        </div>
+    </div>
+</div>-->
+<!--رقم العضوية-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>رقم العضوية</label>
+        <div class="sp-input-group sp-input-solid">
+            <input type="text" minlength="10" maxlength="50" class="form-control" ng-required="true">
+        </div>
+    </div>
+</div>-->
+<!--السجل التجاري-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>السجل التجاري</label>
+        <div class="sp-input-group sp-input-solid">
+            <input type="text" minlength="10" maxlength="50" class="form-control" ng-required="true">
+        </div>
+    </div>
+</div>-->
+<!--اسم المنشاة-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>اسم المنشاة</label>
+        <div class="sp-input-group sp-input-solid">
+            <input type="text" minlength="10" maxlength="50" class="form-control" ng-required="true">
+        </div>
+    </div>
+</div>-->
+<!--النشاط-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>النشاط</label>
+        <div class="sp-input-group sp-input-solid">
+            <ui-select reset-search-input="true" theme="selectize">
+                <ui-select-match>
+                    <span class="selected-value"></span>
+                    <a class="fa fa-times clear-button"></a>
+                </ui-select-match>-->
+<!--<ui-select-choices repeat="c.id as c in RequestTypes | filter: $select.search">
+    <small ng-bind-html="c.name"></small>
+</ui-select-choices>-->
+<!--</ui-select>
+        </div>
+    </div>
+</div>-->
+<!--العنوان-->
+<!--<div class="col-md-6">
+    <div class="form-group">
+        <label>العنوان</label>
+        <div class="sp-input-group sp-input-solid">
+            <input type="text" minlength="10" maxlength="50" class="form-control" ng-required="true">
+        </div>
+    </div>
+</div>-->
+<!--الهاتف-->
+<!--<div class="col-md-6">
+                            <div class="form-group">
+                                <label>الهاتف</label>
+                                <div class="sp-input-group sp-input-solid">
+                                    <input type="text" minlength="10" maxlength="50" class="form-control" ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 text-center">
+        <button type="submit" class="sp-main-button">
+            بحث
+        </button>
+        <button type="reset" class="sp-main-button sp-transparent-button margin-left-10">
+            إعادة تعيين
+        </button>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+        <div class="sp-main-box">
+            <div>
+                <div class="sp-main-title">
+                    <h2>
+                        نتائج البحث
+                    </h2>
+                </div>
+                <div class="sp-main-table-holder search-result">
+                    <table class="table table-hover table-centered">
+                        <thead>
+                            <tr class="bg-blue font-white">
+                                <th class="text-center">
+                                    #
+                                </th>
+                                <th class="text-center">
+                                    <label>رقم العضوية</label>
+                                </th>
+                                <th class="text-center">
+                                    <label>اسم المنشاة</label>
+                                </th>
+                                <th class="text-center">
+                                    <label>الخيارات</label>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-hide="page.thereIsData">
+                                <td ng-show="page.showLoad" colspan="9" style="text-align:center;" class="text-center" data-loading>
+                                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                </td>
+                                <td colspan="9" style="text-align:center;" ng-show="page.noData">
+                                    <h3 class="font-red no-table-data">عفواً , لا توجد بيانات للعرض </h3>
+                                </td>
+                            </tr>
+                            <tr class="white-bg">
+                                <td class="text-center">1</td>
+                                <td class="text-center">10203050409080</td>
+                                <td class="text-center">عالم النظم والبرامج</td>
+                                <td>
+                                    <button type="button" class="sp-btn btn-link" aria-expanded="false">
+                                       تفاصيل
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>-->
+<!--</form>-->
+<!--</div>
+</div>-->

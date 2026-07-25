@@ -1,0 +1,158 @@
+﻿
+
+<div class="container">
+    <div class="row">
+        <div class="form-data white-bg moveto p-bottom-md">
+            <div class="row">
+                <div class="" name="searchForm" role="form">
+                    <div class="row list-unstyled">
+                        <div class="filter-table p-top-sm white-bg clearfix">
+                            <div class="col-md-6 col-sm-12">
+                                <a href="/#/CommercialPartner/AddComplain" class="custom-btn custom-btn-reverse btn-3"><i class="fa fa-comments" aria-hidden="true"></i>  إضافة شكوى/إقتراح</a>
+                            </div>
+                            <div class="col-md-6 col-sm-12" ng-hide="page.noData || page.showLoad">
+                                <div class="table-filter-input">
+                                    <label for="table-rows">عدد السجلات </label>
+                                    <input ng-model="searchModel.ItemsPerPage" class="form-control edited " ng-model-options="{debounce: 1000}" name="recordNumber" type="number" max="100" min="1" style="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive custom-table">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr class="bg-blue font-white">
+                                        <th class="text-center">
+                                            <label>
+                                                <span># </span>
+                                                <span class="glyphicon sort-icon"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>عنوان الشكوى/الإقتراح </span>
+                                                <span class="glyphicon sort-icon"></span>
+                                            </label>
+                                        </th>
+                                        <th class="text-center">
+                                            <label>
+                                                <span>وصف الشكوى/الإقتراح</span>
+                                                <span class="glyphicon sort-icon"></span>
+                                            </label>
+                                        </th>
+
+                                        <th style="cursor:pointer;" class="text-center">
+                                            <label>
+                                                <strong> الخيارات </strong>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-hide="page.thereIsData">
+                                        <td ng-show="page.showLoad" colspan="9" style="text-align:center;" class="text-center" data-loading>
+                                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                                        </td>
+                                        <td colspan="9" style="text-align:center;" ng-show="page.noData">
+                                            <h3 class="font-red">عفواً , لا توجد بيانات للعرض </h3>
+                                        </td>
+                                    </tr>
+                                    <tr pagination-id="paginateId" dir-paginate-start="x in objects | itemsPerPage: searchModel.ItemsPerPage"
+                                        current-page="searchModel.CurrentPage" total-items="searchModel.TotalCount">
+                                        <td class="text-center"><span>{{x.rowNumber | ngArabicNumber: true}} </span></td>
+                                        <td class="text-center"><span>{{x.title | cut:true:15:' ...'}}</span></td>
+                                        <td class="text-center"><span>{{x.complainText | cut:true:15:' ...'}} </span></td>
+                                        <td class="text-center">
+                                            <a ng-click="showDetailsModal(x)" title="استعراض" class="custom-btn custom-btn-reverse btn-3">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                استعراض
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr dir-paginate-end="">
+                                    </tr>
+                                </tbody>
+                                <tfoot ng-hide="objects.length == 0">
+                                    <tr>
+                                        <td colspan="9" class="chm_nohover bg-grey-silver bg-font-grey-silver">
+                                            <ul class="nav nav-pills center-nav">
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        رقم الصفحة
+                                                        <span class="badge badge-custom"> {{ searchModel.CurrentPage  | ngArabicNumber: true}} </span>
+                                                    </a>
+                                                </li>
+                                                <li class="active">
+                                                    <dir-pagination-controls max-size="7" pagination-id="paginateId"
+                                                                             direction-links="true"
+                                                                             boundary-links="true"
+                                                                             on-page-change="GetData()">
+                                                    </dir-pagination-controls>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        إجمالى السجلات
+                                                        <span class="badge badge-custom"> {{ objects[0].rowsCount | ngArabicNumber: true }} </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<modal visible="showModal" title="تفاصيل الشكوي / الإقتراح">
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <div class="user-input">
+                <label>البريد الإلكتروني</label>
+                <div>
+                    <label>{{currentObject.Email}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xs-12">
+            <div class="user-input">
+                <label>رقم الجوال</label>
+                <div>
+                    <label>{{currentObject.Mobile}}</label>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-md-7 col-xs-12">
+            <div class="user-input">
+                <label>  عنوان الشكوى/الإقتراح</label>
+                <div>
+                    <label>{{currentObject.Title}}</label>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="col-md-7 col-xs-12">
+            <div class="user-input">
+                <label>  تفاصيل الشكوى/الإقتراح</label>
+                <div>
+                    <label>{{currentObject.ComplainText}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal>
+
+<style>
+    table td.chm_nohover .nav > li > a:hover, .table td.chm_nohover .nav > li > a:focus{
+        background: #fff;
+    }
+</style>

@@ -1,0 +1,28 @@
+﻿<div class="container">
+    <!-- bootstrap profile end -->
+    <div class="col-xs-12">
+        <div class="record-title text-center m-top-lg m-bottom-md">
+            <h3> <span>شهادة العضوية</span>   </h3>
+        </div>
+
+        <div class="custom-user-data m-top-lg">
+            <div>
+                <div class="row tabbable-custom nav-justified">
+                    <div class="row" ng-show="page.existdata">
+                        <iframe class="elem" width="1200" height="900"></iframe>
+                    </div>
+                    <div ng-hide="page.existdata">
+                        <div ng-show="page.showViewerjs" class="text-center" data-loading>
+                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                        </div>
+                        <div class="col-md-12" ng-show="page.noData">
+                            <div class="note note-danger" style="text-align:center !important">
+                                عفواً . لا توجـد بيانات.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

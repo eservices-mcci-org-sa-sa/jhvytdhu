@@ -1,0 +1,122 @@
+﻿<div class="checkout p-bottom-lg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" ng-show="page.thereIsData">
+                <div class="checkout-body sp-main-box">
+                    <div class="col-md-12 checkout-methods wallet-bill-checkout">
+                        <div class="bill-receipt wallet-bill-receipt" id='newprint' pdf-save-content="newprint"
+                             style="border-radius: 10px;box-sizing: border-box; direction:rtl;text-align:right;margin-top:30px">
+                            <table style="width: 100%; padding: 30px 95px; border-collapse: separate; font-family: 'Droid Arabic Kufi', sans-serif;" width="100%" cellspacing="0">
+                                <tr>
+                                    <td colspan="99">
+                                        <table style="width: 100%; margin-bottom: 30px;">
+                                            <tr>
+                                                <td ng-cloak class="text-center" ng-if="chamberSettings.id !== '' && chamberSettings.id !==null && chamberSettings.id !== undefined">
+                                                    <img ng-cloak ng-src="{{'/Logos/'+(chamberSettings.isUnified ? userInfo.globalSessionValues.CurrentMember.ChamberId : chamberSettings.id )+'.png'}}" alt="chamber logo" width="165">
+                                                </td>
+
+                                                <td class="text-right">
+                                                    <ul style="list-style:none;float:left; padding:0px; margin: 0px;">
+                                                        <li style="margin-bottom: 10px; font-size: 12px; color: #091C14; font-family: 'Droid Arabic Kufi', sans-serif;">
+                                                            <span style="padding: 0; font-size: 12px; color: #091C14; font-weight: normal;">تاريخ الطباعة</span>
+                                                            : <span>{{transList.currentDate}} م</span> &nbsp;,&nbsp;
+                                                            <!--{{transList.transactionDateHijri}} هـ-->
+                                                        </li>
+                                                        <li style="margin-bottom: 10px; font-size: 12px; color: #091C14; font-family: 'Droid Arabic Kufi', sans-serif;">
+                                                            <span style="padding: 0; font-size: 12px; color: #091C14; font-weight: normal;">وقت الطباعة</span>
+                                                            : <span>{{transList.currentTime}}</span>
+                                                        </li>
+                                                        <li style="margin-bottom: 10px; font-size: 12px; color: #091C14; font-family: 'Droid Arabic Kufi', sans-serif;">
+                                                            <span  style="padding: 0; font-size: 12px; color: #091C14; font-weight: normal;"> المستخدم</span>
+                                                            :<span>{{userInfo.globalSessionValues.UserData.UserFullName}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td colspan="99" style="border: 1px solid #ccc;border-radius: 15px;padding: 50px;">
+                                        <table width="100%" style="border-collapse: separate;">
+                                            <tr>
+                                                <td colspan="99" class="text-center">
+                                                    <h2 ng-cloak style="margin: 0px; margin-bottom: 10px; font-size: 14px; font-weight: 700; color: #091C14; font-family: 'Droid Arabic Kufi', sans-serif;"> {{chamberSettings.isUnified ? userInfo.globalSessionValues.CurrentMember.ChamberFullArabicName :userInfo.globalSessionValues.ChamberData.CurrentChamberName}}</h2>
+                                                    <h3 style="margin: 0px; margin-bottom: 30px; font-size: 23px; font-weight: 700; color: #091C14; font-family: 'Droid Arabic Kufi', sans-serif; "> سند رقم <span style="color:#399B75;color:var(--main-color);">{{transList.transId }}</span> </h3>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="99">
+                                                    <ul class="bill-data sp-print-bill-data" style="list-style:none;padding:0px; margin:0px;">
+                                                        <li style="display: flex; align-items: center;margin-bottom: 30px;border: 1px solid #eee; border-radius: 10px; ">
+                                                            <p style="width: 198px; background: #eee !important; padding: 20px; text-align: center; margin: 0; font-size: 14px; color: #6C7773 !important; font-weight: 700; font-family: 'Droid Arabic Kufi', sans-serif; border-bottom-right-radius: 10px; border-top-right-radius: 10px; "> التاریخ : </p>
+                                                            <span style=" font-family: 'Droid Arabic Kufi', sans-serif; font-size: 14px; font-weight: 700; color: #212529; padding-right: 30px; padding-left: 10px;"> {{transList.transactionDate | date:'yyyy-MM-dd'}} م الموافق {{transList.transactionDateHijri}}ھـ</span>
+                                                        </li>
+                                                        <li style="display: flex; align-items: center;margin-bottom: 30px;border: 1px solid #eee; border-radius: 10px; ">
+                                                            <span style="width: 198px; background: #eee !important; padding: 20px; text-align: center; margin: 0; font-size: 14px; color: #6C7773 !important; font-weight: 700; font-family: 'Droid Arabic Kufi', sans-serif; border-bottom-right-radius: 10px; border-top-right-radius: 10px; "> رقم العضویة : </span>
+                                                            <span style=" font-family: 'Droid Arabic Kufi', sans-serif; font-size: 14px; font-weight: 700; color: #212529; padding-right: 30px; padding-left: 10px;">{{transList.memberId}}</span>
+                                                        </li>
+                                                        <li style="display: flex; align-items: center;margin-bottom: 30px;border: 1px solid #eee; border-radius: 10px; " ng-if="transList.transactionType != 8 && transList.transactionType != 9">
+                                                            <span style="width: 198px; background: #eee !important; padding: 20px; text-align: center; margin: 0; font-size: 14px; color: #6C7773 !important; font-weight: 700;
+                                                            font-family: 'Droid Arabic Kufi', sans-serif; border-bottom-right-radius: 10px; border-top-right-radius: 10px; ">استلمنا من المكرم : </span>
+                                                            <span style=" font-family: 'Droid Arabic Kufi', sans-serif; font-size: 14px; font-weight: 700; color: #212529; padding-right: 30px; padding-left: 10px;">
+                                                            {{userInfo.globalSessionValues.CurrentMember.EstName}}</span>
+                                                        </li>
+                                                        <li style="display: flex; align-items: center;margin-bottom: 30px;border: 1px solid #eee; border-radius: 10px; ">
+                                                            <span style="width: 198px; background: #eee !important; padding: 20px; text-align: center; margin: 0; font-size: 14px; color: #6C7773 !important; font-weight: 700; font-family: 'Droid Arabic Kufi', sans-serif; border-bottom-right-radius: 10px; border-top-right-radius: 10px; ">المبلغ : </span>
+                                                            <span  style=" font-family: 'Droid Arabic Kufi', sans-serif; font-size: 14px; font-weight: 700; color: #212529; padding-right: 30px; padding-left: 10px;" ng-if="transList.transactionType == 4 || transList.transactionType == 8 "> {{transList.instDebit}}</span>
+                                                            <span  style=" font-family: 'Droid Arabic Kufi', sans-serif; font-size: 14px; font-weight: 700; color: #212529; padding-right: 30px; padding-left: 10px;" 
+                                                                  ng-if="transList.transactionType == 1 || transList.transactionType == 5  || transList.transactionType == 9||transList.transactionType == 3 ||transList.transactionType == 7"> {{transList.instCredit}}</span>
+                                                        </li>
+                                                        <li style="display: flex; align-items: center;border: 1px solid #eee; border-radius: 10px; " ng-if="transList.memberPortalNotes">
+                                                            <span style="width: 198px; background: #eee !important; padding: 20px; text-align: center; margin: 0; font-size: 14px; color: #6C7773 !important; font-weight: 700; font-family: 'Droid Arabic Kufi', sans-serif; border-bottom-right-radius: 10px; border-top-right-radius: 10px; ">ملاحظة : </span>
+                                                            <span style=" font-family: 'Droid Arabic Kufi', sans-serif; font-size: 14px; font-weight: 700; color: #212529; padding-right: 30px; padding-left: 10px;">{{transList.memberPortalNotes}}</span>
+                                                        </li>
+                                                    </ul>
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="99">
+                                                    <div class="print-hidden" style="display: flex; align-items: center; justify-content: center;">
+                                                        <button style="margin-left:15px" type="button" ng-click="printDiv('newprint')" class="sp-main-button hidden-xs">طباعه <i class="fa fa-print"></i></button>
+                                                        <site-footer back="عوده"></site-footer>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                    
+                                </tr>
+                                
+                            </table>
+                        </div>
+
+                        <!--<div class="clearfix"></div>
+
+                        <div class="justify-content-center text-center" style="display:flex">
+                            <button  style="margin-left:15px" type="button" ng-click="printDiv('newprint')" class="sp-main-button hidden-xs">طباعه <i class="fa fa-print"></i></button>
+                            <site-footer back="عوده"></site-footer>
+                        </div>-->
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div ng-hide="page.thereIsData">
+                <div ng-show="page.showLoad" class="text-center" data-loading>
+                    <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                </div>
+                <div class="col-md-12" ng-show="page.NoData">
+                    <div class="note note-danger" style="text-align:center !important">
+                        السند غير موجود
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

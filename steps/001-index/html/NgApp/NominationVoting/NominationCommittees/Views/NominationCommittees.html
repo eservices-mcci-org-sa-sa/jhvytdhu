@@ -1,0 +1,418 @@
+﻿<!-- header start-->
+<header class="sp-header sp-header-register">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-12">
+                <div class="sp-outer-logo">
+                    <img class="sp-logo" ng-if="chamberSettings.id" ng-src="{{'/Logos/identity/'+chamberSettings.id+'.svg'}}" alt="logo">
+                </div>
+                <div class="sp-outer-logos">
+                    <img ng-if="chamberSettings.id !=undefined && chamberSettings.id !='' && chamberSettings.id !=null && !chamberSettings.isUnified" ng-src="{{'/Logos/'+chamberSettings.id+'.png'}}" alt="logo" class="sp-chamber-logo">
+                    <img ng-if="loadChamberLogo && !chamberSettings.id" src="/Content/Theme/dist/img/loadingImg.gif" alt="logo">
+                    <img src="../../../Content/Theme/assets/img/2030.svg" alt="" class="logo-2030" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end-->
+</br>
+
+<div class="es-sectral-committees">
+    <div class="container">
+        <div class="row" ng-if="!NominationTermsAccepted">
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            لائحة اللجان الوطنية والقطاعية
+                        </h2>
+                        <div class="sp-main-toolbar">
+                            <a class="sp-main-button sp-transparent-button sp-inlineflex-align-center" ng-href="#/Login">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-container">
+                        <div class="sp-sectral-committees-list">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <iframe id="pdfIframe" width="100%" height="900" allowfullscreen></iframe>
+                                </div>
+                            </div> 
+                            </br>
+                            <div class="row">
+                                <label><input type="checkbox"  style="min-height:0px !important;" ng-click="acceptTerms(true)" ng-required="true" /> أوافق على هذه الشروط </label>
+
+                                <!--<div class="col-md-8">
+            <label>
+                <input type="checkbox" class="col-sm-1" name="agree" data-ng-model="IsChecked"
+                       ng-click="acceptTerms(true)"
+                       ng-required="true" /> <span> أوافق على هذه الشروط </span>
+            </label>
+        </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="NominationTermsAccepted">
+            <div class="col-md-12" ng-if="header">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            {{header}}
+                        </h2>
+                        <div class="sp-main-toolbar">
+                            <a class="sp-main-button sp-transparent-button sp-inlineflex-align-center" ng-href="#/NominationCommittees">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            {{subHeader}}
+                        </h2>
+                        <div class="sp-main-toolbar d-flex-align-center">
+                            <a ng-if="showRequestsButton" ng-href="#/NominationCandidate/CandidacyApplication/List" class="sp-main-button sp-inlineflex-align-center">
+                                <ion-icon name="search"></ion-icon>
+                                التحقق من حالة الطلب
+                            </a>
+                            <a ng-if="showVoteButton" ng-href="#/NominationCommittees/Vote" class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                <ion-icon name="reader-outline"></ion-icon>
+                                التصويت على ترشيح اللجان
+                            </a>
+                            <a ng-href="#/Login" class="sp-main-button sp-transparent-button sp-inlineflex-align-center">
+                                العودة
+                                <ion-icon name="arrow-back-outline"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title d-flex-align-center-justify-between">
+                        <h2>
+                            حدد العضويات
+                        </h2>
+                    </div>
+                    <div class="sp-main-container">
+                        <div class="alert alert-landing">
+                            <img src="../../../Content/Theme/assets/img/alert.svg" />
+                            فضلا حدد نوع العضوية لعرض اللجان المناسبة لأنشطتك.
+                        </div>
+                        <div class="alert alert-landing" ng-if="!MembershipsList.length">
+                            <img src="../../../Content/Theme/assets/img/alert.svg" />
+                            لا توجد عضويات.
+                        </div>
+                        <ul class="sp-memberships-list">
+                            <li ng-repeat="org in MembershipsList">
+                                <label class="">
+                                    <input type="checkbox" ng-checked="org.isChecked" ng-model="org.isChecked" ng-change="SelectMembership(org,true)" id="chex1" value="4">
+                                    <div class="">
+                                        <h3>{{org.estName | cutWords:4:' ...'}}</h3>
+                                        <p>{{chamberSettings.chamberName}}</p>
+                                    </div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="main-content-item sp-main-box margin-bottom-30">
+                    <div class="sp-main-title">
+                        <h2>
+                            اللجان المتاحة {{availableToVote ? 'للتصويت' :'للترشح'}} بناءا علي العضويات المختارة اعلاه
+                        </h2>
+                    </div>
+                    <div class="sp-main-subtitle">
+                        <h2>اللجان القطاعية</h2>
+                    </div>
+                    <div class="sp-main-container">
+
+                        <div class="sp-sectral-committees-list">
+                            <div class="row" ng-if="!SelectedNominationCommitteesList.length">
+                                <div class="col-md-3 col-sm-6" ng-repeat="comm in NominationCommitteesList">
+                                    <a href="#/NominationCommittees/Details/{{comm.id}}" class="committee-item">
+                                        <div class="icon-holder" ng-if="comm.slogan && comm.slogan">
+                                            <span ng-bind-html="sanitizeMe(slogans[comm.slogan])"></span>
+                                            <!--<ion-icon name="people-outline"></ion-icon>-->
+                                        </div>
+                                        <h3>{{comm.title}}</h3>
+                                    </a>
+                                </div>
+                                <div ng-show="NominationCommitteesList.length == 0" class="col-sm-12 col-md-12 col-lg-12">
+                                    <div colspan="3" class="note note-danger" ng-if="!availableToVote"> لا يوجد لجان متاح الترشح عليها </div>
+                                    <div colspan="3" class="note note-danger" ng-if="availableToVote"> لا يوجد لجان متاحة للتصويت </div>
+                                </div>
+                            </div>
+
+                            <!--NEW Design When Selected-->
+                            <div class="row" ng-if="SelectedNominationCommitteesList.length" ng-repeat="member in SelectedNominationCommitteesList">
+                                <div class="col-md-12">
+                                    <h4 class="sp-selected-membership-title">{{member.memberDetails.estName}}</h4>
+                                </div>
+                                <div class="col-md-3 col-sm-6" ng-repeat="comm in member.Committees">
+                                    <a ng-click="confirmCommittee(comm.id,member.memberDetails,comm.title)" class="committee-item">
+                                        <div class="icon-holder" ng-if="comm.slogan && comm.slogan">
+                                            <span ng-bind-html="sanitizeMe(slogans[comm.slogan])"></span>
+                                        </div>
+                                        <h3>{{comm.title}}</h3>
+                                    </a>
+                                </div>
+                                <div class="col-md-12" ng-if="!member.Committees.length">
+                                    <a class="committee-item item-nodata">
+                                        <h3>  لا توجد لجان مطابقة لنشاط العضوية.</h3>
+                                    </a>
+                                </div>
+                            </div>
+                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    ul.sp-memberships-list {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        overflow-x: auto;
+        gap: 16px;
+        list-style: none;
+        padding-bottom: 16px;
+    }
+
+        ul.sp-memberships-list li {
+            border: 0;
+            min-width: 23%;
+            padding: 0;
+        }
+
+            ul.sp-memberships-list li > label {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 10px !important;
+                border-radius: 8px;
+                background: #F5F7F7;
+                margin: 0;
+                cursor: pointer;
+            }
+
+                ul.sp-memberships-list li > label > div h3 {
+                    font-size: 15px;
+                    font-weight: 700;
+                    margin: 4px;
+                }
+
+                ul.sp-memberships-list li > label > div p {
+                    font-size: 12px;
+                    margin: 0;
+                    font-weight: 400;
+                }
+
+                ul.sp-memberships-list li > label > input[type='checkbox'] {
+                    min-height: auto !important;
+                    min-width: 20px;
+                }
+
+    .sp-inlineflex-align-center {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+
+    .sp-main-subtitle {
+        padding: 14px;
+        border-bottom: 1px solid #eaecec;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .sp-main-subtitle h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--main-color);
+        }
+
+    .sp-sectral-committees-list .committee-item {
+        padding: 25px;
+        border-radius: 15px;
+        background: #F5F7F7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        height: 130px;
+        margin-bottom: 30px;
+    }
+        .sp-sectral-committees-list .committee-item.item-nodata{cursor: default}
+
+        .sp-sectral-committees-list .committee-item h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .sp-sectral-committees-list .committee-item .icon-holder {
+            padding: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background: white;
+            color: var(--main-color);
+        }
+
+            .sp-sectral-committees-list .committee-item .icon-holder > * {
+                height: 100%;
+                object-fit: contain;
+            }
+
+    h4.sp-selected-membership-title {
+        font-size: 12px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 21px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eaecec;
+        margin-bottom: 20px;
+    }
+
+    /*scroll*/
+    .es-scroll-h {
+        /*--scroll-min-height: 200px;*/
+        /*--scroll-padding-iend: 10px;*/
+        --scroll-bg: rgba(23, 105, 204, 0.17);
+        --scroll-clr: var(--main-color);
+        --scroll-width: 6px;
+        --scroll-border-width: 0px;
+        --scroll-border-style: solid;
+        --scroll-border-clr: var(--main-color);
+        --scroll-track-border-radius: 8px;
+        --scroll-thumb-border-radius: 8px;
+    }
+
+    .es-scroll-h {
+        /*padding-inline-end: var(--scroll-padding-iend);
+        wi: var(--scroll-min-height);
+        object-fit: contain;*/
+        overflow: hidden;
+        overflow-x: auto;
+    }
+
+    .es-scroll-h {
+        scrollbar-width: auto;
+        scrollbar-color: var(--scroll-clr);
+    }
+
+        .es-scroll-h::-webkit-scrollbar {
+            width: var(--scroll-width);
+        }
+
+        .es-scroll-h::-webkit-scrollbar-track {
+            background: var(--scroll-bg);
+            border-radius: var(--scroll-border-radius);
+        }
+
+        .es-scroll-h::-webkit-scrollbar-thumb {
+            background-clip: content-box;
+            background-color: var(--scroll-clr);
+            border: var(--scroll-border-width) var(--scroll-border-style) var(--scroll-border-clr);
+            border-radius: var(--scroll-thumb-border-radius);
+        }
+</style>
+<style>
+    .sp-inlineflex-align-center {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+
+    .sp-main-subtitle {
+        padding: 14px;
+        border-bottom: 1px solid #eaecec;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .sp-main-subtitle h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--main-color);
+        }
+
+    .sp-sectral-committees-list .committee-item {
+        padding: 25px;
+        border-radius: 15px;
+        background: #F5F7F7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        height: 130px;
+        margin-bottom: 30px;
+    }
+
+        .sp-sectral-committees-list .committee-item h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .sp-sectral-committees-list .committee-item .icon-holder {
+            padding: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background: white;
+            color: var(--main-color);
+        }
+
+            .sp-sectral-committees-list .committee-item .icon-holder > * {
+                height: 100%;
+                object-fit: contain;
+            }
+
+            .sp-sectral-committees-list .committee-item .icon-holder svg {
+                height: 100%;
+                object-fit: contain;
+            }
+
+                .sp-sectral-committees-list .committee-item .icon-holder svg [stroke] {
+                    stroke: var(--main-color);
+                }
+
+                .sp-sectral-committees-list .committee-item .icon-holder svg [fill*='#'] {
+                    fill: var(--main-color);
+                }
+</style>

@@ -1,0 +1,72 @@
+﻿<!--<div class="alert alert-success">
+    <i class="fa fa-check-circle-o" style="color:greenyellow" aria-hidden="true"></i>   <strong>{{PaymentResult.Status}}!</strong>
+
+</div>-->
+
+
+
+<div class="checkout grey-color p-top-lg p-bottom-lg">
+    <div class="container" ng-show="showResult">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="checkout-body sp-main-box">
+                    <div class="checkout-methods sp-main-container" ng-init="isSet==1;">
+                        <div class="credit-content clearfix front">
+                            <div class="col-md-12 successIcon">
+                                <div class="form-group">
+                                    <div class="example-content success show  text-center">
+                                        <div class="swal-icon swal-icon--success">
+                                            <div class="swal-icon--success__line swal-icon--success__line--long"></div>
+                                            <div class="swal-icon--success__line swal-icon--success__line--tip"></div>
+                                            <div class="swal-icon--success__ring"></div>
+                                            <div class="swal-icon--success__hide-corners"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-success text-center" style="margin-top: 30px;">
+                                        <strong>تم شحن المحفظة بنجاح بفاتورة رقم  {{Refernce_no}} </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <div class="col-md-12  col-lg-6">
+                                <button class="sp-main-button" type="button" ng-click="goToWalletCharge(1)">عملية جديدة</button>
+                            </div>
+                            <div class="col-md-12  col-lg-6">
+                                <button class="sp-main-button" type="button" ng-click="goToWalletTransactions(1)">عرض حركات المحفظة </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-hide="showResult">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="checkout-body sp-main-box">
+                    <div class="credit-content clearfix front sp-main-container">
+                        <div ng-show="loadingResult" class="text-center" data-loading>
+                            <img src="../../../Content/Theme/dist/img/ajax-loader.gif" style="width: 80px;">
+                        </div>
+                        <div class="col-md-12" ng-show="noResult">
+                            <div class="note note-danger" style="text-align:center !important">
+                                {{Message}}
+                            </div>
+                        </div>
+                        <!--<div class="col-md-12" ng-show="noResult">
+                            <div class="note note-danger" style="text-align:center !important">
+                               برجاء الانتظار لمدة 30 دقيقه كحد أقصي لانتظار تحديث رصيد المحفظة
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
